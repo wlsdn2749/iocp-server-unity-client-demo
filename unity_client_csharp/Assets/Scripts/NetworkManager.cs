@@ -18,10 +18,11 @@ public class NetworkManager : MonoBehaviour
     }
     void Start()
     {
-        string host = Dns.GetHostName();
-        IPHostEntry ipHost = Dns.GetHostEntry(host);
-        IPAddress ipAddr = ipHost.AddressList[0];
-        IPEndPoint endPoint = new IPEndPoint(ipAddr, 8888);
+        Debug.Log("NetworkSession Start");
+        // string host = Dns.GetHostName();
+        // IPHostEntry ipHost = Dns.GetHostEntry(host);
+        IPAddress ipAddr = IPAddress.Parse("127.0.0.1");
+        IPEndPoint endPoint = new IPEndPoint(ipAddr, 8421);
 
         Connector connector = new Connector();
 

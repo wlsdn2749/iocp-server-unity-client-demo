@@ -7,18 +7,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ServerCore;
+using UnityEngine;
 
 namespace DummyClient { 
 
 
     class ServerSession : PacketSession
     {
-
-
         public override void OnConnected(EndPoint endPoint)
         {
+            Debug.Log($"onConnected : {endPoint}");
             Console.WriteLine($"onConnected : {endPoint}");
-
         }
 
         public override void OnDisconnected(EndPoint endPoint)

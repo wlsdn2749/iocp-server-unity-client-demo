@@ -67,7 +67,7 @@ int main()
 			});
 	}
 
-	Protocol::C_CHAT chatPkt;
+	/*Protocol::C_CHAT chatPkt;
 	chatPkt.set_msg(u8"Hello World !");
 	auto sendBuffer = ServerPacketHandler::MakeSendBuffer(chatPkt);
 
@@ -75,7 +75,7 @@ int main()
 	{
 		service->Broadcast(sendBuffer);
 		this_thread::sleep_for(1s);
-	}
+	}*/
 
 	GThreadManager->Join();
 }

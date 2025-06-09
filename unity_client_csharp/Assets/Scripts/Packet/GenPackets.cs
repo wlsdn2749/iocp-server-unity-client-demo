@@ -15,6 +15,7 @@ public enum PacketID
 	S_PlayerList = 4,
 	C_Move = 5,
 	S_BroadCastMove = 6,
+	S_CHAT = 1005,
 	
 }
 
@@ -445,6 +446,7 @@ public class S_BroadCastMove : IPacket
         return SendBufferHelper.Close(count);
     }
 }
+
 
 
 
