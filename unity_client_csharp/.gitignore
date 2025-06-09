@@ -1,0 +1,54 @@
+# Unity generated files
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+MemoryCaptures/
+
+# Visual Studio
+.vs/
+*.csproj
+*.sln
+*.userprefs
+*.unityproj
+*.booproj
+
+# Rider
+.idea/
+*.sln.iml
+
+# MonoDevelop
+*.pidb
+*.userprefs
+
+# OS generated files
+.DS_Store
+._*
+Thumbs.db
+
+# Asset meta data should only be ignored when Assets are ignored
+!/[Aa]ssets/**/*.meta
+
+# Auto-generated solution
+ExportedObj/
+
+# Unity3D generated meta files
+*.unitypackage
+
+# Crash reports
+sysinfo.txt
+
+# Gradle cache
+.gradle/
+
+# Build artifacts
+Build/
+Builds/
+
+# Editor
+UserSettings/
+
+# Packages
+Packages/packages-lock.json
