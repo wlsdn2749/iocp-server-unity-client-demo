@@ -29,7 +29,7 @@ public:
 	{
 		for (int32 i = 0; i < UINT16_MAX; i++)
 		{
-			GPacketHandler[0] = Handle_INVALID;
+			GPacketHandler[i] = Handle_INVALID;
 		}
 
 {%- for pkt in parser.recv_pkt %}

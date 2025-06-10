@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Packet;
 using ServerCore;
 using UnityEngine;
 
@@ -27,7 +28,8 @@ namespace DummyClient {
 
         public override void OnRecvPacket(ArraySegment<byte> buffer)
         {
-            PacketManager.Instance.OnRecvPacket(this, buffer, (s, p) => PacketQueue.Instance.Push(p) );
+            ServerPacketManager.Instance.OnRecvPacket(this, buffer);
+            // PacketManager.Instance.OnRecvPacket(this, buffer, (s, p) => PacketQueue.Instance.Push(p) );
         }
 
         public override void OnSend(int numOfBytes)

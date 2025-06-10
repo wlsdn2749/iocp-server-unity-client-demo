@@ -8,7 +8,11 @@
 class AcceptEvent;
 class ServerService;
 
-class Listener : public IocpObject
+// IocpObject를 상속받는다는건, GetHandle이랑 Dispatch를 반드시 구현해야함.
+// GetHandle은 socket의 HANDLE을 반환하고
+// Dispatch는 iocpEvent 클래스와, 그 패킷바이트를 받아서 처리하는 부분임
+
+class Listener : public IocpObject 
 {
 public:
 	Listener() = default;

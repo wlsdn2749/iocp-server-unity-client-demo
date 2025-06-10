@@ -10,7 +10,7 @@ using ServerCore;
 public enum PacketID
 {
     S_BroadcastEnterGame = 1,
-	C_LeaveGame = 2,
+	C_LeaveGamve = 2,
 	S_BroadCastLeaveGame = 3,
 	S_PlayerList = 4,
 	C_Move = 5,
@@ -18,6 +18,8 @@ public enum PacketID
 	S_CHAT = 1005,
 	
 }
+
+
 
 public interface IPacket
 {
@@ -88,50 +90,6 @@ public class S_BroadcastEnterGame : IPacket
 		success &= BitConverter.TryWriteBytes(s.Slice(count, s.Length - count), this.posZ);
 		count += sizeof(float);
 		
-
-        success &= BitConverter.TryWriteBytes(s, count);
-
-        if (success == false)
-            return null;
-
-        return SendBufferHelper.Close(count);
-    }
-}
-
-
-public class C_LeaveGame : IPacket
-{
-    
-
-    public ushort Protocol { get { return (ushort)PacketID.C_LeaveGame; } }
-
-    public void Read(ArraySegment<byte> segment)
-    {
-        ushort count = 0;
-
-        ReadOnlySpan<byte> s = new ReadOnlySpan<byte>(segment.Array, segment.Offset, segment.Count);
-        count += sizeof(ushort);
-        count += sizeof(ushort);
-
-        
-            
-    }
-
-    public ArraySegment<byte> Write()
-    {
-        ArraySegment<byte> segment = SendBufferHelper.Open(4096);
-
-        bool success = true;
-        ushort count = 0;
-
-        Span<byte> s = new Span<byte>(segment.Array, segment.Offset, segment.Count);
-
-        // Size는 추가하지만, 실제로 사용하지는 않음
-        count += sizeof(ushort);
-
-        success &= BitConverter.TryWriteBytes(s.Slice(count, s.Length - count), (ushort)PacketID.C_LeaveGame);
-        count += sizeof(ushort);
-        
 
         success &= BitConverter.TryWriteBytes(s, count);
 

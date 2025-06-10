@@ -47,7 +47,7 @@ bool Listener::StartAccept(ServerServiceRef service)
 	for (int32 i = 0; i < acceptCount; i++)
 	{
 		AcceptEvent* acceptEvent = xnew<AcceptEvent>();
-		acceptEvent->owner = shared_from_this(); // Listener가 AcceptEvent의 owner가 된다. enable_shared_from_this<T>를 상속받아야함
+		acceptEvent->owner = shared_from_this(); // Listener가 AcceptEvent의 owner가 된다. enable_shared_from_this<T>를 상속받아야함 <- // TODO 여기 순환참조 의심
 		_acceptEvents.push_back(acceptEvent); // 나중에 삭제할 수 있도록
 		RegisterAccept(acceptEvent);
 		// 지금 당장 누군가 접속하면 좋은거고, 아니면 완료통지
