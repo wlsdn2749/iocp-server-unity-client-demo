@@ -1,8 +1,6 @@
 using ServerCore;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
 using Google.Protobuf;
 
 namespace Packet
@@ -10,18 +8,18 @@ namespace Packet
     public enum PacketID : ushort
     {
         // TODO(AUTOMATION) 이부분 자동화 + 이부분은 S+C전부 만들어줘야함
-        PKT_C_LOGIN = 1000,
-        PKT_S_LOGIN = 1001,
-        PKT_C_ENTER_GAME = 1002,
-        PKT_S_ENTER_GAME = 1003,
-        PKT_C_CHAT = 1004,
-        PKT_S_CHAT = 1005,
+	    PKT_C_LOGIN = 1000,
+	    PKT_S_LOGIN = 1001,
+	    PKT_C_ENTER_GAME = 1002,
+	    PKT_S_ENTER_GAME = 1003,
+	    PKT_C_CHAT = 1004,
+	    PKT_S_CHAT = 1005,
     }
     public class ServerPacketManager
     {
         #region Singleton
         static ServerPacketManager _instance = new ServerPacketManager();
-        
+
         public static ServerPacketManager Instance
         {
             get { return _instance; }
@@ -32,11 +30,11 @@ namespace Packet
         {
             Register();
         }
-        
+
         // _handler[Protocol.ID]는 그 Protocol.Id를 처리하는 대리자일 것. 아니면 INVALID_로 처리
         // [id] => (Session, IMessage) => Handler
         Action<PacketSession, IMessage>[] _packetHandlers = new Action<PacketSession, IMessage>[ushort.MaxValue + 1];
-        
+
         // [id] => (data, offset, length) => IMessage
         Dictionary<ushort, Func<byte[], int, int, IMessage>> _messageParsers = new Dictionary<ushort, Func<byte[], int, int, IMessage>>();
 
@@ -48,10 +46,12 @@ namespace Packet
                 _packetHandlers[i] = ServerPacketHandler.HANDLE_INVALID;
             }
             // TODO(AUTOMATION) 이 부분 자동화 해야함 + PKT_S_XXX부분만 하면 됨
-            RegisterHandler((ushort)PacketID.PKT_S_CHAT, ServerPacketHandler.HANDLE_S_Chat, Protocol.S_CHAT.Parser);
-            // ...이하 반복
+            RegisterHandler((ushort)PacketID.PKT_S_LOGIN, ServerPacketHandler.HANDLE_S_LOGIN, Protocol.S_LOGIN.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_ENTER_GAME, ServerPacketHandler.HANDLE_S_ENTER_GAME, Protocol.S_ENTER_GAME.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_CHAT, ServerPacketHandler.HANDLE_S_CHAT, Protocol.S_CHAT.Parser);
+                  
         }
-        
+
         void RegisterHandler<T>(ushort id, Action<PacketSession, T> handler, MessageParser<T> parser) where T : IMessage<T>
         {
             _packetHandlers[id] = (session, packet) => handler(session, (T)packet);
@@ -63,12 +63,12 @@ namespace Packet
             _typeToId[typeof(T)] = id;
         }
 
-        
+
         // 서버로 부터 패킷을 받아 처리하는 코드
         // session          :   클라이언트와 서버가 연결되는, 수신 세션
         // buffer           :   수신된 전체 패킷 버퍼
         // OnRecvCallback   :   패킷을 Queueing 하는 부분, 한번에 처리해주는게 더 성능상 좋기 때문
-        public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer,  Action<PacketSession, IMessage> OnRecvCallback = null)
+        public void OnRecvPacket(PacketSession session, ArraySegment<byte> buffer, Action<PacketSession, IMessage> OnRecvCallback = null)
         {
             ushort size = BitConverter.ToUInt16(buffer.Array, buffer.Offset);
             ushort id = BitConverter.ToUInt16(buffer.Array, buffer.Offset + 2);
@@ -98,7 +98,7 @@ namespace Packet
         {
             if (_typeToId.TryGetValue(packet.GetType(), out var id))
                 return id;
-            
+
             throw new Exception($"[PacketManager] Unregistered IMessage type: {packet.GetType()}");
         }
     }

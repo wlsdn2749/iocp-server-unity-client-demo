@@ -44,6 +44,7 @@
   <ItemGroup>
     <Content Include="requirements.txt" />
     <Content Include="Templates\PacketHandler.h" />
+    <Content Include="Templates\PacketManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

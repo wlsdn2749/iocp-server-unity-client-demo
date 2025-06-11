@@ -41,18 +41,26 @@ namespace Packet
         //     ServerSession serverSession = session as ServerSession;
         //     PlayerManager.Instance.Move(pkt);
         // }
+        
+        public static void HANDLE_INVALID(PacketSession session, IMessage packet)
+        {
+            Debug.Log("[패킷 처리] INVALID PACKET (알수 없는 패킷 ID 요청!)");
+        }
 
-        public static void HANDLE_S_Chat(PacketSession session, IMessage packet)
+        public static void HANDLE_S_LOGIN(PacketSession session, S_LOGIN packet)
+        {
+            throw new NotImplementedException();
+        }
+        public static void HANDLE_S_ENTER_GAME(PacketSession session, S_ENTER_GAME packet)
+        {
+            throw new NotImplementedException();
+        }
+        public static void HANDLE_S_CHAT(PacketSession session, S_CHAT packet)
         {
             S_CHAT pkt = packet as S_CHAT;
             ServerSession serverSession = session as ServerSession;
             
             UnityEngine.Debug.Log($"[ServerPacketVer.채팅] {pkt.PlayerId}: {pkt.Msg}");
         }
-        public static void HANDLE_INVALID(PacketSession session, IMessage packet)
-        {
-            Debug.Log("[패킷 처리] INVALID PACKET (알수 없는 패킷 ID 요청!)");
-        }
-
     }
 }
