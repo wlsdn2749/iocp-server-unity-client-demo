@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using Google.Protobuf;
+using Packet;
 using UnityEngine;
 using Protocol;
+using UnityEngine.Rendering;
 
 public class MyPlayer : Player
 {
@@ -28,27 +30,38 @@ public class MyPlayer : Player
         {
             Debug.Log("SendPacket!");
             yield return new WaitForSeconds(3.0f);
-            C_CHAT chatPkt = new C_CHAT();
-            chatPkt.Msg = "Hello World !"; // 대소문자 주의: C#은 PascalCase로 자동 변환됨
-            byte[] sendBuffer = chatPkt.ToByteArray();
+            // C_CHAT chatPkt = new C_CHAT();
+            // chatPkt.Msg = "Hello World !"; // 대소문자 주의: C#은 PascalCase로 자동 변환됨
+            // byte[] sendBuffer = chatPkt.ToByteArray();
+            //
+            // ushort packetId = 1004; /* C_CHAT에 해당하는 패킷 번호, 예: 1004 */;
+            // ushort bodySize = (ushort)sendBuffer.Length;
+            // ushort totalSize = (ushort)(bodySize + 4); // 헤더 4바이트
+            //
+            // byte[] finalPacket = new byte[totalSize];
+            // Buffer.BlockCopy(BitConverter.GetBytes(totalSize), 0, finalPacket, 0, 2); // size
+            // Buffer.BlockCopy(BitConverter.GetBytes(packetId), 0, finalPacket, 2, 2);  // id
+            // Buffer.BlockCopy(sendBuffer, 0, finalPacket, 4, bodySize);                // protobuf 본문
+            //
+            // _network.Send(finalPacket);
 
-            ushort packetId = 1004; /* C_CHAT에 해당하는 패킷 번호, 예: 1004 */;
-            ushort bodySize = (ushort)sendBuffer.Length;
-            ushort totalSize = (ushort)(bodySize + 4); // 헤더 4바이트
+            Protocol.C_CHAT chatPkt = new Protocol.C_CHAT()
+            {
+                Msg = "Hello World!"
+            };
 
-            byte[] finalPacket = new byte[totalSize];
-            Buffer.BlockCopy(BitConverter.GetBytes(totalSize), 0, finalPacket, 0, 2); // size
-            Buffer.BlockCopy(BitConverter.GetBytes(packetId), 0, finalPacket, 2, 2);  // id
-            Buffer.BlockCopy(sendBuffer, 0, finalPacket, 4, bodySize);                // protobuf 본문
-            
+            ArraySegment<byte> sendBuffer = ServerPacketManager.MakeSendBuffer(chatPkt);
+            _network.Send(sendBuffer);
+
+
             // C_Move movePacket = new C_Move();
+
             // movePacket.posX = UnityEngine.Random.Range(-50, 50);
             // movePacket.posY = 0;
             // movePacket.posZ = UnityEngine.Random.Range(-50, 50);
-            
-            _network.Send(finalPacket);
 
             // _network.Send(movePacket.Write());
+            // sendWrapper.Send(
         }
     }
 }

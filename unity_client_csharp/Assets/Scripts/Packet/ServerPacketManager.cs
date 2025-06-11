@@ -2,6 +2,7 @@ using ServerCore;
 using System;
 using System.Collections.Generic;
 using Google.Protobuf;
+using Packet;
 
 namespace Packet
 {
@@ -39,6 +40,10 @@ namespace Packet
         Dictionary<ushort, Func<byte[], int, int, IMessage>> _messageParsers = new Dictionary<ushort, Func<byte[], int, int, IMessage>>();
 
         private readonly Dictionary<Type, ushort> _typeToId = new();
+        public static ArraySegment<byte> MakeSendBuffer(Protocol.C_LOGIN pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_LOGIN);
+        public static ArraySegment<byte> MakeSendBuffer(Protocol.C_ENTER_GAME pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_ENTER_GAME);
+        public static ArraySegment<byte> MakeSendBuffer(Protocol.C_CHAT pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_CHAT);
+
         void Register()
         {
             for (int i = 0; i < UInt16.MaxValue + 1; i++)
@@ -89,6 +94,25 @@ namespace Packet
                 }
             }
         }
+
+        public static ArraySegment<byte> MakeSendBuffer<T>(T pkt, ushort pktId) where T : IMessage<T>
+        {
+            byte[] body = pkt.ToByteArray();
+            ushort bodySize = (ushort)body.Length;
+            ushort packetSize = (ushort)(bodySize + 4); // Header 크기 4byte
+
+            byte[] buffer = new byte[packetSize];
+            
+            // Header 작성
+            Array.Copy(BitConverter.GetBytes(packetSize), 0, buffer, 0, 2);           // size
+            Array.Copy(BitConverter.GetBytes(pktId), 0, buffer, 2, 2);                // id
+            
+            // Body 작성
+            Array.Copy(body, 0, buffer, 4, body.Length);
+
+            return new ArraySegment<byte>(buffer, 0, packetSize);
+        }
+
         public void HandlePacket(PacketSession session, IMessage packet)
         {
             _packetHandlers[GetPacketId(packet)].Invoke(session, packet);
