@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using DummyClient;
+using Google.Protobuf;
+using Packet;
 using ServerCore;
+using Unity.Collections;
 using UnityEngine;
 
 public class NetworkManager : MonoBehaviour
@@ -36,10 +39,11 @@ public class NetworkManager : MonoBehaviour
     void Update()
     {
 
-        List<IPacket> packetList = PacketQueue.Instance.PopAll();
+        // List<IPacket> packetList = PacketQueue.Instance.PopAll();
+        List<IMessage> packetList = PacketQueue.Instance.PopAll();
         
-        foreach(IPacket pkt in packetList)
-            PacketManager.Instance.HandlePacket(_session, pkt);
+        foreach(IMessage pkt in packetList)
+            ServerPacketManager.Instance.HandlePacket(_session, pkt);
         
     }
 

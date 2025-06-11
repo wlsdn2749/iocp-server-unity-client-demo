@@ -28,7 +28,7 @@ namespace DummyClient {
 
         public override void OnRecvPacket(ArraySegment<byte> buffer)
         {
-            ServerPacketManager.Instance.OnRecvPacket(this, buffer);
+            ServerPacketManager.Instance.OnRecvPacket(this, buffer, (s, p) => PacketQueue.Instance.Push(p));
             // PacketManager.Instance.OnRecvPacket(this, buffer, (s, p) => PacketQueue.Instance.Push(p) );
         }
 
