@@ -51,5 +51,11 @@ namespace Packet
             ServerSession serverSession = session as ServerSession;
             PlayerManager.Instance.EnterGame(pkt);
         }
+        public static void HANDLE_S_BROADCAST_MOVE(PacketSession session, S_BROADCAST_MOVE packet)
+        {
+            S_BROADCAST_MOVE pkt = packet as S_BROADCAST_MOVE;
+            ServerSession serverSession = session as ServerSession;
+            PlayerManager.Instance.Move(pkt);
+        }
     }
 }

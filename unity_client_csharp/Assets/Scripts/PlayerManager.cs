@@ -53,23 +53,24 @@ public class PlayerManager
             }
         }
     }
-    // public void Move(S_BroadCastMove packet)
-    // {
-    //     if (_myPlayer.PlayerId == packet.playerId)
-    //     {
-    //         _myPlayer.transform.position = new Vector3(packet.posX, packet.posY, packet.posZ);
-    //     }
-    //     else
-    //     {
-    //         Player player = null;
-    //         // _players에 packet.playerId라는 Key가 있으면 True반환하고 player에 그 value를 넘김
-    //         // False인 경우 Value의 Default값이 Player에 넘어감
-    //         if (_players.TryGetValue(packet.playerId, out player))
-    //         {
-    //             player.transform.position = new Vector3(packet.posX, packet.posY, packet.posZ);
-    //         }
-    //     }
-    // }
+    public void Move(S_BROADCAST_MOVE packet)
+    {
+        if (_myPlayer.PlayerId == packet.PlayerId)
+        {
+            _myPlayer.transform.position = new Vector3(packet.PosX, packet.PosY, packet.PosZ);
+        }
+        else
+        {
+            Player player = null;
+            // _players에 packet.playerId라는 Key가 있으면 True반환하고 player에 그 value를 넘김
+            // False인 경우 Value의 Default값이 Player에 넘어감
+            if (_players.TryGetValue(packet.PlayerId, out player))
+            {
+                Debug.Log($"Pos x,y,z = ({packet.PosX}, {packet.PosY}, {packet.PosZ})");
+                player.transform.position = new Vector3(packet.PosX, packet.PosY, packet.PosZ);
+            }
+        }
+    }
     //
     public void EnterGame(S_BROADCAST_ENTER_GAME packet)
     {

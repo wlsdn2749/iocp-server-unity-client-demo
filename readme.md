@@ -15,6 +15,9 @@
 
 이 프로젝트는 기존 강의에서 제공되는 학습 기반 코드를 실전 수준으로 구조화하고 확장하는 데 목적이 있습니다.
 
+- 송수신 패킷 통신 O
+- 브로드캐스팅 O (데모 O)
+
 
 ## PacketGenerator
 
@@ -33,23 +36,24 @@ Protobuf `.proto` 파일을 기반으로 C++/C# 패킷 코드(CS/H)를 자동 �
 
 
 
+---
 ## 🧩 의존성
 
 ### Server (C++)
 - Windows 환경 / Visual Studio 2022
 - WinSock / IOCP 관련 API
-- Protobuf C++ 라이브러리
+- Protobuf C++ 라이브러리 3.21.12
 
 ### Client (C# Unity)
 - Unity 6000.0.31f1
 - `Google.Protobuf` .dll 실행파일 필요
 - 실행파일 4가지, 모두 다운받아 Assets/Plugins 에 넣었음
-    https://www.nuget.org/packages/Google.Protobuf/3.21.12
-    https://www.nuget.org/packages/System.Memory/4.6.3
-    https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/6.1.2
-    https://www.nuget.org/packages/System.Buffers/4.6.1
+    - https://www.nuget.org/packages/Google.Protobuf/3.21.12
+    - https://www.nuget.org/packages/System.Memory/4.6.3
+    - https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe/6.1.2
+    - https://www.nuget.org/packages/System.Buffers/4.6.1
 
 ### PacketGenerator (Python / jinja2)
-- Python: 3.10, 
+- Python: 3.10
 - Jinja2: 3.1.6
 - Pyinstaller를 통한 실행파일 생성

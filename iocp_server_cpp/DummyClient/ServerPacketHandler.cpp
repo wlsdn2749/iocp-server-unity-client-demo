@@ -67,6 +67,11 @@ bool Handle_S_BROADCAST_ENTER_GAME(PacketSessionRef& session, Protocol::S_BROADC
 	return true;
 }
 
+bool Handle_S_BROADCAST_MOVE(PacketSessionRef& session, Protocol::S_BROADCAST_MOVE& pkt)
+{
+	return true;
+}
+
 
 //
 //

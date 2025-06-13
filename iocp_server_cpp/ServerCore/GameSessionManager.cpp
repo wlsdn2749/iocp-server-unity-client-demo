@@ -1,7 +1,10 @@
 #include "pch.h"
 #include "GameSessionManager.h"
+#include <random>
 
+#include "../GameServer/ClientPacketHandler.h"
 #include "../GameServer/GameSession.h"
+#include "../GameServer/Protocol.pb.h"
 
 GameSessionManager GSessionManager;
 
@@ -42,3 +45,4 @@ void GameSessionManager::Broadcast(SendBufferRef sendBuffer)
 		session->Send(sendBuffer); // 불필요한 복사 X
 	}
 }
+
