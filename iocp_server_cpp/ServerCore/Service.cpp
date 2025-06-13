@@ -44,9 +44,13 @@ SessionRef Service::CreateSession()
 
 void Service::AddSession(SessionRef session)
 {
-	WRITE_LOCK;
-	_sessionCount++;
-	_sessions.insert(session);
+	{
+		WRITE_LOCK;
+		_sessionCount++;
+		_sessions.insert(session);
+	}
+
+	// 여기서 SendPlayerListTo(session) (GameRoom::Enter부분)
 }
 
 void Service::ReleaseSession(SessionRef session)

@@ -11,49 +11,26 @@ using UnityEngine;
 
 namespace Packet
 {
-    public class ServerPacketHandler
+    
+    public class ServerPacketHandler : MonoBehaviour
     {
-        // public static void S_BroadcastEnterGameHandler(PacketSession session, IPacket packet)
-        // {
-        //     S_BroadcastEnterGame pkt = packet as S_BroadcastEnterGame;
-        //     ServerSession serverSession = session as ServerSession;
-        //     PlayerManager.Instance.EnterGame(pkt);
-        // }
-        //
-        // public static void S_BroadCastLeaveGameHandler(PacketSession session, IPacket packet)
-        // {
-        //     S_BroadCastLeaveGame pkt = packet as S_BroadCastLeaveGame;
-        //     ServerSession serverSession = session as ServerSession;
-        //     PlayerManager.Instance.LeaveGame(pkt);
-        // }
-        //
-        // public static void S_PlayerListHandler(PacketSession session, IPacket packet)
-        // {
-        //     S_PlayerList pkt = packet as S_PlayerList;
-        //     ServerSession serverSession = session as ServerSession;
-        //
-        //     PlayerManager.Instance.Add(pkt);
-        // }
-        //
-        // public static void S_BroadCastMoveHandler(PacketSession session, IPacket packet)
-        // {
-        //     S_BroadCastMove pkt = packet as S_BroadCastMove;
-        //     ServerSession serverSession = session as ServerSession;
-        //     PlayerManager.Instance.Move(pkt);
-        // }
-        
         public static void HANDLE_INVALID(PacketSession session, IMessage packet)
         {
             Debug.Log("[패킷 처리] INVALID PACKET (알수 없는 패킷 ID 요청!)");
         }
 
+        
+        // (CLIENT) C_LOGIN -> (SERVER) S_LOGIN에 응답하기 위한 패킷
         public static void HANDLE_S_LOGIN(PacketSession session, S_LOGIN packet)
         {
-            throw new NotImplementedException();
+            S_LOGIN pkt = packet as S_LOGIN;
+            ServerSession serverSession = session as ServerSession;
+            PlayerManager.Instance.Login(pkt);
+
         }
         public static void HANDLE_S_ENTER_GAME(PacketSession session, S_ENTER_GAME packet)
         {
-            throw new NotImplementedException();
+            Debug.Log("[패킷 처리] HANDLE_S_ENTER_GAME PACKET (SERVER가 S_ENTER_GAME 요청을 보냈음)");
         }
         public static void HANDLE_S_CHAT(PacketSession session, S_CHAT packet)
         {
@@ -61,6 +38,18 @@ namespace Packet
             ServerSession serverSession = session as ServerSession;
             
             UnityEngine.Debug.Log($"[ServerPacketVer.채팅] {pkt.PlayerId}: {pkt.Msg}");
+        }
+        public static void HANDLE_S_PLAYERLIST(PacketSession session, S_PLAYERLIST packet)
+        {
+            S_PLAYERLIST pkt = packet as S_PLAYERLIST;
+            ServerSession serverSession = session as ServerSession;
+            PlayerManager.Instance.Add(pkt);
+        }
+        public static void HANDLE_S_BROADCAST_ENTER_GAME(PacketSession session, S_BROADCAST_ENTER_GAME packet)
+        {
+            S_BROADCAST_ENTER_GAME pkt = packet as S_BROADCAST_ENTER_GAME;
+            ServerSession serverSession = session as ServerSession;
+            PlayerManager.Instance.EnterGame(pkt);
         }
     }
 }

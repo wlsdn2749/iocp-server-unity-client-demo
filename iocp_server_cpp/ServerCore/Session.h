@@ -123,6 +123,6 @@ public:
 	PacketSessionRef GetPacketSessionRef() {return static_pointer_cast<PacketSession>(shared_from_this());}
 
 protected:
-	virtual int32 OnRecv(BYTE* buffer, int32 len) sealed; // OnRecv를 더이상 사용 X
+	virtual int32 OnRecv(BYTE* buffer, int32 len) sealed; // OnRecv의 base코드는 그대로 두고, OnRecvPacket으로 사용
 	virtual void OnRecvPacket(BYTE* buffer, int32 len) abstract; // 이를 반드시 구현해서 사용해야함
 };

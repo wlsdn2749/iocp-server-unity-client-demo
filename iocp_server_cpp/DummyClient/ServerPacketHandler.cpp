@@ -41,6 +41,32 @@ bool Handle_S_CHAT(PacketSessionRef& session, Protocol::S_CHAT& pkt)
 	return true;
 }
 
+bool Handle_S_PLAYERLIST(PacketSessionRef& session, Protocol::S_PLAYERLIST& pkt)
+{
+	std::cout << "\n=== PlayerList Packet Contents ===" << std::endl;
+	std::cout << "My Player ID: " << pkt.myplayerid() << std::endl;
+	std::cout << "Total Players: " << pkt.players_size() << std::endl;
+	
+	for (int i = 0; i < pkt.players_size(); i++)
+	{
+		const Protocol::Player& player = pkt.players(i);
+		std::cout << "\nPlayer " << i + 1 << ":" << std::endl;
+		std::cout << "  ID: " << player.id() << std::endl;
+		std::cout << "  Name: " << player.name() << std::endl;
+		std::cout << "  Type: " << player.playertype() << std::endl;
+		std::cout << "  Position: (" << player.posx() << ", " << player.posy() << ", " << player.posz() << ")" << std::endl;
+	}
+	std::cout << "===============================\n" << std::endl;
+	
+	return true;
+}
+
+bool Handle_S_BROADCAST_ENTER_GAME(PacketSessionRef& session, Protocol::S_BROADCAST_ENTER_GAME& pkt)
+{
+	std::cout << "PlayerBroadcast Enter" << std::endl;
+	return true;
+}
+
 
 //
 //

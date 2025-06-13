@@ -21,13 +21,13 @@
     <ClCompile Include="ServerPacketHandler.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\Procedure+Generator_소스코드\DummyClient\Enum.pb.cc">
+    <ClCompile Include="Enum.pb.cc">
       <Filter>Protocol</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\Procedure+Generator_소스코드\DummyClient\Protocol.pb.cc">
+    <ClCompile Include="Protocol.pb.cc">
       <Filter>Protocol</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\Procedure+Generator_소스코드\DummyClient\Struct.pb.cc">
+    <ClCompile Include="Struct.pb.cc">
       <Filter>Protocol</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,13 +38,13 @@
     <ClInclude Include="ServerPacketHandler.h">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\Procedure+Generator_소스코드\DummyClient\Enum.pb.h">
+    <ClInclude Include="Enum.pb.h">
       <Filter>Protocol</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\Procedure+Generator_소스코드\DummyClient\Protocol.pb.h">
+    <ClInclude Include="Protocol.pb.h">
       <Filter>Protocol</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\Procedure+Generator_소스코드\DummyClient\Struct.pb.h">
+    <ClInclude Include="Struct.pb.h">
       <Filter>Protocol</Filter>
     </ClInclude>
   </ItemGroup>

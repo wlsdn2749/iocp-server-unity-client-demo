@@ -11,6 +11,20 @@ using UnityEngine;
 
 public class NetworkManager : MonoBehaviour
 {
+    public static NetworkManager Instance { get; private set; }
+
+    void Awake()
+    {
+        // 중복 인스턴스 방지
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject); // 씬이 바뀌어도 파괴되지 않도록
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private ServerSession _session = new ServerSession();

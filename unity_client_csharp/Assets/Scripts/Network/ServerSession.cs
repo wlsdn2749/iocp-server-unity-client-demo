@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Packet;
 using ServerCore;
 using UnityEngine;
+using Protocol;
 
 namespace DummyClient { 
 
@@ -19,6 +20,10 @@ namespace DummyClient {
         {
             Debug.Log($"onConnected : {endPoint}");
             Console.WriteLine($"onConnected : {endPoint}");
+
+            Protocol.C_LOGIN loginPkt = new C_LOGIN();
+            var sendBuffer = ServerPacketManager.MakeSendBuffer(loginPkt);
+            NetworkManager.Instance.Send(sendBuffer);
         }
 
         public override void OnDisconnected(EndPoint endPoint)

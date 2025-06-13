@@ -28,6 +28,9 @@
     <Filter Include="Log">
       <UniqueIdentifier>{a81300cb-fda4-4ff6-812b-f95213cbd13d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Protocol">
+      <UniqueIdentifier>{4b315b23-647c-4b90-8ee0-821a0fc97bb3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CorePch.h">

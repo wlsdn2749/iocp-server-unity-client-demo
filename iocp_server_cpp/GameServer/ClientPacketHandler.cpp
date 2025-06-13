@@ -5,6 +5,13 @@
 #include "Player.h"
 #include "Room.h"
 
+// Random Code
+#include <random>
+static std::random_device rd;
+static std::mt19937 gen(rd());
+std::uniform_real_distribution<float> dis(-50.0f, 50.0f); // ~50,50
+
+
 PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
 // 직접 컨텐츠 작업자가 만들어야함
@@ -21,21 +28,19 @@ bool Handle_C_LOGIN(PacketSessionRef& session, Protocol::C_LOGIN& pkt)
 {
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
 
-	// TODO : validation 체크
+	//// TODO : validation 체크
 
 	Protocol::S_LOGIN loginPkt;
 	loginPkt.set_success(true);
-
-	// DB에서 플레이 정보를 긁어온다.
-	// Gamesession에 플레이 정보를 저장 (메모리)
-
-	// ID 발급 DB 아이디가 아니고, 인게임 아이디
 	static Atomic<uint64> idGenerator = 1;
 
 	{
 		auto player = loginPkt.add_players();
-		player->set_name(u8"DB에서 긁어온 이름 1");
+		player->set_name(u8"Tommy");
 		player->set_playertype(Protocol::PLAYER_TYPE_KNIGHT);
+		player->set_posx(dis(gen));
+		player->set_posy(0);
+		player->set_posz(dis(gen));
 
 		PlayerRef playerRef = MakeShared<Player>();
 		playerRef->playerId = idGenerator++;
@@ -43,22 +48,11 @@ bool Handle_C_LOGIN(PacketSessionRef& session, Protocol::C_LOGIN& pkt)
 		playerRef->type = player->playertype();
 		playerRef->ownerSession = gameSession;
 
-		gameSession->_players.push_back(playerRef);
-	}
-
-	{
-		auto player = loginPkt.add_players();
-		player->set_name(u8"DB에서 긁어온 이름 2");
-		player->set_playertype(Protocol::PLAYER_TYPE_MAGE);
-
-		PlayerRef playerRef = MakeShared<Player>();
-		playerRef->playerId = idGenerator++;
-		playerRef->name = player->name();
-		playerRef->type = player->playertype();
-		playerRef->ownerSession = gameSession;
+		playerRef->posX = player->posx();
+		playerRef->posY = player->posy();
+		playerRef->posZ = player->posz();
 
 		gameSession->_players.push_back(playerRef);
-
 	}
 
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(loginPkt);
@@ -86,6 +80,8 @@ bool Handle_C_ENTER_GAME(PacketSessionRef& session, Protocol::C_ENTER_GAME& pkt)
 	enterGamePkt.set_success(true);
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(enterGamePkt);
 	gameSession->_currentPlayer->ownerSession->Send(sendBuffer);
+
+	std::cout << "[Server Action] Client Room 접속 완료" << std::endl;
 
 	return true;
 }

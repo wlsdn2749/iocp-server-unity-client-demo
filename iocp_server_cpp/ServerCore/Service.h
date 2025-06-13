@@ -4,7 +4,6 @@
 #include "Listener.h"
 #include <functional>
 
-
 enum class ServiceType : uint8
 {
 	Server,
@@ -35,7 +34,7 @@ public:
 	void			AddSession(SessionRef session);
 	void			ReleaseSession(SessionRef session);
 	int32			GetCurrentSessionCount() { return _sessionCount; }
-	int32			GetMaxSessionCount() { return _maxSessionCount; }	
+	int32			GetMaxSessionCount() { return _maxSessionCount; }
 public:
 	ServiceType		GetServiceType() { return _type; }
 	NetAddress		GetNetAddress() { return _netAddress; }

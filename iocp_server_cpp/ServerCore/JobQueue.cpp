@@ -60,6 +60,7 @@ void JobQueue::Execute()
 			LCurrentJobQueue = nullptr;
 			// 여유 있는 다른 스데르가 실행하도록 GlobalQueue에 넘김
 			GGlobalQueue->Push(shared_from_this());
+			break;
 		}
 	}
 }

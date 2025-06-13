@@ -52,7 +52,7 @@ int main()
 		NetAddress(L"127.0.0.1", 8421),
 		MakeShared<IocpCore>(),
 		MakeShared<ServerSession>, // TODO,  ()가 필요없는건, CreateSession으로 넘어가서 실행하기 때문
-		1);
+		10);
 
 	ASSERT_CRASH(service->Start());
 	for (int32 i = 0; i < 2; i++)

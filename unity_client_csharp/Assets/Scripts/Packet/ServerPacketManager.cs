@@ -15,6 +15,8 @@ namespace Packet
 	    PKT_S_ENTER_GAME = 1003,
 	    PKT_C_CHAT = 1004,
 	    PKT_S_CHAT = 1005,
+	    PKT_S_PLAYERLIST = 1006,
+	    PKT_S_BROADCAST_ENTER_GAME = 1007,
     }
     public class ServerPacketManager
     {
@@ -54,6 +56,8 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_LOGIN, ServerPacketHandler.HANDLE_S_LOGIN, Protocol.S_LOGIN.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_ENTER_GAME, ServerPacketHandler.HANDLE_S_ENTER_GAME, Protocol.S_ENTER_GAME.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_CHAT, ServerPacketHandler.HANDLE_S_CHAT, Protocol.S_CHAT.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_PLAYERLIST, ServerPacketHandler.HANDLE_S_PLAYERLIST, Protocol.S_PLAYERLIST.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_BROADCAST_ENTER_GAME, ServerPacketHandler.HANDLE_S_BROADCAST_ENTER_GAME, Protocol.S_BROADCAST_ENTER_GAME.Parser);
                   
         }
 

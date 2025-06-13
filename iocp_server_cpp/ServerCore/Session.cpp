@@ -329,29 +329,32 @@ PacketSession::~PacketSession()
 // 지금까지 받은 데이터가 최소 size보다 큰지?
 // 작으면, 기다려서 합침
 
+// buffer는 여러 패킷이 들어있을 수 있음
+
 int32 PacketSession::OnRecv(BYTE* buffer, int32 len)
 {
-	int32 processLen = 0;
-	while (true)
+	int32 processLen = 0; // ① 이번 호출에서 이미 처리한 총 바이트
+	while (true) 
 	{
-		int32 dataSize = len - processLen; // processLen은 패킷 하나가 처리되서 쌓이는 부분
+		int32 dataSize = len - processLen; // ② 아직 안 읽은 바이트 수
 		// 최소한 헤더는 파싱할 수 있는지?
 
 		if (dataSize < sizeof(PacketHeader))
-			break;
+			break;							// ③ 헤더(4B)조차 못 읽으면 다음 recv 때 이어서
 
-		PacketHeader header = *(reinterpret_cast<PacketHeader*>(& buffer[0]));
+		// ④ 현재 오프셋(processLen)에서 헤더 구조체를 읽는다
+		PacketHeader header = *(reinterpret_cast<PacketHeader*>(&buffer[processLen])); // 여기부분 실수;;
 
-		// 헤더에 기록된 패킷 크기를 파싱할 수 있어야 한다.
-
+		
+		// ⑤ 헤더가 알려 준 ‘전체 패킷 길이’(size) 만큼 모두 도착했는가?
 		if (dataSize < header.size)
 			break;
 
-		// 패킷 조립 성공
+		// ⑥ 한 패킷(헤더+본문)이 완성 → 상위 핸들러로 넘김
 		OnRecvPacket(&buffer[processLen], header.size);
 
 		processLen += header.size;
 	}
 
-	return processLen;
+	return processLen;  // ⑧ 이번에 소비한 바이트 수 리턴
 }

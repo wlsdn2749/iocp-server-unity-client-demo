@@ -13,6 +13,8 @@ enum : uint16
 	PKT_S_ENTER_GAME = 1003,
 	PKT_C_CHAT = 1004,
 	PKT_S_CHAT = 1005,
+	PKT_S_PLAYERLIST = 1006,
+	PKT_S_BROADCAST_ENTER_GAME = 1007,
 
 };
 
@@ -31,7 +33,7 @@ public:
 	{
 		for (int32 i = 0; i < UINT16_MAX; i++)
 		{
-			GPacketHandler[0] = Handle_INVALID;
+			GPacketHandler[i] = Handle_INVALID;
 		}
 		GPacketHandler[PKT_C_LOGIN] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_LOGIN>(Handle_C_LOGIN, session, buffer, len); };
 		GPacketHandler[PKT_C_ENTER_GAME] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_ENTER_GAME>(Handle_C_ENTER_GAME, session, buffer, len); };
@@ -46,6 +48,8 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::S_LOGIN& pkt) { return MakeSendBuffer(pkt, PKT_S_LOGIN); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_ENTER_GAME& pkt) { return MakeSendBuffer(pkt, PKT_S_ENTER_GAME); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_CHAT& pkt) { return MakeSendBuffer(pkt, PKT_S_CHAT); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_PLAYERLIST& pkt) { return MakeSendBuffer(pkt, PKT_S_PLAYERLIST); };
+	static SendBufferRef MakeSendBuffer(Protocol::S_BROADCAST_ENTER_GAME& pkt) { return MakeSendBuffer(pkt, PKT_S_BROADCAST_ENTER_GAME); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>

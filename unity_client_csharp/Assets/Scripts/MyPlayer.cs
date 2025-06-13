@@ -10,14 +10,20 @@ public class MyPlayer : Player
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    private NetworkManager _network;
+    // private NetworkManager _network;
+    //
+    // private void Awake()
+    // {
+    //     _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+    // }
     void Start()
     {
         Debug.Log("My Player Start");
         StartCoroutine(nameof(CoSendPacket));
-        _network = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        
+        
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -51,7 +57,7 @@ public class MyPlayer : Player
             };
 
             ArraySegment<byte> sendBuffer = ServerPacketManager.MakeSendBuffer(chatPkt);
-            _network.Send(sendBuffer);
+            NetworkManager.Instance.Send(sendBuffer);
 
 
             // C_Move movePacket = new C_Move();
