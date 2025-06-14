@@ -8,6 +8,7 @@ using Packet;
 using ServerCore;
 using Unity.Collections;
 using UnityEngine;
+using System.Net.Sockets;
 
 public class NetworkManager : MonoBehaviour
 {
@@ -23,9 +24,7 @@ public class NetworkManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject); // 씬이 바뀌어도 파괴되지 않도록
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private ServerSession _session = new ServerSession();
 
@@ -36,8 +35,6 @@ public class NetworkManager : MonoBehaviour
     void Start()
     {
         Debug.Log("NetworkSession Start");
-        // string host = Dns.GetHostName();
-        // IPHostEntry ipHost = Dns.GetHostEntry(host);
         IPAddress ipAddr = IPAddress.Parse("127.0.0.1");
         IPEndPoint endPoint = new IPEndPoint(ipAddr, 8421);
 
@@ -53,7 +50,6 @@ public class NetworkManager : MonoBehaviour
     void Update()
     {
 
-        // List<IPacket> packetList = PacketQueue.Instance.PopAll();
         List<IMessage> packetList = PacketQueue.Instance.PopAll();
         
         foreach(IMessage pkt in packetList)
@@ -61,5 +57,24 @@ public class NetworkManager : MonoBehaviour
         
     }
 
-
+    // void OnApplicationQuit()
+    // {
+    //     Debug.Log("Application Quit - Cleaning up network resources");
+    //     if (_session != null)
+    //     {
+    //         _session.Disconnect();
+    //         _session = null;
+    //     }
+    //     StopAllCoroutines();
+    // }
+    //
+    // void OnDestroy()
+    // {
+    //     Debug.Log("NetworkManager Destroy - Cleaning up network resources");
+    //     if (_session != null)
+    //     {
+    //         _session.Disconnect();
+    //         _session = null;
+    //     }
+    // }
 }

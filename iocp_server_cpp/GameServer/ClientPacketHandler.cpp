@@ -38,9 +38,9 @@ bool Handle_C_LOGIN(PacketSessionRef& session, Protocol::C_LOGIN& pkt)
 		auto player = loginPkt.add_players();
 		player->set_name(u8"Tommy");
 		player->set_playertype(Protocol::PLAYER_TYPE_KNIGHT);
-		player->set_posx(dis(gen));
-		player->set_posy(0);
-		player->set_posz(dis(gen));
+		player->set_posx(0);
+		player->set_posy(5);
+		player->set_posz(0);
 
 		PlayerRef playerRef = MakeShared<Player>();
 		playerRef->playerId = idGenerator++;
@@ -101,7 +101,10 @@ bool Handle_C_CHAT(PacketSessionRef& session, Protocol::C_CHAT& pkt)
 
 bool Handle_C_MOVE(PacketSessionRef& session, Protocol::C_MOVE& pkt)
 {
+	
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+	// Log
+	//cout << "Id: " << gameSession->_currentPlayer->playerId << " Moved" << endl;
 	// 움직임을 갱신해주기
 	gameSession->_currentPlayer->posX = pkt.posx(); 
 	gameSession->_currentPlayer->posY = pkt.posy(); 
