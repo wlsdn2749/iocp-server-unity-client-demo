@@ -1,4 +1,17 @@
-# C++ IOCP Server and C# Unity Client DEMO
+<table>
+  <tr>
+    <td><img src="/statics/demo.gif" width="1152" height="648"></td>
+  </tr>
+</table>
+
+<div align="center">
+
+**C++ IOCP Server and C# Unity Client DEMO**
+
+______________________________________________________________________
+
+</div>
+
 
 ## 📖 Introduction
 
@@ -45,7 +58,7 @@ Protobuf `.proto` 파일을 기반으로 C++/C# 패킷 코드(CS/H)를 자동 �
 - Protobuf C++ 라이브러리 3.21.12
 
 ### Client (C# Unity)
-- Unity 6000.0.31f1
+- Unity 6000.0.31f1(빌드시 백그라운드 프로세스 버그 있음) -> **Unity 6000.1.7f1**
 - `Google.Protobuf` .dll 실행파일 필요
 - 실행파일 4가지, 모두 다운받아 Assets/Plugins 에 넣었음
     - https://www.nuget.org/packages/Google.Protobuf/3.21.12
@@ -57,3 +70,11 @@ Protobuf `.proto` 파일을 기반으로 C++/C# 패킷 코드(CS/H)를 자동 �
 - Python: 3.10
 - Jinja2: 3.1.6
 - Pyinstaller를 통한 실행파일 생성
+
+### TODO
+- Client:
+  - C# 버전 DummyClient 제작
+  - SendBuffer에서의 Pooling 기능 추가 & Protobuf 사용
+  
+- Server:
+  - Client Disconnection시 Session 삭제
