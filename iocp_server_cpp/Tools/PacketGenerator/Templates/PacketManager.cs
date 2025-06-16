@@ -8,7 +8,6 @@ namespace Packet
 {
     public enum PacketID : ushort
     {
-        // TODO(AUTOMATION) 이부분 자동화 + 이부분은 S+C전부 만들어줘야함
 {%- for pkt in parser.total_pkt %}
 	    PKT_{{pkt.name}} = {{pkt.id}},
 {%- endfor %}
@@ -48,10 +47,11 @@ namespace Packet
             {
                 _packetHandlers[i] = ServerPacketHandler.HANDLE_INVALID;
             }
-            // TODO(AUTOMATION) 이 부분 자동화 해야함 + PKT_S_XXX부분만 하면 됨
+            
 {%- for pkt in parser.recv_pkt %}
             RegisterHandler((ushort)PacketID.PKT_{{pkt.name}}, ServerPacketHandler.HANDLE_{{pkt.name}}, Protocol.{{pkt.name}}.Parser);
 {%- endfor %}
+            
                   
         }
 
