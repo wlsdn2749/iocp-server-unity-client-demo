@@ -46,8 +46,6 @@ Protobuf `.proto` 파일을 기반으로 C++/C# 패킷 코드(CS/H)를 자동 �
 
 ---
 
-## 📌 사용법
-
 > ⚠ 반드시 `Common/Protobuf/bin` 폴더 안에서 실행하세요.  
 > PacketGenerator 내용을 수정한 후, MakeExe로 GenPackets.exe를 만들고 
 > `Templates/` 폴더와 실행 파일 (`GenPacket.exe`)를 복사해서 `Common/Protobuf/bin/`부분에 넣어 사용하면된다.
@@ -79,9 +77,8 @@ Protobuf `.proto` 파일을 기반으로 C++/C# 패킷 코드(CS/H)를 자동 �
 - Jinja2: 3.1.6
 - Pyinstaller를 통한 실행파일 생성
 
-## ✅ 개발 Todo
+<!-- ## ✅ 개발 Todo -->
 
-- 
 
 <!-- - [ ] 🎮 **채팅 기능 시연**  
       Player Count 표시 + YouTube 시연 영상 추가 + DB Insert 확인
@@ -93,7 +90,12 @@ Protobuf `.proto` 파일을 기반으로 C++/C# 패킷 코드(CS/H)를 자동 �
 - [ ] **클라이언트 Disconnect 처리 시 세션 안전 제거**
 --- -->
 
-## 🧪 Test & QA
+## Development, testing, and QA checklist
+
+- [ ] **C# DummyClient 구현**
+- [ ] **채팅 기능 구현 // 현재 룸에 접속중인 클라이언트 확인 기능 추가**
+- [ ] **DummyClient – 로그인 → 이동 100회 → 채팅 10회 → 종료**
+- [ ] 위의 시나리오의 성능 측정
 
 <!-- ### Unit Test (GoogleTest, Unity Test Framework)
 - [ ] `MemoryPool` 테스트 – 재할당 후 패턴 유지 확인
@@ -102,10 +104,10 @@ Protobuf `.proto` 파일을 기반으로 C++/C# 패킷 코드(CS/H)를 자동 �
 - [ ] `DBConnectionPool` – Mock Handle로 호출 횟수 검증 -->
 
 ### Integration & End-to-End
-- [ ] DummyClient – 로그인 → 이동 100회 → 채팅 10회 → 종료
 
 
-### Performance & Stability
+
+<!-- ### Performance & Stability
 - [ ] wrk-tcp / custom cpp client를 통한 TPS 측정
 - [ ] Unity Ping/Pong RTT 및 Jitter 그래프 확인
-- [ ] 메모리 릭 검사 (서버: CRTDBG, 클라: Unity Profiler)
+- [ ] 메모리 릭 검사 (서버: CRTDBG, 클라: Unity Profiler) -->
