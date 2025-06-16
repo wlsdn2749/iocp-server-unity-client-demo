@@ -1,0 +1,30 @@
+# git-cliff.toml
+[changelog]
+header = "# 📦 Changelog\n\n"
+trim = true
+date_order = "desc"
+body = """
+{% for group, commits in commits | group_by(attribute="group") %}
+### {{ group | upper_first }}
+{% for commit in commits %}
+- {{ commit.message }} ({{ commit.id | truncate(length=7) }})
+{% endfor %}
+{% endfor %}
+"""
+footer = ""
+
+[git]
+conventional_commits = true
+filter_commits = true
+tag_pattern = "v[0-9]+(\\.[0-9]+)*"
+
+exclude_commits = [
+  "Update changelog",
+  "update changelog",
+  "\\[skip ci\\]"
+]
+
+[[changelog.git.tag_resolver]]
+# 태그 패턴에서 버전만 추출
+pattern = "v(?P<version>.*)"
+template = "## [v{{ version }}] - {{ timestamp | date(format=\"%Y-%m-%d\") }}"

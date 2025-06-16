@@ -22,7 +22,8 @@ public class NetworkManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        
+        // OnDestoryLoad ... 씬 바뀔때 사라지지 않게 처리하는 것도 필요할 수 있음.
         Instance = this;
     }
 

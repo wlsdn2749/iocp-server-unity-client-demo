@@ -11,37 +11,54 @@ namespace ServerCore
 {
     public abstract class PacketSession : Session
     {
-        public static readonly int HeaderSize = 2;
-        // [size(2)][(packedId(2)][...]
+        private static readonly int _headerSize = 4; // size(2) + id(2)
+
+        // 패킷 헤더 구조체 (Server와 동일하게 관리)
+        private readonly struct PacketHeader
+        {
+            public readonly ushort Size;  // 전체 패킷 크기 (Header + Body)
+            public readonly ushort Id;    // 패킷 ID
+
+            public PacketHeader(ushort size, ushort id)
+            {
+                Size = size;
+                Id = id;
+            }
+
+            public static PacketHeader FromBuffer(ArraySegment<byte> buffer)
+            {
+                if (buffer.Count < _headerSize)
+                    throw new ArgumentException("Buffer too small for PacketHeader");
+
+                ushort size = BitConverter.ToUInt16(buffer.Array, buffer.Offset);
+                ushort id   = BitConverter.ToUInt16(buffer.Array, buffer.Offset + 2);
+                return new PacketHeader(size, id);
+            }
+        }
+
         public sealed override int OnRecv(ArraySegment<byte> buffer) // buffer를 통해 얼마만큼의 데이터를 처리했는지 반환
         {
             int processLen = 0;
             int packetCount = 0;
             while (true)
             {
-                //최소한 헤더는 파싱
-                if(buffer.Count < HeaderSize)
-                {
+                // 최소한 헤더는 파싱할 수 있는지 확인
+                if (buffer.Count < _headerSize)
                     break;
-                }
 
-                // 패킷이 완전체로 도착했는지 여부
-                ushort dataSize = BitConverter.ToUInt16(buffer.Array, buffer.Offset);
+                // 헤더를 읽어온다
+                PacketHeader header = PacketHeader.FromBuffer(buffer);
 
-                //buffer.Count는 버퍼의 크기, dataSize는 data의 크기, 
-                if (buffer.Count < dataSize)
-                {
+                // 패킷이 완전체로 도착했는지 확인
+                if (buffer.Count < header.Size)
                     break;
-                }
 
-                // 여기 까지 왔으면 패킷 조립 가능
-                // ArraySegment는 Class아니고 Struct라 Heap영역 할당 x
-                OnRecvPacket(new ArraySegment<byte>(buffer.Array, buffer.Offset, dataSize));
+                // 패킷 하나가 완성 → 상위 핸들러로 전달
+                OnRecvPacket(new ArraySegment<byte>(buffer.Array, buffer.Offset, header.Size));
                 packetCount++;
 
-                processLen += dataSize;
-                buffer = new ArraySegment<byte>(buffer.Array, buffer.Offset + dataSize, buffer.Count - dataSize);
-
+                processLen += header.Size;
+                buffer = new ArraySegment<byte>(buffer.Array, buffer.Offset + header.Size, buffer.Count - header.Size);
             }
 
             if(packetCount > 1)
