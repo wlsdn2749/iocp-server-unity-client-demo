@@ -93,7 +93,7 @@ Protobuf `.proto` 파일을 기반으로 C++/C# 패킷 코드(CS/H)를 자동 �
 ## Development, testing, and QA checklist
 
 - [ ] **C# DummyClient 구현**
-- [ ] **채팅 기능 구현 // 현재 룸에 접속중인 클라이언트 확인 기능 추가**
+- [X] **채팅 기능 구현 // 현재 룸에 접속중인 클라이언트 확인 기능 추가**
 - [ ] **DummyClient – 로그인 → 이동 100회 → 채팅 10회 → 종료**
 - [ ] 위의 시나리오의 성능 측정
 
