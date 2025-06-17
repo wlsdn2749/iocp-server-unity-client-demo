@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.5] - 2025-06-17
+
+### 🚀 Features
+
+- *(chat)* Chat broadcasting
+
 ## [0.0.4] - 2025-06-17
 
 ### 🐛 Bug Fixes
