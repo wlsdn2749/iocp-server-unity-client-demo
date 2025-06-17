@@ -32,12 +32,12 @@ namespace Packet
         {
             Debug.Log("[패킷 처리] HANDLE_S_ENTER_GAME PACKET (SERVER가 S_ENTER_GAME 요청을 보냈음)");
         }
-        public static void HANDLE_S_CHAT(PacketSession session, S_CHAT packet)
+        public static void HANDLE_S_BROADCAST_CHAT(PacketSession session, S_BROADCAST_CHAT packet)
         {
-            S_CHAT pkt = packet as S_CHAT;
+            S_BROADCAST_CHAT pkt = packet as S_BROADCAST_CHAT;
             ServerSession serverSession = session as ServerSession;
             
-            UnityEngine.Debug.Log($"[ServerPacketVer.채팅] {pkt.PlayerId}: {pkt.Msg}");
+            UnityEngine.Debug.Log($"[Server's Broadcast] {pkt.PlayerId}: {pkt.Msg}");
         }
         public static void HANDLE_S_PLAYERLIST(PacketSession session, S_PLAYERLIST packet)
         {

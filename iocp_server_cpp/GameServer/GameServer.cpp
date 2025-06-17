@@ -117,13 +117,13 @@ int main()
 
 	//DoWorkerJob(service);
 
-	Protocol::S_CHAT chatPkt;
+	/*Protocol::S_CHAT chatPkt;
 	chatPkt.set_msg(u8"Hello World ! I'm Server This message get from is Client");
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(chatPkt);
 	while (true)
 	{
 		service->Broadcast(sendBuffer);
 		this_thread::sleep_for(1s);
-	}
+	}*/
 	GThreadManager->Join();
 }

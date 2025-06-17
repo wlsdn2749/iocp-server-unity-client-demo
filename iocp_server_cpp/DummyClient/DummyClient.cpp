@@ -18,7 +18,7 @@ int main()
 		MakeShared<IocpCore>(),
 		[] { return SessionManager::Instance().Generate(); },
 		//MakeShared<ServerSession>, // TODO,  ()가 필요없는건, CreateSession으로 넘어가서 실행하기 때문
-		10);
+		5);
 
 	ASSERT_CRASH(service->Start());
 	for (int32 i = 0; i < 2; i++)
@@ -45,15 +45,15 @@ int main()
 				}
 			});
 	}
-	/*Protocol::C_CHAT chatPkt;
+	Protocol::C_CHAT chatPkt;
 	chatPkt.set_msg(u8"Hello World !");
 	auto sendBuffer = ServerPacketHandler::MakeSendBuffer(chatPkt);
 
 	while (true)
 	{
 		service->Broadcast(sendBuffer);
-		this_thread::sleep_for(1s);
-	}*/
+		this_thread::sleep_for(2s);
+	}
 
 	GThreadManager->Join();
 }

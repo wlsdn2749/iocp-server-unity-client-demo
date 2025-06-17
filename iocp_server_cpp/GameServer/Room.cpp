@@ -51,9 +51,6 @@ void Room::Leave(PlayerRef player)
 
 void Room::BroadCast(SendBufferRef sendBuffer)
 {
-	// Todo 이 부분을 잘 수정해야 함, 이부분 만 수정하면
-	// 잘될거같은데.. 흠....
-	// 이게 원본코드
 	for (auto& s: _players)
 	{
 		s.second->ownerSession->Send(sendBuffer);

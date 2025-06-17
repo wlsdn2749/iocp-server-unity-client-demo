@@ -35,9 +35,9 @@ bool Handle_S_ENTER_GAME(PacketSessionRef& session, Protocol::S_ENTER_GAME& pkt)
 	return true;
 }
 
-bool Handle_S_CHAT(PacketSessionRef& session, Protocol::S_CHAT& pkt)
+bool Handle_S_BROADCAST_CHAT(PacketSessionRef& session, Protocol::S_BROADCAST_CHAT& pkt)
 {
-	std::cout << pkt.msg() << endl;
+	std::cout << pkt.playerid() << " : " << pkt.msg() << " --> " << endl;
 	return true;
 }
 

@@ -88,13 +88,15 @@ bool Handle_C_ENTER_GAME(PacketSessionRef& session, Protocol::C_ENTER_GAME& pkt)
 
 bool Handle_C_CHAT(PacketSessionRef& session, Protocol::C_CHAT& pkt)
 {
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
 	std::cout << pkt.msg() << endl;
 
-	Protocol::S_CHAT chatPkt;
+	Protocol::S_BROADCAST_CHAT chatPkt;
+	chatPkt.set_playerid(gameSession->_currentPlayer->playerId);
 	chatPkt.set_msg(pkt.msg());
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(chatPkt);
 
-	GRoom->BroadCast(sendBuffer);
+	GRoom->DoAsync(&Room::BroadCast, sendBuffer); // 룸 외부에서 처리할때는 반드시 DoAsync 사용
 
 	return true;
 }
@@ -118,7 +120,7 @@ bool Handle_C_MOVE(PacketSessionRef& session, Protocol::C_MOVE& pkt)
 	movePkt.set_posz(gameSession->_currentPlayer->posZ);
 
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(movePkt);
-	GRoom->BroadCast(sendBuffer);
+	GRoom->DoAsync(&Room::BroadCast, sendBuffer); // 룸 외부에서 처리할때는 반드시 DoAsync 사용
 
 	return true;
 }

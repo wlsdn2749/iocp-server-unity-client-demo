@@ -66,10 +66,8 @@ public class PlayerManager
             // False인 경우 Value의 Default값이 Player에 넘어감
             if (_players.TryGetValue(packet.PlayerId, out player))
             {
-                Debug.Log($"Pos x,y,z = ({packet.PosX}, {packet.PosY}, {packet.PosZ})");
+                //Debug.Log($"Pos x,y,z = ({packet.PosX}, {packet.PosY}, {packet.PosZ})");
                 player.OnMovePacket(packet);
-                // player.transform.position = new Vector3(packet.PosX, packet.PosY, packet.PosZ);
-                // _targetPos = new Vector3(packet.PosX, packet.PosY, packet.PosZ);
             }
         }
     }
