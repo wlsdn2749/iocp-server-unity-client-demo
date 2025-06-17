@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.4] - 2025-06-17
+
+### 🐛 Bug Fixes
+
+- Server's ClientPacketHandler.css, in case of using Room's function e.g) broadcast or enter... have to use DoAsync() instead of GRoom->... because JobQueue is built by processing one thread only. if using GRoom->... in outside of Room.cpp may cause data races so fixed it and Chatiing demo revised
+
 ## [0.0.3] - 2025-06-16
 
 ### 📚 Documentation
