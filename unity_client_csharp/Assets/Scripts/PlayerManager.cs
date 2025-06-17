@@ -10,6 +10,8 @@ public class PlayerManager
 
     public static PlayerManager Instance { get; } = new PlayerManager();
     
+    public int TotalPlayerCount => (_myPlayer != null ? 1 : 0) + _players.Count;
+    
     public void Login(S_LOGIN packet)
     {
         if (packet.Success == false)
@@ -85,22 +87,22 @@ public class PlayerManager
         player.transform.position = new Vector3(packet.PosX, packet.PosY, packet.PosZ);
         _players.Add(packet.PlayerId, player);
     }
-    //
-    // public void LeaveGame(S_BroadCastLeaveGame packet)
-    // {
-    //     if (_myPlayer.PlayerId == packet.playerId)
-    //     {
-    //         GameObject.Destroy(_myPlayer.gameObject);
-    //         _myPlayer = null;
-    //     }
-    //     else
-    //     {
-    //         Player player = null;
-    //         if (_players.TryGetValue(packet.playerId, out player))
-    //         {
-    //             GameObject.Destroy(player.gameObject);
-    //             _players.Remove(packet.playerId);
-    //         }
-    //     }
-    // }
+    
+    public void LeaveGame(S_BROADCAST_LEAVE_GAME packet)
+    {
+        if (_myPlayer.PlayerId == packet.PlayerId)
+        {
+            GameObject.Destroy(_myPlayer.gameObject);
+            _myPlayer = null;
+        }
+        else
+        {
+            Player player = null;
+            if (_players.TryGetValue(packet.PlayerId, out player))
+            {
+                GameObject.Destroy(player.gameObject);
+                _players.Remove(packet.PlayerId);
+            }
+        }
+    }
 }

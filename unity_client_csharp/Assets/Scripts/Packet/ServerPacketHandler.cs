@@ -58,5 +58,11 @@ namespace Packet
             ServerSession serverSession = session as ServerSession;
             PlayerManager.Instance.Move(pkt);
         }
+        public static void HANDLE_S_BROADCAST_LEAVE_GAME(PacketSession session, S_BROADCAST_LEAVE_GAME packet)
+        {
+            S_BROADCAST_LEAVE_GAME pkt = packet as S_BROADCAST_LEAVE_GAME;
+            ServerSession serverSession = session as ServerSession;
+            PlayerManager.Instance.LeaveGame(pkt);
+        }
     }
 }

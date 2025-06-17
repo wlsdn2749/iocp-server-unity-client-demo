@@ -14,7 +14,7 @@ public:
 	void BroadCast(SendBufferRef sendBuffer);
 
 private:
-	map<uint64, PlayerRef> _players;
+	map<uint64, PlayerRef> _players; // playerId -> player Object
 };
 
 extern shared_ptr<Room> GRoom;

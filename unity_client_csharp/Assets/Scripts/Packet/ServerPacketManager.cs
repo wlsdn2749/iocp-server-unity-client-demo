@@ -13,12 +13,14 @@ namespace Packet
 	    PKT_S_LOGIN = 1001,
 	    PKT_C_ENTER_GAME = 1002,
 	    PKT_S_ENTER_GAME = 1003,
-	    PKT_S_PLAYERLIST = 1004,
-	    PKT_S_BROADCAST_ENTER_GAME = 1005,
-	    PKT_C_MOVE = 1006,
-	    PKT_S_BROADCAST_MOVE = 1007,
-	    PKT_C_CHAT = 1008,
-	    PKT_S_BROADCAST_CHAT = 1009,
+	    PKT_C_LEAVE_GAME = 1004,
+	    PKT_S_BROADCAST_LEAVE_GAME = 1005,
+	    PKT_S_PLAYERLIST = 1006,
+	    PKT_S_BROADCAST_ENTER_GAME = 1007,
+	    PKT_C_MOVE = 1008,
+	    PKT_S_BROADCAST_MOVE = 1009,
+	    PKT_C_CHAT = 1010,
+	    PKT_S_BROADCAST_CHAT = 1011,
     }
     public class ServerPacketManager
     {
@@ -46,6 +48,7 @@ namespace Packet
         private readonly Dictionary<Type, ushort> _typeToId = new();
         public static ArraySegment<byte> MakeSendBuffer(Protocol.C_LOGIN pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_LOGIN);
         public static ArraySegment<byte> MakeSendBuffer(Protocol.C_ENTER_GAME pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_ENTER_GAME);
+        public static ArraySegment<byte> MakeSendBuffer(Protocol.C_LEAVE_GAME pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_LEAVE_GAME);
         public static ArraySegment<byte> MakeSendBuffer(Protocol.C_MOVE pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_MOVE);
         public static ArraySegment<byte> MakeSendBuffer(Protocol.C_CHAT pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_CHAT);
 
@@ -58,6 +61,7 @@ namespace Packet
             // TODO(AUTOMATION) 이 부분 자동화 해야함 + PKT_S_XXX부분만 하면 됨
             RegisterHandler((ushort)PacketID.PKT_S_LOGIN, ServerPacketHandler.HANDLE_S_LOGIN, Protocol.S_LOGIN.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_ENTER_GAME, ServerPacketHandler.HANDLE_S_ENTER_GAME, Protocol.S_ENTER_GAME.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_BROADCAST_LEAVE_GAME, ServerPacketHandler.HANDLE_S_BROADCAST_LEAVE_GAME, Protocol.S_BROADCAST_LEAVE_GAME.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_PLAYERLIST, ServerPacketHandler.HANDLE_S_PLAYERLIST, Protocol.S_PLAYERLIST.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BROADCAST_ENTER_GAME, ServerPacketHandler.HANDLE_S_BROADCAST_ENTER_GAME, Protocol.S_BROADCAST_ENTER_GAME.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BROADCAST_MOVE, ServerPacketHandler.HANDLE_S_BROADCAST_MOVE, Protocol.S_BROADCAST_MOVE.Parser);

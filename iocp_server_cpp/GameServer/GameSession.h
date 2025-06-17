@@ -17,8 +17,11 @@ public:
 
 public:
 	Vector<PlayerRef> _players;
-
 	PlayerRef _currentPlayer;
+	// 이 위 두개는 Player와의 연결이 종료되면 삭제되면서 Player를
+	// 물고 있던 참조카운트가 2개 빠지는데 이떄 비로소 player가 삭제된다.
+
+
 	weak_ptr<class Room> _room;
 };
 

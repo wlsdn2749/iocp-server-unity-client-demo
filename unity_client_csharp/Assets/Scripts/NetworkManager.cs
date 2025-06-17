@@ -58,17 +58,18 @@ public class NetworkManager : MonoBehaviour
         
     }
 
-    // void OnApplicationQuit()
-    // {
-    //     Debug.Log("Application Quit - Cleaning up network resources");
-    //     if (_session != null)
-    //     {
-    //         _session.Disconnect();
-    //         _session = null;
-    //     }
-    //     StopAllCoroutines();
-    // }
-    //
+    void OnApplicationQuit()
+    {
+        Protocol.C_LEAVE_GAME leave = new Protocol.C_LEAVE_GAME();
+        var send = ServerPacketManager.MakeSendBuffer(leave);
+        _session.Send(send);
+
+        // 평문 TCP라면 바로 Close 하면 패킷이 유실될 수 있으므로
+        // 100ms 정도 WaitForEndOfFrame 또는 Thread.Sleep 후 Close 추천
+        _session.Disconnect();
+    }
+
+    
     // void OnDestroy()
     // {
     //     Debug.Log("NetworkManager Destroy - Cleaning up network resources");

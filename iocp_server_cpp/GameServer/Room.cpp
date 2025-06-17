@@ -38,7 +38,6 @@ void Room::Enter(PlayerRef player)
 	enterPkt.set_posz(player->posZ);
 	SendBufferRef enterBuffer = ClientPacketHandler::MakeSendBuffer(enterPkt);
 
-	//GRoom->DoAsync(&Room::BroadCast, enterBuffer);
 	BroadCast(enterBuffer);
 	
 }
@@ -46,7 +45,16 @@ void Room::Enter(PlayerRef player)
 void Room::Leave(PlayerRef player)
 {
 	// TODO Broadcasting?
-	_players.erase(player->playerId);
+
+	auto leavePlayerId = player->playerId;
+	// 현재 룸에서 해당 플레이어 제거
+	_players.erase(leavePlayerId);
+
+	// 남은 모든 세션에 S_BROADCAST_LEAVE_GAME 전송
+	Protocol::S_BROADCAST_LEAVE_GAME pkt;
+	pkt.set_playerid(leavePlayerId);
+	SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+	BroadCast(sendBuffer);
 }
 
 void Room::BroadCast(SendBufferRef sendBuffer)
