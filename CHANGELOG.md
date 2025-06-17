@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.6] - 2025-06-17
+
+### 🚀 Features
+
+- *(room count)* Update interval 0.5s, client can see how many peoples in this roomon top-left side TMP. that count is local variable unity client handle an array contains players. that array is changed by other client disconnected. but in case of C++ DummyClient even if disconnecting doesn't work well. it only works well in unity client and builts.
+
 ## [0.0.5] - 2025-06-17
 
 ### 🚀 Features
