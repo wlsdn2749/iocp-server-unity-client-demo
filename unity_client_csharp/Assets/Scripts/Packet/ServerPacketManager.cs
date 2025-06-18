@@ -8,7 +8,6 @@ namespace Packet
 {
     public enum PacketID : ushort
     {
-        // TODO(AUTOMATION) 이부분 자동화 + 이부분은 S+C전부 만들어줘야함
 	    PKT_C_LOGIN = 1000,
 	    PKT_S_LOGIN = 1001,
 	    PKT_C_ENTER_GAME = 1002,
@@ -58,7 +57,6 @@ namespace Packet
             {
                 _packetHandlers[i] = ServerPacketHandler.HANDLE_INVALID;
             }
-            // TODO(AUTOMATION) 이 부분 자동화 해야함 + PKT_S_XXX부분만 하면 됨
             RegisterHandler((ushort)PacketID.PKT_S_LOGIN, ServerPacketHandler.HANDLE_S_LOGIN, Protocol.S_LOGIN.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_ENTER_GAME, ServerPacketHandler.HANDLE_S_ENTER_GAME, Protocol.S_ENTER_GAME.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BROADCAST_LEAVE_GAME, ServerPacketHandler.HANDLE_S_BROADCAST_LEAVE_GAME, Protocol.S_BROADCAST_LEAVE_GAME.Parser);
@@ -66,6 +64,7 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_BROADCAST_ENTER_GAME, ServerPacketHandler.HANDLE_S_BROADCAST_ENTER_GAME, Protocol.S_BROADCAST_ENTER_GAME.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BROADCAST_MOVE, ServerPacketHandler.HANDLE_S_BROADCAST_MOVE, Protocol.S_BROADCAST_MOVE.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BROADCAST_CHAT, ServerPacketHandler.HANDLE_S_BROADCAST_CHAT, Protocol.S_BROADCAST_CHAT.Parser);
+            
                   
         }
 
