@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.8] - 2025-06-18
+
+### 🚀 Features
+
+- *(C# DummyClient)* You can use from now, both of C# and C++ DummyClient. They seems like working well
+
+### ⚙️ Miscellaneous Tasks
+
+- Remove TODO comment in Automation code. It is already implemented so that the code is useless
+
 ## [0.0.7] - 2025-06-17
 
 ### 📚 Documentation
