@@ -1,0 +1,4 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDependentOption.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/GNUInstallDirs.cmake
+C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/build/_deps/googletest-src/CMakeLists.txt

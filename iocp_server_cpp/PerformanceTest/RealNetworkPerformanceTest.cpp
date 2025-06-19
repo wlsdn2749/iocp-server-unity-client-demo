@@ -135,70 +135,177 @@ public:
     void CleanupClientsOnly() {
         std::cout << "🧹 클라이언트 프로세스들만 정리 중...\n";
         
-        // 클라이언트 프로세스들 종료
+        if (_clientProcesses.empty()) {
+            std::cout << "   정리할 클라이언트 프로세스가 없습니다.\n";
+            return;
+        }
+        
+        // 1단계: 프로세스 상태 확인 및 디버깅 정보
+        std::cout << "   1단계: 프로세스 상태 확인...\n";
+        std::vector<HANDLE> validProcesses;
+        std::vector<DWORD> processIds;
+        
         for (auto process : _clientProcesses) {
             if (process != -1) {
                 HANDLE hProcess = reinterpret_cast<HANDLE>(process);
                 if (hProcess != INVALID_HANDLE_VALUE) {
-                    if (!TerminateProcess(hProcess, 0)) {
-                        std::cout << "   클라이언트 프로세스 종료 실패: " << GetLastError() << "\n";
-                    } else {
-                        WaitForSingleObject(hProcess, 5000);
-                        std::cout << "   클라이언트 프로세스 종료됨\n";
+                    DWORD exitCode;
+                    if (GetExitCodeProcess(hProcess, &exitCode)) {
+                        DWORD processId = GetProcessId(hProcess);
+                        if (exitCode == STILL_ACTIVE) {
+                            validProcesses.push_back(hProcess);
+                            processIds.push_back(processId);
+                            std::cout << "     활성 클라이언트 프로세스 발견: PID " << processId << "\n";
+                        } else {
+                            std::cout << "     이미 종료된 프로세스: PID " << processId << " (종료 코드: " << exitCode << ")\n";
+                            CloseHandle(hProcess);
+                        }
                     }
-                    CloseHandle(hProcess);
                 }
             }
         }
+        
+        if (validProcesses.empty()) {
+            std::cout << "   모든 클라이언트 프로세스가 이미 종료되었습니다.\n";
+            _clientProcesses.clear();
+            return;
+        }
+        
+        std::cout << "   " << validProcesses.size() << "개의 활성 프로세스를 종료합니다.\n";
+        
+        // 2단계: 활성 프로세스들을 강제 종료
+        std::cout << "   2단계: 활성 프로세스들 강제 종료...\n";
+        int terminatedCount = 0;
+        
+        for (size_t i = 0; i < validProcesses.size(); i++) {
+            HANDLE hProcess = validProcesses[i];
+            DWORD processId = processIds[i];
+            
+            std::cout << "     PID " << processId << " 종료 시도...\n";
+            
+            if (!TerminateProcess(hProcess, 1)) {
+                DWORD error = GetLastError();
+                std::cout << "     PID " << processId << " 종료 실패: " << error;
+                if (error == ERROR_ACCESS_DENIED) {
+                    std::cout << " (권한 없음)";
+                } else if (error == ERROR_INVALID_HANDLE) {
+                    std::cout << " (유효하지 않은 핸들)";
+                }
+                std::cout << "\n";
+            } else {
+                // 프로세스 종료 완료 대기 (최대 3초)
+                std::cout << "     PID " << processId << " 종료 신호 전송됨, 대기 중...\n";
+                DWORD waitResult = WaitForSingleObject(hProcess, 3000);
+                
+                switch (waitResult) {
+                    case WAIT_OBJECT_0:
+                        std::cout << "     PID " << processId << " 성공적으로 종료됨\n";
+                        terminatedCount++;
+                        break;
+                    case WAIT_TIMEOUT:
+                        std::cout << "     PID " << processId << " 종료 대기 시간 초과 (강제 종료됨)\n";
+                        terminatedCount++; // 타임아웃이어도 종료 신호는 보냈으므로 카운트
+                        break;
+                    case WAIT_FAILED:
+                        std::cout << "     PID " << processId << " 대기 실패: " << GetLastError() << "\n";
+                        break;
+                }
+            }
+            CloseHandle(hProcess);
+        }
         _clientProcesses.clear();
         
-        // 클라이언트 정리 후 잠깐 대기
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        std::cout << "   " << terminatedCount << "개 클라이언트 프로세스 종료됨\n";
+        
+        // 2.5단계: 혹시 놓친 DummyClientCS 프로세스들 추가 정리
+        std::cout << "   2.5단계: DummyClientCS 프로세스 전체 정리...\n";
+        KillAllDummyClientProcesses();
+        
+        // 3단계: 네트워크 연결 정리 확인 및 대기
+        std::cout << "   3단계: 네트워크 연결 정리 확인...\n";
+        WaitForConnectionsCleanup(8); // 최대 8초 대기
         
         std::cout << "✅ 클라이언트 정리 완료 (서버는 유지)\n";
     }
     
     // 프로세스 정리
     void Cleanup() {
-        std::cout << "🧹 프로세스 정리 중...\n";
+        std::cout << "🧹 모든 프로세스 정리 중...\n";
         
-        // 클라이언트 프로세스들 종료
-        for (auto process : _clientProcesses) {
-            if (process != -1) {
-                HANDLE hProcess = reinterpret_cast<HANDLE>(process);
-                if (hProcess != INVALID_HANDLE_VALUE) {
-                    // Graceful shutdown 시도 (종료 시그널 전송)
-                    if (!TerminateProcess(hProcess, 0)) {
-                        std::cout << "   클라이언트 프로세스 종료 실패: " << GetLastError() << "\n";
-                    } else {
-                        // 프로세스 종료 대기 (최대 5초)
-                        WaitForSingleObject(hProcess, 5000);
-                        std::cout << "   클라이언트 프로세스 종료됨\n";
+        // 1단계: 클라이언트 프로세스들 정리
+        if (!_clientProcesses.empty()) {
+            std::cout << "   클라이언트 프로세스 정리 중...\n";
+            
+            // Graceful shutdown 시도
+            for (auto process : _clientProcesses) {
+                if (process != -1) {
+                    HANDLE hProcess = reinterpret_cast<HANDLE>(process);
+                    if (hProcess != INVALID_HANDLE_VALUE) {
+                        GenerateConsoleCtrlEvent(CTRL_C_EVENT, GetProcessId(hProcess));
                     }
-                    CloseHandle(hProcess);
                 }
             }
+            
+            // Graceful shutdown 대기
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+            
+            // 강제 종료
+            for (auto process : _clientProcesses) {
+                if (process != -1) {
+                    HANDLE hProcess = reinterpret_cast<HANDLE>(process);
+                    if (hProcess != INVALID_HANDLE_VALUE) {
+                        DWORD exitCode;
+                        if (GetExitCodeProcess(hProcess, &exitCode) && exitCode == STILL_ACTIVE) {
+                            if (!TerminateProcess(hProcess, 1)) {
+                                std::cout << "   클라이언트 프로세스 종료 실패: " << GetLastError() << "\n";
+                            } else {
+                                WaitForSingleObject(hProcess, 3000);
+                            }
+                        }
+                        CloseHandle(hProcess);
+                    }
+                }
+            }
+            _clientProcesses.clear();
+            std::cout << "   클라이언트 프로세스 정리 완료\n";
+            
+            // 백업 정리: 혹시 놓친 DummyClientCS 프로세스들
+            std::cout << "   백업 정리: 남은 DummyClientCS 프로세스 검색...\n";
+            KillAllDummyClientProcesses();
         }
-        _clientProcesses.clear();
         
-        // 서버 프로세스 종료
+        // 2단계: 서버 프로세스 종료
         if (_serverProcess != -1) {
+            std::cout << "   서버 프로세스 정리 중...\n";
             HANDLE hServerProcess = reinterpret_cast<HANDLE>(_serverProcess);
             if (hServerProcess != INVALID_HANDLE_VALUE) {
-                if (!TerminateProcess(hServerProcess, 0)) {
-                    std::cout << "   서버 프로세스 종료 실패: " << GetLastError() << "\n";
-                } else {
-                    // 서버 종료 대기 (최대 10초)
-                    WaitForSingleObject(hServerProcess, 10000);
-                    std::cout << "   서버 프로세스 종료됨\n";
+                // 서버에 graceful shutdown 신호 전송
+                GenerateConsoleCtrlEvent(CTRL_C_EVENT, GetProcessId(hServerProcess));
+                std::this_thread::sleep_for(std::chrono::seconds(3));
+                
+                // 아직 실행 중이면 강제 종료
+                DWORD exitCode;
+                if (GetExitCodeProcess(hServerProcess, &exitCode) && exitCode == STILL_ACTIVE) {
+                    if (!TerminateProcess(hServerProcess, 1)) {
+                        std::cout << "   서버 프로세스 종료 실패: " << GetLastError() << "\n";
+                    } else {
+                        // 서버 종료 대기 (최대 10초)
+                        DWORD waitResult = WaitForSingleObject(hServerProcess, 10000);
+                        if (waitResult == WAIT_TIMEOUT) {
+                            std::cout << "   서버 종료 대기 시간 초과\n";
+                        } else {
+                            std::cout << "   서버 프로세스 종료됨\n";
+                        }
+                    }
                 }
                 CloseHandle(hServerProcess);
             }
             _serverProcess = -1;
         }
         
-        // 추가 정리 시간 (포트 해제 등을 위해)
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        // 3단계: 네트워크 리소스 완전 정리 확인
+        std::cout << "   네트워크 리소스 정리 확인...\n";
+        WaitForConnectionsCleanup(10); // 최대 10초 대기
         
         std::cout << "✅ 모든 프로세스 정리 완료\n";
     }
@@ -210,6 +317,69 @@ public:
 private:
     intptr_t _serverProcess = -1;
     std::vector<intptr_t> _clientProcesses;
+    
+    // 네트워크 연결 상태 확인 (포트 7777에 대한 연결 수 체크)
+    int CheckActiveConnections() {
+        int connectionCount = 0;
+        
+        // netstat 명령으로 포트 7777에 대한 연결 수 확인
+        std::string command = "netstat -an | findstr :7777 | findstr ESTABLISHED";
+        
+        FILE* pipe = _popen(command.c_str(), "r");
+        if (pipe) {
+            char buffer[256];
+            while (fgets(buffer, sizeof(buffer), pipe) != nullptr) {
+                connectionCount++;
+            }
+            _pclose(pipe);
+        }
+        
+        return connectionCount;
+    }
+    
+    // 모든 연결이 정리될 때까지 대기
+    void WaitForConnectionsCleanup(int maxWaitSeconds = 10) {
+        std::cout << "   네트워크 연결 정리 상태 확인 중...\n";
+        
+        for (int i = 0; i < maxWaitSeconds; i++) {
+            int activeConnections = CheckActiveConnections();
+            std::cout << "     " << (i + 1) << "초: 활성 연결 " << activeConnections << "개\n";
+            
+            if (activeConnections == 0) {
+                std::cout << "   ✅ 모든 네트워크 연결이 정리되었습니다.\n";
+                return;
+            }
+            
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+        }
+        
+        int finalConnections = CheckActiveConnections();
+        if (finalConnections > 0) {
+            std::cout << "   ⚠️ " << finalConnections << "개의 연결이 아직 남아있습니다.\n";
+        }
+    }
+    
+    // 시스템에서 실행 중인 모든 DummyClientCS 프로세스 종료
+    void KillAllDummyClientProcesses() {
+        std::cout << "     시스템의 모든 DummyClientCS 프로세스 검색 중...\n";
+        
+        // taskkill 명령으로 모든 DummyClientCS 프로세스 종료
+        std::string command = "taskkill /F /IM DummyClientCS.exe 2>nul";
+        
+        int result = system(command.c_str());
+        if (result == 0) {
+            std::cout << "     DummyClientCS 프로세스들이 강제 종료되었습니다.\n";
+        } else {
+            std::cout << "     실행 중인 DummyClientCS 프로세스가 없거나 종료 실패\n";
+        }
+        
+        // 추가 확인: dotnet 프로세스 중 DummyClientCS 관련된 것들도 정리
+        std::string dotnetCommand = "taskkill /F /FI \"IMAGENAME eq dotnet.exe\" /FI \"WINDOWTITLE eq *DummyClientCS*\" 2>nul";
+        system(dotnetCommand.c_str());
+        
+        // 잠깐 대기
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    }
 };
 
 // 실제 네트워크 테스트 스위트
@@ -231,6 +401,13 @@ protected:
     static void TearDownTestSuite() {
         // 테스트 스위트 종료 시 서버 정리
         std::cout << "\n🧹 테스트 스위트 정리 - 공용 서버 종료\n";
+        
+        // 마지막 백업 정리: 모든 DummyClientCS 프로세스 강제 종료
+        std::cout << "   최종 정리: 모든 DummyClientCS 프로세스 강제 종료\n";
+        system("taskkill /F /IM DummyClientCS.exe 2>nul");
+        system("taskkill /F /FI \"IMAGENAME eq dotnet.exe\" /FI \"WINDOWTITLE eq *DummyClientCS*\" 2>nul");
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        
         if (s_sharedManager) {
             s_sharedManager->Cleanup();
             s_sharedManager.reset();
@@ -252,9 +429,15 @@ protected:
     void TearDown() override {
         // 각 테스트 종료 시 클라이언트만 정리 (서버는 유지)
         if (manager) {
+            std::cout << "\n🔄 테스트 종료 - 클라이언트 정리 시작\n";
             manager->CleanupClientsOnly();
+            
+            // 추가 안정화 시간 (다음 테스트를 위해)
+            std::cout << "   다음 테스트를 위한 안정화 대기 (2초)...\n";
+            std::this_thread::sleep_for(std::chrono::seconds(2));
         }
         manager.reset();
+        std::cout << "✅ 테스트 종료 정리 완료\n";
     }
     
     std::unique_ptr<RealNetworkTestManager> manager;
