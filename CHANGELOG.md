@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.10] - 2025-06-19
+
+### ⚙️ Miscellaneous Tasks
+
+- Test automation using batch file completed in local status
+
 ## [0.0.9] - 2025-06-19
 
 ### ⚙️ Miscellaneous Tasks
