@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.11] - 2025-06-19
+
+### 📚 Documentation
+
+- Update readme.md based on test automation
+
+### ⚙️ Miscellaneous Tasks
+
+- Automation Optimization, Now just run PerformanceTest/network_test.bat, you will make automation test and getting result based on real network communications
+
 ## [0.0.10] - 2025-06-19
 
 ### ⚙️ Miscellaneous Tasks
