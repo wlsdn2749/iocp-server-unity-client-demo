@@ -1,0 +1,5 @@
+if(EXISTS "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/PerformanceTest[1]_tests.cmake")
+  include("C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/PerformanceTest[1]_tests.cmake")
+else()
+  add_test(PerformanceTest_NOT_BUILT PerformanceTest_NOT_BUILT)
+endif()

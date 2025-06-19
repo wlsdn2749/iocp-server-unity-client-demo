@@ -1,0 +1,4 @@
+ClientCount,TPS,AvgLatency,MaxLatency,PacketLoss,Duration
+1,4.00,10.50,21.00,5.00,5044
+3,12.00,11.50,23.00,3.33,5026
+5,20.00,12.50,25.00,2.00,5023
