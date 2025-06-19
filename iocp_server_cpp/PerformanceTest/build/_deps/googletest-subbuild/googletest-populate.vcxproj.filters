@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\build\_deps\googletest-subbuild\CMakeFiles\cbbf4ee80dcd505d47781620a1aff6b4\googletest-populate-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\build\_deps\googletest-subbuild\CMakeFiles\cbbf4ee80dcd505d47781620a1aff6b4\googletest-populate-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\build\_deps\googletest-subbuild\CMakeFiles\cbbf4ee80dcd505d47781620a1aff6b4\googletest-populate-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\build\_deps\googletest-subbuild\CMakeFiles\cbbf4ee80dcd505d47781620a1aff6b4\googletest-populate-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\build\_deps\googletest-subbuild\CMakeFiles\cbbf4ee80dcd505d47781620a1aff6b4\googletest-populate-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\build\_deps\googletest-subbuild\CMakeFiles\cbbf4ee80dcd505d47781620a1aff6b4\googletest-populate-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\build\_deps\googletest-subbuild\CMakeFiles\cbbf4ee80dcd505d47781620a1aff6b4\googletest-populate-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\build\_deps\googletest-subbuild\CMakeFiles\cbbf4ee80dcd505d47781620a1aff6b4\googletest-populate-test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\build\_deps\googletest-subbuild\CMakeFiles\ff37457a950b4ba894a4ead442aed09d\googletest-populate-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\build\_deps\googletest-subbuild\CMakeFiles\a863adb9243189405d3c72d7d71f3e3b\googletest-populate.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\build\_deps\googletest-subbuild\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\build\_deps\googletest-subbuild\CMakeFiles\googletest-populate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{CA7FA4F5-7A06-3D78-986B-35B5E331FBC3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -25,7 +25,7 @@ namespace DummyClientCS
 
             connector.Connect(endPoint,
                 () => { return SessionManager.Instance.Generate(); },
-                5);
+                1); // 기본 1
 
             //Move 패킷을 주기적으로 보내는 스레드
             Task.Run(() =>

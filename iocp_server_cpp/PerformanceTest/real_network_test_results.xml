@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="5" failures="0" disabled="1" errors="0" time="67.067" timestamp="2025-06-19T18:18:01.055" name="AllTests">
+  <testsuite name="RealNetworkTestSuite" tests="5" failures="0" disabled="1" skipped="0" errors="0" time="67.067" timestamp="2025-06-19T18:18:01.056">
+    <testcase name="ServerStartupTest" file="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\RealNetworkPerformanceTest.cpp" line="176" status="run" result="completed" time="5.032" timestamp="2025-06-19T18:18:01.056" classname="RealNetworkTestSuite" />
+    <testcase name="SingleClientConnectionTest" file="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\RealNetworkPerformanceTest.cpp" line="194" status="run" result="completed" time="8.567" timestamp="2025-06-19T18:18:06.089" classname="RealNetworkTestSuite" />
+    <testcase name="MultiClientStressTest" file="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\RealNetworkPerformanceTest.cpp" line="223" status="run" result="completed" time="15.645" timestamp="2025-06-19T18:18:14.656" classname="RealNetworkTestSuite" />
+    <testcase name="DISABLED_EnduranceTest" file="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\RealNetworkPerformanceTest.cpp" line="257" status="notrun" result="suppressed" time="0." timestamp="1970-01-01T09:00:00.000" classname="RealNetworkTestSuite" />
+    <testcase name="PerformanceReportTest" file="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\PerformanceTest\RealNetworkPerformanceTest.cpp" line="284" status="run" result="completed" time="37.821" timestamp="2025-06-19T18:18:30.302" classname="RealNetworkTestSuite" />
+  </testsuite>
+</testsuites>
