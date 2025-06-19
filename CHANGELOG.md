@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.9] - 2025-06-19
+
+### ⚙️ Miscellaneous Tasks
+
+- Local test automation maked but it is yet unstable...
+
 ## [0.0.8] - 2025-06-18
 
 ### 🚀 Features
