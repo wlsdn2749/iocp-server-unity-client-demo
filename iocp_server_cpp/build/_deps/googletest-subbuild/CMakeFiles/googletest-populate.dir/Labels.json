@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/build/_deps/googletest-subbuild/CMakeFiles/googletest-populate"
+		},
+		{
+			"file" : "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/build/_deps/googletest-subbuild/CMakeFiles/8d21132f3aeb3b19b6e596cd7d224504/googletest-populate.rule"
+		},
+		{
+			"file" : "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/build/_deps/googletest-subbuild/CMakeFiles/5692aa3876a912f16a99ddfca1366168/googletest-populate-complete.rule"
+		},
+		{
+			"file" : "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/build/_deps/googletest-subbuild/CMakeFiles/579fbee4ac0bf7f8e69a8c526401d345/googletest-populate-build.rule"
+		},
+		{
+			"file" : "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/build/_deps/googletest-subbuild/CMakeFiles/579fbee4ac0bf7f8e69a8c526401d345/googletest-populate-configure.rule"
+		},
+		{
+			"file" : "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/build/_deps/googletest-subbuild/CMakeFiles/579fbee4ac0bf7f8e69a8c526401d345/googletest-populate-download.rule"
+		},
+		{
+			"file" : "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/build/_deps/googletest-subbuild/CMakeFiles/579fbee4ac0bf7f8e69a8c526401d345/googletest-populate-install.rule"
+		},
+		{
+			"file" : "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/build/_deps/googletest-subbuild/CMakeFiles/579fbee4ac0bf7f8e69a8c526401d345/googletest-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/build/_deps/googletest-subbuild/CMakeFiles/579fbee4ac0bf7f8e69a8c526401d345/googletest-populate-patch.rule"
+		},
+		{
+			"file" : "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/build/_deps/googletest-subbuild/CMakeFiles/579fbee4ac0bf7f8e69a8c526401d345/googletest-populate-test.rule"
+		},
+		{
+			"file" : "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/build/_deps/googletest-subbuild/CMakeFiles/579fbee4ac0bf7f8e69a8c526401d345/googletest-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"googletest-populate"
+		],
+		"name" : "googletest-populate"
+	}
+}

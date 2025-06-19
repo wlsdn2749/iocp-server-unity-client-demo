@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\wlsdn\workspace\iocp-server-unity-client-demo\iocp_server_cpp\build\CMakeFiles\846604c0a96ea1599c347e9e4bfa1f66\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{94E62E19-461C-3AA3-83A4-DC81CC31FA75}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

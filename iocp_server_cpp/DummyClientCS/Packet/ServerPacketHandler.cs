@@ -58,7 +58,7 @@ namespace Packet
             S_BROADCAST_CHAT pkt = packet as S_BROADCAST_CHAT;
             ServerSession serverSession = session as ServerSession;
 
-            Console.WriteLine($"[Server's Broadcast] {pkt.PlayerId}: {pkt.Msg}");
+            //Console.WriteLine($"[Server's Broadcast] {pkt.PlayerId}: {pkt.Msg}");
             //UI.ChatUIManager.Instance?.AddMessage(pkt.PlayerId.ToString(), pkt.Msg);
         }
         public static void HANDLE_S_PLAYERLIST(PacketSession session, S_PLAYERLIST packet)
