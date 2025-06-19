@@ -16,6 +16,36 @@ namespace DummyClientCS
 
         static void Main(string[] args)
         {
+            Console.WriteLine($"🚀 DummyClientCS 시작 (PID: {System.Diagnostics.Process.GetCurrentProcess().Id})");
+            
+            // 성능 통계 수집 시작
+            ClientPerformanceStats.Instance.StartPeriodicSave(1);
+            
+            // Ctrl+C 핸들러 등록
+            Console.CancelKeyPress += (sender, e) =>
+            {
+                Console.WriteLine("\n🛑 클라이언트 종료 중... 통계 저장");
+                ClientPerformanceStats.Instance.Stop();
+                
+                // 개별 실행 시 통계 파일 삭제 (GTest 환경이 아닌 경우)
+                var processId = System.Diagnostics.Process.GetCurrentProcess().Id;
+                var statsFile = $"client_stats_{processId}.json";
+                try 
+                {
+                    if (File.Exists(statsFile))
+                    {
+                        File.Delete(statsFile);
+                        Console.WriteLine($"🗑️ {statsFile} 파일 삭제됨 (개별 실행)");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"⚠️ 통계 파일 삭제 실패: {ex.Message}");
+                }
+                
+                Environment.Exit(0);
+            };
+
             //string host = Dns.GetHostName();
             //IPHostEntry ipHost = Dns.GetHostEntry(host);
             IPAddress ipAddr = IPAddress.Parse("127.0.0.1");

@@ -7,6 +7,14 @@ project(PerformanceTest)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# 빌드 출력 디렉토리 설정
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/build/Debug)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_SOURCE_DIR}/build/Release)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/build/Debug)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_SOURCE_DIR}/build/Release)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/build/Debug)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_SOURCE_DIR}/build/Release)
+
 # Google Test 다운로드 및 빌드 (안정적인 릴리스 버전 사용)
 include(FetchContent)
 FetchContent_Declare(
@@ -19,20 +27,19 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-# 테스트 실행 파일 생성
+# 실제 네트워크 성능 테스트 실행 파일 생성
 add_executable(
-  PerformanceTest
-  PerformanceTest.cpp
+  NetworkPerformanceTest
   RealNetworkPerformanceTest.cpp
 )
 
 # Google Test 라이브러리 링크
 target_link_libraries(
-  PerformanceTest
+  NetworkPerformanceTest
   gtest_main
   gtest
 )
 
 # 테스트 발견 활성화
 include(GoogleTest)
-gtest_discover_tests(PerformanceTest)
+gtest_discover_tests(NetworkPerformanceTest)

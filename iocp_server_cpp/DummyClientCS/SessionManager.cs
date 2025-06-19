@@ -33,6 +33,7 @@ namespace DummyClientCS
                     ArraySegment<byte> segment = ServerPacketManager.MakeSendBuffer(movePacket);
 
                     session.Send(segment);
+                    ClientPerformanceStats.Instance.OnPacketSent();
                 }
             }
         }
@@ -50,6 +51,7 @@ namespace DummyClientCS
                     ArraySegment<byte> segment = ServerPacketManager.MakeSendBuffer(chatPacket);
 
                     session.Send(segment);
+                    ClientPerformanceStats.Instance.OnPacketSent();
                 }
             }
         }

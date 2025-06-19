@@ -37,6 +37,7 @@ namespace DummyClientCS
         public override void OnRecvPacket(ArraySegment<byte> buffer)
         {
             ServerPacketManager.Instance.OnRecvPacket(this, buffer);
+            ClientPerformanceStats.Instance.OnPacketReceived();
             // PacketManager.Instance.OnRecvPacket(this, buffer, (s, p) => PacketQueue.Instance.Push(p) );
         }
 

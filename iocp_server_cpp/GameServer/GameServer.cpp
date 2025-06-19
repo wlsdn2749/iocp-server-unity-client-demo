@@ -18,6 +18,7 @@
 #include "DBSynchronizer.h"
 #include "Genprocedures.h"
 #include "XMLParser.h"
+#include "PerformanceStats.h"
 
 // 패킷 직렬화 (Serialization)
 
@@ -34,6 +35,23 @@ enum
 {
 	WORKER_TICK = 64
 };
+
+// Ctrl+C 핸들러 (성능 통계 저장을 위해)
+BOOL WINAPI ConsoleHandler(DWORD signal) {
+	if (signal == CTRL_C_EVENT) {
+		cout << "\n🛑 서버 종료 중... 성능 통계 저장" << endl;
+		PerformanceStats::Instance()->Stop();
+		cout << "✅ 성능 통계 저장 완료 (server_stats.json)" << endl;
+		
+		// 개별 실행 시 통계 파일 삭제 (GTest 환경이 아닌 경우)
+		if (std::remove("server_stats.json") == 0) {
+			cout << "🗑️ server_stats.json 파일 삭제됨 (개별 실행)" << endl;
+		}
+		
+		ExitProcess(0);
+	}
+	return TRUE;
+}
 void DoWorkerJob(ServerServiceRef& service)
 {
 	while (true)
@@ -93,6 +111,15 @@ int main()
 	}*/
 
 	ClientPacketHandler::init();
+
+	// Ctrl+C 핸들러 등록 (성능 통계 저장을 위해)
+	if (!SetConsoleCtrlHandler(ConsoleHandler, TRUE)) {
+		cout << "⚠️ 시그널 핸들러 등록 실패" << endl;
+	}
+
+	// 성능 통계 수집 시작
+	PerformanceStats::Instance()->StartPeriodicSave(1); // 1초마다 통계 저장
+	cout << "🚀 GameServer started with performance monitoring" << endl;
 
 	ServerServiceRef service = MakeShared<ServerService>(
 		NetAddress(L"127.0.0.1", 8421),

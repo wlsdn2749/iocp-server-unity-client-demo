@@ -24,7 +24,7 @@ events:
       The output was:
       0
       msbuild 버전 17.14.10+8b8e13593(.NET Framework용)
-      빌드 시작: 2025-06-18(수) 오후 9:58:24
+      빌드 시작: 2025-06-20(금) 오전 1:52:31
       
       1 노드의 "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\4.0.2\\CompilerIdC\\CompilerIdC.vcxproj" 프로젝트(기본 대상)입니다.
       PrepareForBuild:
@@ -53,7 +53,7 @@ events:
           경고 0개
           오류 0개
       
-      경과 시간: 00:00:01.27
+      경과 시간: 00:00:01.44
       
       
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
@@ -79,7 +79,7 @@ events:
       The output was:
       0
       msbuild 버전 17.14.10+8b8e13593(.NET Framework용)
-      빌드 시작: 2025-06-18(수) 오후 9:58:26
+      빌드 시작: 2025-06-20(금) 오전 1:52:33
       
       1 노드의 "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\4.0.2\\CompilerIdCXX\\CompilerIdCXX.vcxproj" 프로젝트(기본 대상)입니다.
       PrepareForBuild:
@@ -108,7 +108,7 @@ events:
           경고 0개
           오류 0개
       
-      경과 시간: 00:00:01.22
+      경과 시간: 00:00:01.20
       
       
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
@@ -127,8 +127,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-rbzqtg"
-      binary: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-rbzqtg"
+      source: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-ockb7a"
+      binary: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-ockb7a"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
       CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
@@ -137,40 +137,40 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-rbzqtg'
+        Change Dir: 'C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-ockb7a'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_bcf7b.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_d9216.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         msbuild 버전 17.14.10+8b8e13593(.NET Framework용)
-        빌드 시작: 2025-06-18(수) 오후 9:58:28
+        빌드 시작: 2025-06-20(금) 오전 1:52:35
         
-        1 노드의 "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rbzqtg\\cmTC_bcf7b.vcxproj" 프로젝트(기본 대상)입니다.
+        1 노드의 "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ockb7a\\cmTC_d9216.vcxproj" 프로젝트(기본 대상)입니다.
         PrepareForBuild:
-          "cmTC_bcf7b.dir\\Debug\\" 디렉터리를 만들고 있습니다.
+          "cmTC_d9216.dir\\Debug\\" 디렉터리를 만들고 있습니다.
           구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
-          "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rbzqtg\\Debug\\" 디렉터리를 만들고 있습니다.
-          "cmTC_bcf7b.dir\\Debug\\cmTC_bcf7b.tlog\\" 디렉터리를 만들고 있습니다.
+          "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ockb7a\\Debug\\" 디렉터리를 만들고 있습니다.
+          "cmTC_d9216.dir\\Debug\\cmTC_d9216.tlog\\" 디렉터리를 만들고 있습니다.
         InitializeBuildStatus:
-          "AlwaysCreate"이(가) 지정되었기 때문에 "cmTC_bcf7b.dir\\Debug\\cmTC_bcf7b.tlog\\unsuccessfulbuild"을(를) 만들고 있습니다.
-          "cmTC_bcf7b.dir\\Debug\\cmTC_bcf7b.tlog\\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+          "AlwaysCreate"이(가) 지정되었기 때문에 "cmTC_d9216.dir\\Debug\\cmTC_d9216.tlog\\unsuccessfulbuild"을(를) 만들고 있습니다.
+          "cmTC_d9216.dir\\Debug\\cmTC_d9216.tlog\\unsuccessfulbuild"에 연결(touching)하고 있습니다.
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_bcf7b.dir\\Debug\\\\" /Fd"cmTC_bcf7b.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.0\\Modules\\CMakeCCompilerABI.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_d9216.dir\\Debug\\\\" /Fd"cmTC_d9216.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.0\\Modules\\CMakeCCompilerABI.c"
           Microsoft (R) C/C++ 최적화 컴파일러 버전 19.44.35211(x64)
           Copyright (c) Microsoft Corporation. All rights reserved.
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_bcf7b.dir\\Debug\\\\" /Fd"cmTC_bcf7b.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.0\\Modules\\CMakeCCompilerABI.c"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_d9216.dir\\Debug\\\\" /Fd"cmTC_d9216.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.0\\Modules\\CMakeCCompilerABI.c"
           CMakeCCompilerABI.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rbzqtg\\Debug\\cmTC_bcf7b.exe" /INCREMENTAL /ILK:"cmTC_bcf7b.dir\\Debug\\cmTC_bcf7b.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-rbzqtg/Debug/cmTC_bcf7b.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-rbzqtg/Debug/cmTC_bcf7b.lib" /MACHINE:X64  /machine:x64 cmTC_bcf7b.dir\\Debug\\CMakeCCompilerABI.obj
-          cmTC_bcf7b.vcxproj -> C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rbzqtg\\Debug\\cmTC_bcf7b.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ockb7a\\Debug\\cmTC_d9216.exe" /INCREMENTAL /ILK:"cmTC_d9216.dir\\Debug\\cmTC_d9216.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-ockb7a/Debug/cmTC_d9216.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-ockb7a/Debug/cmTC_d9216.lib" /MACHINE:X64  /machine:x64 cmTC_d9216.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_d9216.vcxproj -> C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ockb7a\\Debug\\cmTC_d9216.exe
         FinalizeBuildStatus:
-          "cmTC_bcf7b.dir\\Debug\\cmTC_bcf7b.tlog\\unsuccessfulbuild" 파일을 삭제하고 있습니다.
-          "cmTC_bcf7b.dir\\Debug\\cmTC_bcf7b.tlog\\cmTC_bcf7b.lastbuildstate"에 연결(touching)하고 있습니다.
-        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rbzqtg\\cmTC_bcf7b.vcxproj" 프로젝트를 빌드했습니다(기본 대상).
+          "cmTC_d9216.dir\\Debug\\cmTC_d9216.tlog\\unsuccessfulbuild" 파일을 삭제하고 있습니다.
+          "cmTC_d9216.dir\\Debug\\cmTC_d9216.tlog\\cmTC_d9216.lastbuildstate"에 연결(touching)하고 있습니다.
+        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ockb7a\\cmTC_d9216.vcxproj" 프로젝트를 빌드했습니다(기본 대상).
         
         빌드했습니다.
             경고 0개
             오류 0개
         
-        경과 시간: 00:00:01.23
+        경과 시간: 00:00:01.19
         
       exitCode: 0
   -
@@ -210,8 +210,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-nxoro6"
-      binary: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-nxoro6"
+      source: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-ryba00"
+      binary: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-ryba00"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
@@ -221,40 +221,40 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-nxoro6'
+        Change Dir: 'C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-ryba00'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_d46f9.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_0227f.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         msbuild 버전 17.14.10+8b8e13593(.NET Framework용)
-        빌드 시작: 2025-06-18(수) 오후 9:58:30
+        빌드 시작: 2025-06-20(금) 오전 1:52:36
         
-        1 노드의 "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nxoro6\\cmTC_d46f9.vcxproj" 프로젝트(기본 대상)입니다.
+        1 노드의 "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ryba00\\cmTC_0227f.vcxproj" 프로젝트(기본 대상)입니다.
         PrepareForBuild:
-          "cmTC_d46f9.dir\\Debug\\" 디렉터리를 만들고 있습니다.
+          "cmTC_0227f.dir\\Debug\\" 디렉터리를 만들고 있습니다.
           구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
-          "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nxoro6\\Debug\\" 디렉터리를 만들고 있습니다.
-          "cmTC_d46f9.dir\\Debug\\cmTC_d46f9.tlog\\" 디렉터리를 만들고 있습니다.
+          "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ryba00\\Debug\\" 디렉터리를 만들고 있습니다.
+          "cmTC_0227f.dir\\Debug\\cmTC_0227f.tlog\\" 디렉터리를 만들고 있습니다.
         InitializeBuildStatus:
-          "AlwaysCreate"이(가) 지정되었기 때문에 "cmTC_d46f9.dir\\Debug\\cmTC_d46f9.tlog\\unsuccessfulbuild"을(를) 만들고 있습니다.
-          "cmTC_d46f9.dir\\Debug\\cmTC_d46f9.tlog\\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+          "AlwaysCreate"이(가) 지정되었기 때문에 "cmTC_0227f.dir\\Debug\\cmTC_0227f.tlog\\unsuccessfulbuild"을(를) 만들고 있습니다.
+          "cmTC_0227f.dir\\Debug\\cmTC_0227f.tlog\\unsuccessfulbuild"에 연결(touching)하고 있습니다.
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_d46f9.dir\\Debug\\\\" /Fd"cmTC_d46f9.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.0\\Modules\\CMakeCXXCompilerABI.cpp"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_0227f.dir\\Debug\\\\" /Fd"cmTC_0227f.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.0\\Modules\\CMakeCXXCompilerABI.cpp"
           Microsoft (R) C/C++ 최적화 컴파일러 버전 19.44.35211(x64)
           Copyright (c) Microsoft Corporation. All rights reserved.
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_d46f9.dir\\Debug\\\\" /Fd"cmTC_d46f9.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.0\\Modules\\CMakeCXXCompilerABI.cpp"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_0227f.dir\\Debug\\\\" /Fd"cmTC_0227f.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.0\\Modules\\CMakeCXXCompilerABI.cpp"
           CMakeCXXCompilerABI.cpp
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nxoro6\\Debug\\cmTC_d46f9.exe" /INCREMENTAL /ILK:"cmTC_d46f9.dir\\Debug\\cmTC_d46f9.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-nxoro6/Debug/cmTC_d46f9.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-nxoro6/Debug/cmTC_d46f9.lib" /MACHINE:X64  /machine:x64 cmTC_d46f9.dir\\Debug\\CMakeCXXCompilerABI.obj
-          cmTC_d46f9.vcxproj -> C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nxoro6\\Debug\\cmTC_d46f9.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ryba00\\Debug\\cmTC_0227f.exe" /INCREMENTAL /ILK:"cmTC_0227f.dir\\Debug\\cmTC_0227f.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-ryba00/Debug/cmTC_0227f.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-ryba00/Debug/cmTC_0227f.lib" /MACHINE:X64  /machine:x64 cmTC_0227f.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_0227f.vcxproj -> C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ryba00\\Debug\\cmTC_0227f.exe
         FinalizeBuildStatus:
-          "cmTC_d46f9.dir\\Debug\\cmTC_d46f9.tlog\\unsuccessfulbuild" 파일을 삭제하고 있습니다.
-          "cmTC_d46f9.dir\\Debug\\cmTC_d46f9.tlog\\cmTC_d46f9.lastbuildstate"에 연결(touching)하고 있습니다.
-        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nxoro6\\cmTC_d46f9.vcxproj" 프로젝트를 빌드했습니다(기본 대상).
+          "cmTC_0227f.dir\\Debug\\cmTC_0227f.tlog\\unsuccessfulbuild" 파일을 삭제하고 있습니다.
+          "cmTC_0227f.dir\\Debug\\cmTC_0227f.tlog\\cmTC_0227f.lastbuildstate"에 연결(touching)하고 있습니다.
+        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ryba00\\cmTC_0227f.vcxproj" 프로젝트를 빌드했습니다(기본 대상).
         
         빌드했습니다.
             경고 0개
             오류 0개
         
-        경과 시간: 00:00:01.28
+        경과 시간: 00:00:01.19
         
       exitCode: 0
   -
@@ -297,8 +297,8 @@ events:
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-fy66kw"
-      binary: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-fy66kw"
+      source: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-ok1ttb"
+      binary: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-ok1ttb"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
       CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
@@ -307,40 +307,40 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-fy66kw'
+        Change Dir: 'C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-ok1ttb'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_9ad89.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_8c8fb.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         msbuild 버전 17.14.10+8b8e13593(.NET Framework용)
-        빌드 시작: 2025-06-18(수) 오후 9:58:38
+        빌드 시작: 2025-06-20(금) 오전 1:52:43
         
-        1 노드의 "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fy66kw\\cmTC_9ad89.vcxproj" 프로젝트(기본 대상)입니다.
+        1 노드의 "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ok1ttb\\cmTC_8c8fb.vcxproj" 프로젝트(기본 대상)입니다.
         PrepareForBuild:
-          "cmTC_9ad89.dir\\Debug\\" 디렉터리를 만들고 있습니다.
+          "cmTC_8c8fb.dir\\Debug\\" 디렉터리를 만들고 있습니다.
           구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
-          "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fy66kw\\Debug\\" 디렉터리를 만들고 있습니다.
-          "cmTC_9ad89.dir\\Debug\\cmTC_9ad89.tlog\\" 디렉터리를 만들고 있습니다.
+          "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ok1ttb\\Debug\\" 디렉터리를 만들고 있습니다.
+          "cmTC_8c8fb.dir\\Debug\\cmTC_8c8fb.tlog\\" 디렉터리를 만들고 있습니다.
         InitializeBuildStatus:
-          "AlwaysCreate"이(가) 지정되었기 때문에 "cmTC_9ad89.dir\\Debug\\cmTC_9ad89.tlog\\unsuccessfulbuild"을(를) 만들고 있습니다.
-          "cmTC_9ad89.dir\\Debug\\cmTC_9ad89.tlog\\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+          "AlwaysCreate"이(가) 지정되었기 때문에 "cmTC_8c8fb.dir\\Debug\\cmTC_8c8fb.tlog\\unsuccessfulbuild"을(를) 만들고 있습니다.
+          "cmTC_8c8fb.dir\\Debug\\cmTC_8c8fb.tlog\\unsuccessfulbuild"에 연결(touching)하고 있습니다.
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_9ad89.dir\\Debug\\\\" /Fd"cmTC_9ad89.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fy66kw\\src.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_8c8fb.dir\\Debug\\\\" /Fd"cmTC_8c8fb.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ok1ttb\\src.c"
           Microsoft (R) C/C++ 최적화 컴파일러 버전 19.44.35211(x64)
           Copyright (c) Microsoft Corporation. All rights reserved.
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_9ad89.dir\\Debug\\\\" /Fd"cmTC_9ad89.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fy66kw\\src.c"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_8c8fb.dir\\Debug\\\\" /Fd"cmTC_8c8fb.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ok1ttb\\src.c"
           src.c
-        C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fy66kw\\src.c(1,10): error C1083: 포함 파일을 열 수 없습니다. 'pthread.h': No such file or directory [C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fy66kw\\cmTC_9ad89.vcxproj]
-        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fy66kw\\cmTC_9ad89.vcxproj" 프로젝트를 빌드했습니다(기본 대상). - 실패
+        C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ok1ttb\\src.c(1,10): error C1083: 포함 파일을 열 수 없습니다. 'pthread.h': No such file or directory [C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ok1ttb\\cmTC_8c8fb.vcxproj]
+        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ok1ttb\\cmTC_8c8fb.vcxproj" 프로젝트를 빌드했습니다(기본 대상). - 실패
         
         빌드하지 못했습니다.
         
-        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fy66kw\\cmTC_9ad89.vcxproj"(기본 대상)(1)->
+        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ok1ttb\\cmTC_8c8fb.vcxproj"(기본 대상)(1)->
         (ClCompile 대상) -> 
-          C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fy66kw\\src.c(1,10): error C1083: 포함 파일을 열 수 없습니다. 'pthread.h': No such file or directory [C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fy66kw\\cmTC_9ad89.vcxproj]
+          C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ok1ttb\\src.c(1,10): error C1083: 포함 파일을 열 수 없습니다. 'pthread.h': No such file or directory [C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ok1ttb\\cmTC_8c8fb.vcxproj]
         
             경고 0개
             오류 1개
         
-        경과 시간: 00:00:01.11
+        경과 시간: 00:00:01.06
         
       exitCode: 1
   -
@@ -354,8 +354,8 @@ events:
     checks:
       - "Looking for pthread_create in pthreads"
     directories:
-      source: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-iytni8"
-      binary: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-iytni8"
+      source: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-kn4bb6"
+      binary: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-kn4bb6"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
       CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
@@ -364,42 +364,42 @@ events:
       variable: "CMAKE_HAVE_PTHREADS_CREATE"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-iytni8'
+        Change Dir: 'C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-kn4bb6'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_79850.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_c8598.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         msbuild 버전 17.14.10+8b8e13593(.NET Framework용)
-        빌드 시작: 2025-06-18(수) 오후 9:58:40
+        빌드 시작: 2025-06-20(금) 오전 1:52:45
         
-        1 노드의 "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-iytni8\\cmTC_79850.vcxproj" 프로젝트(기본 대상)입니다.
+        1 노드의 "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kn4bb6\\cmTC_c8598.vcxproj" 프로젝트(기본 대상)입니다.
         PrepareForBuild:
-          "cmTC_79850.dir\\Debug\\" 디렉터리를 만들고 있습니다.
+          "cmTC_c8598.dir\\Debug\\" 디렉터리를 만들고 있습니다.
           구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
-          "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-iytni8\\Debug\\" 디렉터리를 만들고 있습니다.
-          "cmTC_79850.dir\\Debug\\cmTC_79850.tlog\\" 디렉터리를 만들고 있습니다.
+          "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kn4bb6\\Debug\\" 디렉터리를 만들고 있습니다.
+          "cmTC_c8598.dir\\Debug\\cmTC_c8598.tlog\\" 디렉터리를 만들고 있습니다.
         InitializeBuildStatus:
-          "AlwaysCreate"이(가) 지정되었기 때문에 "cmTC_79850.dir\\Debug\\cmTC_79850.tlog\\unsuccessfulbuild"을(를) 만들고 있습니다.
-          "cmTC_79850.dir\\Debug\\cmTC_79850.tlog\\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+          "AlwaysCreate"이(가) 지정되었기 때문에 "cmTC_c8598.dir\\Debug\\cmTC_c8598.tlog\\unsuccessfulbuild"을(를) 만들고 있습니다.
+          "cmTC_c8598.dir\\Debug\\cmTC_c8598.tlog\\unsuccessfulbuild"에 연결(touching)하고 있습니다.
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_79850.dir\\Debug\\\\" /Fd"cmTC_79850.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-iytni8\\CheckFunctionExists.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_c8598.dir\\Debug\\\\" /Fd"cmTC_c8598.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kn4bb6\\CheckFunctionExists.c"
           Microsoft (R) C/C++ 최적화 컴파일러 버전 19.44.35211(x64)
           Copyright (c) Microsoft Corporation. All rights reserved.
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_79850.dir\\Debug\\\\" /Fd"cmTC_79850.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-iytni8\\CheckFunctionExists.c"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_c8598.dir\\Debug\\\\" /Fd"cmTC_c8598.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kn4bb6\\CheckFunctionExists.c"
           CheckFunctionExists.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-iytni8\\Debug\\cmTC_79850.exe" /INCREMENTAL /ILK:"cmTC_79850.dir\\Debug\\cmTC_79850.ilk" /NOLOGO pthreads.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-iytni8/Debug/cmTC_79850.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-iytni8/Debug/cmTC_79850.lib" /MACHINE:X64  /machine:x64 cmTC_79850.dir\\Debug\\CheckFunctionExists.obj
-        LINK : fatal error LNK1104: 'pthreads.lib' 파일을 열 수 없습니다. [C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-iytni8\\cmTC_79850.vcxproj]
-        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-iytni8\\cmTC_79850.vcxproj" 프로젝트를 빌드했습니다(기본 대상). - 실패
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kn4bb6\\Debug\\cmTC_c8598.exe" /INCREMENTAL /ILK:"cmTC_c8598.dir\\Debug\\cmTC_c8598.ilk" /NOLOGO pthreads.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-kn4bb6/Debug/cmTC_c8598.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-kn4bb6/Debug/cmTC_c8598.lib" /MACHINE:X64  /machine:x64 cmTC_c8598.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: 'pthreads.lib' 파일을 열 수 없습니다. [C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kn4bb6\\cmTC_c8598.vcxproj]
+        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kn4bb6\\cmTC_c8598.vcxproj" 프로젝트를 빌드했습니다(기본 대상). - 실패
         
         빌드하지 못했습니다.
         
-        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-iytni8\\cmTC_79850.vcxproj"(기본 대상)(1)->
+        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kn4bb6\\cmTC_c8598.vcxproj"(기본 대상)(1)->
         (Link 대상) -> 
-          LINK : fatal error LNK1104: 'pthreads.lib' 파일을 열 수 없습니다. [C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-iytni8\\cmTC_79850.vcxproj]
+          LINK : fatal error LNK1104: 'pthreads.lib' 파일을 열 수 없습니다. [C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kn4bb6\\cmTC_c8598.vcxproj]
         
             경고 0개
             오류 1개
         
-        경과 시간: 00:00:01.08
+        경과 시간: 00:00:01.05
         
       exitCode: 1
   -
@@ -413,8 +413,8 @@ events:
     checks:
       - "Looking for pthread_create in pthread"
     directories:
-      source: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-0jlj94"
-      binary: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-0jlj94"
+      source: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-5abv7i"
+      binary: "C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-5abv7i"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
       CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
@@ -423,42 +423,42 @@ events:
       variable: "CMAKE_HAVE_PTHREAD_CREATE"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-0jlj94'
+        Change Dir: 'C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-5abv7i'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_fd1a2.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_dc9ea.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         msbuild 버전 17.14.10+8b8e13593(.NET Framework용)
-        빌드 시작: 2025-06-18(수) 오후 9:58:41
+        빌드 시작: 2025-06-20(금) 오전 1:52:47
         
-        1 노드의 "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0jlj94\\cmTC_fd1a2.vcxproj" 프로젝트(기본 대상)입니다.
+        1 노드의 "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5abv7i\\cmTC_dc9ea.vcxproj" 프로젝트(기본 대상)입니다.
         PrepareForBuild:
-          "cmTC_fd1a2.dir\\Debug\\" 디렉터리를 만들고 있습니다.
+          "cmTC_dc9ea.dir\\Debug\\" 디렉터리를 만들고 있습니다.
           구조적 출력을 사용할 수 있습니다. 컴파일러 진단의 서식은 오류 계층 구조를 반영합니다. 자세한 내용은 https://aka.ms/cpp/structured-output을 참조하세요.
-          "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0jlj94\\Debug\\" 디렉터리를 만들고 있습니다.
-          "cmTC_fd1a2.dir\\Debug\\cmTC_fd1a2.tlog\\" 디렉터리를 만들고 있습니다.
+          "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5abv7i\\Debug\\" 디렉터리를 만들고 있습니다.
+          "cmTC_dc9ea.dir\\Debug\\cmTC_dc9ea.tlog\\" 디렉터리를 만들고 있습니다.
         InitializeBuildStatus:
-          "AlwaysCreate"이(가) 지정되었기 때문에 "cmTC_fd1a2.dir\\Debug\\cmTC_fd1a2.tlog\\unsuccessfulbuild"을(를) 만들고 있습니다.
-          "cmTC_fd1a2.dir\\Debug\\cmTC_fd1a2.tlog\\unsuccessfulbuild"에 연결(touching)하고 있습니다.
+          "AlwaysCreate"이(가) 지정되었기 때문에 "cmTC_dc9ea.dir\\Debug\\cmTC_dc9ea.tlog\\unsuccessfulbuild"을(를) 만들고 있습니다.
+          "cmTC_dc9ea.dir\\Debug\\cmTC_dc9ea.tlog\\unsuccessfulbuild"에 연결(touching)하고 있습니다.
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_fd1a2.dir\\Debug\\\\" /Fd"cmTC_fd1a2.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0jlj94\\CheckFunctionExists.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_dc9ea.dir\\Debug\\\\" /Fd"cmTC_dc9ea.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5abv7i\\CheckFunctionExists.c"
           Microsoft (R) C/C++ 최적화 컴파일러 버전 19.44.35211(x64)
           Copyright (c) Microsoft Corporation. All rights reserved.
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_fd1a2.dir\\Debug\\\\" /Fd"cmTC_fd1a2.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0jlj94\\CheckFunctionExists.c"
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_dc9ea.dir\\Debug\\\\" /Fd"cmTC_dc9ea.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5abv7i\\CheckFunctionExists.c"
           CheckFunctionExists.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0jlj94\\Debug\\cmTC_fd1a2.exe" /INCREMENTAL /ILK:"cmTC_fd1a2.dir\\Debug\\cmTC_fd1a2.ilk" /NOLOGO pthread.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-0jlj94/Debug/cmTC_fd1a2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-0jlj94/Debug/cmTC_fd1a2.lib" /MACHINE:X64  /machine:x64 cmTC_fd1a2.dir\\Debug\\CheckFunctionExists.obj
-        LINK : fatal error LNK1104: 'pthread.lib' 파일을 열 수 없습니다. [C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0jlj94\\cmTC_fd1a2.vcxproj]
-        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0jlj94\\cmTC_fd1a2.vcxproj" 프로젝트를 빌드했습니다(기본 대상). - 실패
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5abv7i\\Debug\\cmTC_dc9ea.exe" /INCREMENTAL /ILK:"cmTC_dc9ea.dir\\Debug\\cmTC_dc9ea.ilk" /NOLOGO pthread.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-5abv7i/Debug/cmTC_dc9ea.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/PerformanceTest/build/CMakeFiles/CMakeScratch/TryCompile-5abv7i/Debug/cmTC_dc9ea.lib" /MACHINE:X64  /machine:x64 cmTC_dc9ea.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: 'pthread.lib' 파일을 열 수 없습니다. [C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5abv7i\\cmTC_dc9ea.vcxproj]
+        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5abv7i\\cmTC_dc9ea.vcxproj" 프로젝트를 빌드했습니다(기본 대상). - 실패
         
         빌드하지 못했습니다.
         
-        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0jlj94\\cmTC_fd1a2.vcxproj"(기본 대상)(1)->
+        "C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5abv7i\\cmTC_dc9ea.vcxproj"(기본 대상)(1)->
         (Link 대상) -> 
-          LINK : fatal error LNK1104: 'pthread.lib' 파일을 열 수 없습니다. [C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-0jlj94\\cmTC_fd1a2.vcxproj]
+          LINK : fatal error LNK1104: 'pthread.lib' 파일을 열 수 없습니다. [C:\\Users\\wlsdn\\workspace\\iocp-server-unity-client-demo\\iocp_server_cpp\\PerformanceTest\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5abv7i\\cmTC_dc9ea.vcxproj]
         
             경고 0개
             오류 1개
         
-        경과 시간: 00:00:01.14
+        경과 시간: 00:00:01.03
         
       exitCode: 1
 ...

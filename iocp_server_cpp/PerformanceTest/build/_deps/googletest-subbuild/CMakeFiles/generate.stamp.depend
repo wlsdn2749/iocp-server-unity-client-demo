@@ -1,6 +1,8 @@
 # CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineSystem.cmake
 C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeGenericSystem.cmake
 C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeInitializeConfigs.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeSystem.cmake.in
 C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeSystemSpecificInformation.cmake
 C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeSystemSpecificInitialize.cmake
 C:/Program Files/CMake/share/cmake-4.0/Modules/ExternalProject.cmake

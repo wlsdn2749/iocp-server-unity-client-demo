@@ -83,6 +83,9 @@
     <ClInclude Include="Genprocedures.h">
       <Filter>DB</Filter>
     </ClInclude>
+    <ClInclude Include="PerformanceStats.h">
+      <Filter>Main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Common\Protobuf\bin\Protocol.proto">

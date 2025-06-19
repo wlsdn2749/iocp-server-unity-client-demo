@@ -1,4 +1,0 @@
-UserCount,TPS,AvgLatency,MaxLatency,SuccessRate,Duration
-1,59.86,14.75,16.00,91.07,1704
-5,299.30,14.73,16.00,91.07,1704
-10,597.54,14.76,16.00,91.07,1708
