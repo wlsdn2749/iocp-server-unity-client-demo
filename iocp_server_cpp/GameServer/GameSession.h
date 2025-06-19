@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Session.h"
+#include "PerformanceStats.h"
 
 class GameSession : public PacketSession
 {

@@ -1,5 +1,5 @@
-libdir=C:/Program Files/PerformanceTest/lib
-includedir=C:/Program Files/PerformanceTest/include
+libdir=C:/Program Files (x86)/PerformanceTest/lib
+includedir=C:/Program Files (x86)/PerformanceTest/include
 
 Name: gtest
 Description: GoogleTest (without main() function)

@@ -167,13 +167,9 @@ echo.
 echo 🏁 실제 네트워크 성능 테스트 완료!
 echo ===============================================
 echo.
-echo 📊 결과 파일들:
-echo   - real_network_test_results.xml (GTest XML 리포트)
-echo   - real_network_performance_report.csv (성능 데이터)
-echo   - performance_summary.json (통계 요약 파일)
-echo.
-echo 🧹 개별 통계 파일들은 자동으로 정리되었습니다
-echo   (server_stats.json, client_stats_*.json 삭제됨)
+echo 다음 파일들을 확인하세요:
+echo - real_network_performance_report.csv (성능 데이터)
+echo - real_network_test_results.xml (상세 테스트 결과)
 echo.
 echo 📁 테스트 실행 파일 위치: %TEST_EXE%
 echo.
