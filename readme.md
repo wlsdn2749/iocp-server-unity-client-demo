@@ -88,16 +88,40 @@ DummyClientCS.exe
 
 > 📊 **상세한 성능 테스트 정보**: [`iocp_server_cpp/PerformanceTest/README.md`](iocp_server_cpp/PerformanceTest/README.md) 참조
 
-## 🛠️ **자동화 도구**
+## 🛠️ **자동화 도구 사용법**
 
-### **패킷/코드 자동화**
-- **PacketGenerator**: `.proto` → C++/C# 코드 자동 생성
-- **ProcedureGenerator**: DB 프로시저 코드 자동 생성
+본 프로젝트는 **Protobuf를 사용한 패킷 자동화와 Jinja2를 사용한 코드 자동화**를 통해 개발 생산성을 극대화합니다.
 
-### **성능 테스트 자동화**
-- **Google Test**: 실제 네트워크 성능 측정
-- **실시간 통계**: JSON 기반 성능 데이터 수집
-- **원클릭 테스트**: 빌드부터 리포트까지 완전 자동화
+## 🔄 **패킷/코드 자동화 워크플로우**
+
+```mermaid
+flowchart TD
+ subgraph Common\Protobuf\bin["Common\Protobuf\bin"]
+    CPB_A[".proto 파일 수정"]
+ end
+ subgraph Visual_Studio["VS 2022"]
+    VS_Build["프로젝트 빌드"]
+    VS_PreBuild["프로젝트 빌드 전 이벤트"]
+    VS_CodeGen["코드 자동 생성"]
+    VS_Impl["컨텐츠 코드 구현"]
+ end
+ subgraph OS["Window"]
+    OS_Batch["GenPackets.exe 자동 실행"]
+ end
+ subgraph PacketGenerator["PacketGenerator"]
+    PG_Revise["PacketGenerator 수정"]
+ end
+
+    CPB_A --> VS_Build
+    VS_Build --> VS_PreBuild
+    VS_PreBuild --> OS_Batch
+    OS_Batch --> VS_CodeGen
+    VS_CodeGen --> VS_Impl
+    PG_Revise -- MakeExe.bat 실행 후, /Templates 폴더와 GenPackets.Exe를 복사 --> CPB_A
+    
+
+```
+
 
 ## 🧪 **테스트 시나리오**
 
