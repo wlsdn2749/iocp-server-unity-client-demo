@@ -1,0 +1,69 @@
+{
+  "testTimestamp": "2025-06-22 21:04:50",
+  "testDuration": 30223,
+  "connectedClients": 3,
+  "totalTPS": 18,
+  "averageLatency": 8.9,
+  "maxLatency": 16.02,
+  "totalPacketsSent": 544,
+  "totalPacketsReceived": 533,
+  "packetLossRate": 1,
+  "serverStats": {
+  "timestamp": 137965,
+  "connectedClients": 3,
+  "totalConnections": 21,
+  "totalPacketsReceived": 1887,
+  "totalPacketsSent": 5575,
+  "recentPacketsReceived": 16,
+  "recentPacketsSent": 41,
+  "tps": 13.6629,
+  "avgProcessingTime": 0.251563,
+  "maxProcessingTime": 1.877,
+  "uptimeMs": 137965
+}
+,
+  "clientStats": [
+    {
+  "processId": 47120,
+  "timestamp": 31020,
+  "totalPacketsSent": 164,
+  "totalPacketsReceived": 431,
+  "recentPacketsSent": 6,
+  "recentPacketsReceived": 15,
+  "tps": 5.2868443827800675,
+  "avgLatency": 0,
+  "maxLatency": 0,
+  "avgRtt": 0.25456666666666666,
+  "maxRtt": 1.131,
+  "uptimeMs": 31020
+},
+    {
+  "processId": 836,
+  "timestamp": 31009,
+  "totalPacketsSent": 164,
+  "totalPacketsReceived": 435,
+  "recentPacketsSent": 6,
+  "recentPacketsReceived": 15,
+  "tps": 5.288784619138511,
+  "avgLatency": 0,
+  "maxLatency": 0,
+  "avgRtt": 0.2653,
+  "maxRtt": 0.995,
+  "uptimeMs": 31009
+},
+    {
+  "processId": 15696,
+  "timestamp": 30016,
+  "totalPacketsSent": 158,
+  "totalPacketsReceived": 422,
+  "recentPacketsSent": 5,
+  "recentPacketsReceived": 15,
+  "tps": 5.263790163256152,
+  "avgLatency": 0,
+  "maxLatency": 0,
+  "avgRtt": 0.23475862068965514,
+  "maxRtt": 0.811,
+  "uptimeMs": 30016
+}
+  ]
+}

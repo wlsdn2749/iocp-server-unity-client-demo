@@ -83,7 +83,11 @@ public:
         }
         
         for (int i = 0; i < clientCount; i++) {
-            intptr_t clientProcess = _spawnl(_P_NOWAIT, clientPath.c_str(), "DummyClientCS.exe", nullptr);
+            // gTest 환경변수 설정
+            _putenv("GTEST_MODE=true");
+            _putenv("PERFORMANCE_TEST=true");
+            
+            intptr_t clientProcess = _spawnl(_P_NOWAIT, clientPath.c_str(), "DummyClientCS.exe", "--gtest", "--performance-test", nullptr);
             if (clientProcess == -1) {
                 std::cout << "❌ 클라이언트 " << i << " 시작 실패\n";
                 continue;

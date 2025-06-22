@@ -4,6 +4,10 @@
 #include "GameSession.h"
 #include "Player.h"
 #include "Room.h"
+#include "PrometheusMetrics.h"
+
+// Prometheus 메트릭 (외부 선언)
+extern PrometheusMetrics* GPrometheusMetrics;
 
 // Random Code
 #include <random>
@@ -27,6 +31,12 @@ bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len)
 bool Handle_C_LOGIN(PacketSessionRef& session, Protocol::C_LOGIN& pkt)
 {
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	// Prometheus 메트릭 업데이트
+	if (GPrometheusMetrics) {
+		GPrometheusMetrics->IncrementPacketsReceived();
+		GPrometheusMetrics->IncrementConnectedClients();
+	}
 
 	//// TODO : validation 체크
 
@@ -99,6 +109,12 @@ bool Handle_C_CHAT(PacketSessionRef& session, Protocol::C_CHAT& pkt)
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
 	std::cout << pkt.msg() << endl;
 
+	// Prometheus 메트릭 업데이트
+	if (GPrometheusMetrics) {
+		GPrometheusMetrics->IncrementPacketsReceived();
+		GPrometheusMetrics->IncrementChatPackets();
+	}
+
 	Protocol::S_BROADCAST_CHAT chatPkt;
 	chatPkt.set_playerid(gameSession->_currentPlayer->playerId);
 	chatPkt.set_msg(pkt.msg());
@@ -109,10 +125,43 @@ bool Handle_C_CHAT(PacketSessionRef& session, Protocol::C_CHAT& pkt)
 	return true;
 }
 
+bool Handle_C_RTT(PacketSessionRef& session, Protocol::C_RTT& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+	
+	// 현재 서버 시간을 마이크로초 단위로 측정
+	auto now = std::chrono::high_resolution_clock::now();
+	auto duration = now.time_since_epoch();
+	auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(duration).count();
+	
+	// S_RTT 패킷 생성 및 응답
+	Protocol::S_RTT rttPkt;
+	rttPkt.set_clienttime(pkt.clienttime());  // 클라이언트가 보낸 시간을 그대로 반환
+	rttPkt.set_servertime(microseconds);      // 서버 현재 시간
+	
+	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(rttPkt);
+	session->Send(sendBuffer);
+	
+	// Prometheus 메트릭 업데이트 (RTT 계산은 클라이언트에서 수행)
+	if (GPrometheusMetrics) {
+		GPrometheusMetrics->IncrementPacketsReceived();
+		GPrometheusMetrics->IncrementRttPackets();
+	}
+	
+	return true;
+}
+
 bool Handle_C_MOVE(PacketSessionRef& session, Protocol::C_MOVE& pkt)
 {
 	
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+	
+	// Prometheus 메트릭 업데이트
+	if (GPrometheusMetrics) {
+		GPrometheusMetrics->IncrementPacketsReceived();
+		GPrometheusMetrics->IncrementMovePackets();
+	}
+	
 	// Log
 	//cout << "Id: " << gameSession->_currentPlayer->playerId << " Moved" << endl;
 	// 움직임을 갱신해주기

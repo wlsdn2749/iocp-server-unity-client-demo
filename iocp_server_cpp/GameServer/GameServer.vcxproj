@@ -214,6 +214,7 @@ CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
     <ClInclude Include="pch.h" />
     <ClInclude Include="PerformanceStats.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PrometheusMetrics.h" />
     <ClInclude Include="Protocol.pb.h" />
     <ClInclude Include="ClientPacketHandler.h" />
     <ClInclude Include="Room.h" />

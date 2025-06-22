@@ -49,7 +49,7 @@ ______________________________________________________________________
 
 ### **1. 🎯 원클릭 성능 테스트 (추천)**
 ```bash
-cd iocp_server_cpp/PerformanceTest/
+cd iocp_server_cpp/PerformanceTest/scripts/
 .\build_and_test_real_network.bat
 ```
 
@@ -86,7 +86,7 @@ DummyClientCS.exe
 - ✅ **자동 파일 정리**: 테스트 후 요약 파일 생성
 - ✅ **실제 네트워크 성능 측정**: 가상 시뮬레이션이 아닌 실제 TCP/IP 통신
 
-> 📊 **상세한 성능 테스트 정보**: [`iocp_server_cpp/PerformanceTest/README.md`](iocp_server_cpp/PerformanceTest/README.md) 참조
+> 📊 **성능 테스트 가이드**: [`iocp_server_cpp/PerformanceTest/README.md`](iocp_server_cpp/PerformanceTest/README.md) | [`iocp_server_cpp/LoadTest/README.md`](iocp_server_cpp/LoadTest/README.md)
 
 ## 🛠️ **자동화 도구 사용법**
 
@@ -123,24 +123,41 @@ flowchart TD
 ```
 
 
-## 🧪 **테스트 시나리오**
+## 🧪 **부하테스트 & 성능 분석**
 
-### **✅ 원클릭 성능 테스트**
+### **📂 LoadTest - 실시간 모니터링 부하테스트**
 ```bash
+cd iocp_server_cpp/LoadTest/scripts/
+.\quick_test.bat          # 30초 빠른 테스트
+.\gradual_load_test.bat   # 점진적 부하테스트 (1->5->10->...->30 클라이언트)
+```
+- **🎯 실시간 모니터링**: Prometheus + Grafana 대시보드 (http://localhost:3000)
+- **📊 시각적 분석**: TPS, 지연시간, 메모리 사용량 실시간 추적
+- **🔄 점진적 증가**: 성능 한계점 자동 탐지
+
+> 📋 **상세 가이드**: [`iocp_server_cpp/LoadTest/README.md`](iocp_server_cpp/LoadTest/README.md)
+
+### **📂 PerformanceTest - 실제 네트워크 성능 측정**
+```bash
+cd iocp_server_cpp/PerformanceTest/scripts/
 .\build_and_test_real_network.bat
 ```
-- 실제 네트워크 성능 측정
-- 자동 리포트 생성 (`performance_summary.json`)
-- 깔끔한 파일 정리
+- **🌐 실제 TCP 통신**: GameServer.exe + DummyClientCS.exe 실제 실행
+- **📈 성능 리포트**: CSV/XML/JSON 형식 자동 생성
+- **🧪 Google Test**: 단위 테스트 프레임워크 기반
+- **📊 통계 수집**: client_stats_*.json (gTest 환경에서만)
 
-### **✅ 실제 게임 시나리오**
-- **로그인** → **이동 100회** → **채팅 10회** → **종료**
-- 45초간 실제 게임 플레이 패턴 테스트
-- 실시간 성능 지표 수집 및 분석
+> 📋 **상세 가이드**: [`iocp_server_cpp/PerformanceTest/README.md`](iocp_server_cpp/PerformanceTest/README.md)
 
-### **✅ 크로스 플랫폼 테스트**
-- C++ 서버 + Unity Client + DummyClient C# 동시 실행
-- 서로 다른 언어/플랫폼 간 완벽 호환 확인
+### **🎮 테스트 시나리오 비교**
+
+| 구분 | LoadTest | PerformanceTest |
+|------|----------|----------------|
+| **목적** | 실시간 부하 모니터링 | 정확한 성능 측정 |
+| **모니터링** | Grafana 대시보드 | 리포트 파일 생성 |
+| **클라이언트 수** | 점진적 증가 (1→30) | 고정 (코드 설정) |
+| **JSON 생성** | ❌ 생성 안됨 | ✅ gTest 모드에서만 |
+| **실행 시간** | 5분 (점진적) | 45초 (고정) |
 
 ## 📚 **학습 기반**
 
@@ -171,6 +188,8 @@ flowchart TD
 ### **Testing & Automation**
 - Google Test 3.21.12 / 실시간 JSON 로깅
 - Python 3.10 (PacketGenerator) / CMake 3.20+
+- **🆕 Prometheus + Grafana**: 실시간 부하테스트 모니터링
+- **🆕 Docker Compose**: 원클릭 모니터링 환경
 
 ## 📈 **성능 기준값 (실측) -- 이 부분은 추후 보완 예정**
 
@@ -181,6 +200,26 @@ flowchart TD
 | **패킷 손실률** | 1.00% | 1.00% | 1.00% |
 
 > 📊 **상세한 성능 데이터**: [`iocp_server_cpp/PerformanceTest/README.md`](iocp_server_cpp/PerformanceTest/README.md) 참조
+
+## 📋 **프로젝트 구조 & 다이어그램**
+
+### **📂 폴더 구조**
+```
+iocp-server-unity-client-demo/
+├── 📂 iocp_server_cpp/          # C++ 서버 & 테스트
+│   ├── 📂 LoadTest/             # 실시간 모니터링 부하테스트
+│   ├── 📂 PerformanceTest/      # 실제 네트워크 성능 측정
+│   ├── 📂 GameServer/           # 메인 게임 서버
+│   └── 📂 DummyClientCS/        # C# 테스트 클라이언트
+├── 📂 unity_client_csharp/      # Unity 클라이언트
+└── 📂 docs/diagram/             # 시스템 다이어그램
+```
+
+### **📊 시스템 다이어그램**
+- **컴포넌트 구조**: [`docs/diagram/01_Compoenent_diagram.md`](docs/diagram/01_Compoenent_diagram.md)
+- **서버 아키텍처**: [`docs/diagram/02_Server_diagram.md`](docs/diagram/02_Server_diagram.md)  
+- **클라이언트 구조**: [`docs/diagram/03_Client_diagram.md`](docs/diagram/03_Client_diagram.md)
+- **패킷 시퀀스**: [`docs/diagram/04_Packet_Sequence_diagram.md`](docs/diagram/04_Packet_Sequence_diagram.md)
 
 ## 🤝 **기여하기**
 
@@ -197,6 +236,9 @@ flowchart TD
 
 **🚀 실전 수준의 게임 서버를 경험해보세요!**
 
-**원클릭 테스트로 바로 시작하기**: `.\build_and_test_real_network.bat`
+**📊 실시간 모니터링**: `cd iocp_server_cpp/LoadTest/scripts/ && .\quick_test.bat`  
+**🧪 성능 측정**: `cd iocp_server_cpp/PerformanceTest/scripts/ && .\build_and_test_real_network.bat`
+
+**📋 자세한 가이드**: [`LoadTest`](iocp_server_cpp/LoadTest/README.md) | [`PerformanceTest`](iocp_server_cpp/PerformanceTest/README.md) | [`Diagrams`](docs/diagram/)
 
 </div>

@@ -19,6 +19,8 @@ enum : uint16
 	PKT_S_BROADCAST_MOVE = 1009,
 	PKT_C_CHAT = 1010,
 	PKT_S_BROADCAST_CHAT = 1011,
+	PKT_C_RTT = 1012,
+	PKT_S_RTT = 1013,
 
 };
 
@@ -32,6 +34,7 @@ bool Handle_S_PLAYERLIST(PacketSessionRef& session, Protocol::S_PLAYERLIST& pkt)
 bool Handle_S_BROADCAST_ENTER_GAME(PacketSessionRef& session, Protocol::S_BROADCAST_ENTER_GAME& pkt);
 bool Handle_S_BROADCAST_MOVE(PacketSessionRef& session, Protocol::S_BROADCAST_MOVE& pkt);
 bool Handle_S_BROADCAST_CHAT(PacketSessionRef& session, Protocol::S_BROADCAST_CHAT& pkt);
+bool Handle_S_RTT(PacketSessionRef& session, Protocol::S_RTT& pkt);
 
 class ServerPacketHandler
 {
@@ -50,6 +53,7 @@ public:
 		GPacketHandler[PKT_S_BROADCAST_ENTER_GAME] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::S_BROADCAST_ENTER_GAME>(Handle_S_BROADCAST_ENTER_GAME, session, buffer, len); };
 		GPacketHandler[PKT_S_BROADCAST_MOVE] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::S_BROADCAST_MOVE>(Handle_S_BROADCAST_MOVE, session, buffer, len); };
 		GPacketHandler[PKT_S_BROADCAST_CHAT] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::S_BROADCAST_CHAT>(Handle_S_BROADCAST_CHAT, session, buffer, len); };
+		GPacketHandler[PKT_S_RTT] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::S_RTT>(Handle_S_RTT, session, buffer, len); };
 		
 	}
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -62,6 +66,7 @@ public:
 	static SendBufferRef MakeSendBuffer(Protocol::C_LEAVE_GAME& pkt) { return MakeSendBuffer(pkt, PKT_C_LEAVE_GAME); };
 	static SendBufferRef MakeSendBuffer(Protocol::C_MOVE& pkt) { return MakeSendBuffer(pkt, PKT_C_MOVE); };
 	static SendBufferRef MakeSendBuffer(Protocol::C_CHAT& pkt) { return MakeSendBuffer(pkt, PKT_C_CHAT); };
+	static SendBufferRef MakeSendBuffer(Protocol::C_RTT& pkt) { return MakeSendBuffer(pkt, PKT_C_RTT); };
 
 private:
 	template<typename PacketType, typename ProcessFunc>

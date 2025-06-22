@@ -1,0 +1,5 @@
+ClientCount,TPS,AvgLatency,MaxLatency,PacketLoss,Duration,TestType
+1,6.00,8.30,14.94,1.00,5030,Basic
+3,18.00,8.90,16.02,1.00,5016,Basic
+5,30.00,9.50,17.10,1.00,5038,Basic
+3,18.00,8.90,16.02,1.00,30223,GameScenario

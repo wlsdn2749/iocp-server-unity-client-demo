@@ -20,7 +20,7 @@ cd /d "%~dp0"
 echo.
 echo 📦 1단계: GameServer 빌드 중...
 echo ===============================================
-cd ..
+cd ../..
 echo [DEBUG] 현재 경로: %CD%
 if exist Binary/Debug/GameServer.exe (
     echo ✅ Debug 버전 GameServer.exe 발견
@@ -141,24 +141,28 @@ echo    - 필터: --gtest_filter=RealNetworkTestSuite.*
 echo    - 실행 파일: %TEST_EXE%
 echo.
 
+:: gTest 환경변수 설정 (DummyClientCS에서 통계 파일 생성 활성화)
+set GTEST_MODE=true
+set PERFORMANCE_TEST=true
+
 :: 실제 네트워크 테스트만 실행 (RealNetworkTestSuite 필터)
-%TEST_EXE% --gtest_filter=RealNetworkTestSuite.* --gtest_output=xml:real_network_test_results.xml
+%TEST_EXE% --gtest_filter=RealNetworkTestSuite.* --gtest_output=xml:../reports/real_network_test_results.xml
 
 echo.
 echo 📊 5단계: 테스트 결과 확인...
 echo ===============================================
 
-if exist real_network_performance_report.csv (
-    echo ✅ 성능 리포트 생성됨: real_network_performance_report.csv
+if exist ../reports/real_network_performance_report.csv (
+    echo ✅ 성능 리포트 생성됨: ../reports/real_network_performance_report.csv
     echo.
     echo 📄 CSV 리포트 내용:
-    type real_network_performance_report.csv
+    type ../reports/real_network_performance_report.csv
 ) else (
     echo ⚠️  성능 리포트가 생성되지 않았습니다.
 )
 
-if exist real_network_test_results.xml (
-    echo ✅ XML 테스트 결과 생성됨: real_network_test_results.xml
+if exist ../reports/real_network_test_results.xml (
+    echo ✅ XML 테스트 결과 생성됨: ../reports/real_network_test_results.xml
 ) else (
     echo ⚠️  XML 테스트 결과가 생성되지 않았습니다.
 )
@@ -168,8 +172,8 @@ echo 🏁 실제 네트워크 성능 테스트 완료!
 echo ===============================================
 echo.
 echo 다음 파일들을 확인하세요:
-echo - real_network_performance_report.csv (성능 데이터)
-echo - real_network_test_results.xml (상세 테스트 결과)
+echo - ../reports/real_network_performance_report.csv (성능 데이터)
+echo - ../reports/real_network_test_results.xml (상세 테스트 결과)
 echo.
 echo 📁 테스트 실행 파일 위치: %TEST_EXE%
 echo.

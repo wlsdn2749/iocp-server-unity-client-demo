@@ -86,6 +86,9 @@
     <ClInclude Include="PerformanceStats.h">
       <Filter>Main</Filter>
     </ClInclude>
+    <ClInclude Include="PrometheusMetrics.h">
+      <Filter>Main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Common\Protobuf\bin\Protocol.proto">

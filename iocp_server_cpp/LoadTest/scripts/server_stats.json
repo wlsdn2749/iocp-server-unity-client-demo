@@ -1,0 +1,13 @@
+{
+  "timestamp": 101600,
+  "connectedClients": 30,
+  "totalConnections": 30,
+  "totalPacketsReceived": 9184,
+  "totalPacketsSent": 167682,
+  "recentPacketsReceived": 161,
+  "recentPacketsSent": 3949,
+  "tps": 90.3543,
+  "avgProcessingTime": 0.64897,
+  "maxProcessingTime": 5.999,
+  "uptimeMs": 101600
+}

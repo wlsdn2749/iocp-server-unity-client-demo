@@ -45,6 +45,37 @@ public class NetworkManager : MonoBehaviour
             () => { return _session; },
             1);
         
+        // RTT 패킷을 1초마다 보내는 코루틴 시작
+        StartCoroutine(SendRttCoroutine());
+    }
+
+    // RTT 패킷을 주기적으로 보내는 코루틴
+    private IEnumerator SendRttCoroutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1.0f); // 1초마다
+            
+            try
+            {
+                Protocol.C_RTT rttPacket = new Protocol.C_RTT();
+                
+                // 현재 클라이언트 시간을 마이크로초 단위로 측정
+                var now = DateTime.UtcNow;
+                var ticks = now.Ticks;
+                var microseconds = ticks / 10; // Ticks를 마이크로초로 변환 (1 tick = 100 nanoseconds)
+                
+                rttPacket.ClientTime = (ulong)microseconds;
+                var sendBuffer = ServerPacketManager.MakeSendBuffer(rttPacket);
+                _session.Send(sendBuffer);
+                
+                Debug.Log("[RTT 패킷 전송]");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"RTT 패킷 전송 오류: {e.Message}");
+            }
+        }
     }
 
     // Update is called once per frame

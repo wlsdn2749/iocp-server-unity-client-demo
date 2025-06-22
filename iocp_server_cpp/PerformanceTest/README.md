@@ -622,16 +622,26 @@ jobs:
 ### **파일 구조**
 ```
 PerformanceTest/
-├── network_test.bat                    # 원클릭 실행 스크립트
-├── build_and_test_real_network.bat     # 동일한 기능
-├── CMakeLists.txt                      # 빌드 설정
-├── PerformanceTest.cpp                 # 가상 시뮬레이션 테스트
-├── RealNetworkPerformanceTest.cpp      # 실제 네트워크 테스트  
-├── build/
-│   ├── Debug/PerformanceTest.exe
-│   └── Release/PerformanceTest.exe
-├── real_network_performance_report.csv # 성능 리포트
-└── real_network_test_results.xml       # 상세 테스트 결과
+├── 📂 scripts/          # 실행 스크립트들
+│   ├── build_and_test_real_network.bat    # 빌드+테스트 올인원
+│   └── network_test.bat                   # 네트워크 테스트만
+|
+├── 📂 reports/          # 테스트 결과 파일들
+│   ├── performance_summary.json          # 성능 요약
+│   ├── real_network_performance_report.csv    # CSV 리포트
+│   ├── real_network_test_results.xml     # XML 테스트 결과
+│   └── server_stats.json                 # 서버 통계
+│
+├── 📂 docs/             # 문서들
+│   └── README.md                          # 상세 매뉴얼
+│
+├── 📂 build/            # CMake 빌드 출력
+│   ├── Debug/
+│   └── Release/
+│
+└── README.md            # 이 파일 (간단 가이드)
+│   CMakeLists.txt                     # CMake 설정
+│   RealNetworkPerformanceTest.cpp     # C++ 테스트 소스
 ```
 
 ### **성능 벤치마크 목표**

@@ -46,6 +46,11 @@ bool Handle_S_BROADCAST_CHAT(PacketSessionRef& session, Protocol::S_BROADCAST_CH
 	return true;
 }
 
+bool Handle_S_RTT(PacketSessionRef& session, Protocol::S_RTT& pkt)
+{
+	return true;
+}
+
 bool Handle_S_PLAYERLIST(PacketSessionRef& session, Protocol::S_PLAYERLIST& pkt)
 {
 	std::cout << "\n=== PlayerList Packet Contents ===" << std::endl;
