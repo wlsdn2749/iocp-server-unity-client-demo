@@ -64,5 +64,33 @@ namespace Packet
             ServerSession serverSession = session as ServerSession;
             PlayerManager.Instance.LeaveGame(pkt);
         }
+        
+        public static void HANDLE_S_RTT(PacketSession session, S_RTT packet)
+        {
+            S_RTT pkt = packet as S_RTT;
+            ServerSession serverSession = session as ServerSession;
+            
+            // 현재 클라이언트 시간을 마이크로초 단위로 측정
+            var now = DateTime.UtcNow;
+            var ticks = now.Ticks;
+            var currentMicroseconds = ticks / 10; // Ticks를 마이크로초로 변환 (1 tick = 100 nanoseconds)
+            
+            // RTT 계산 (현재 시간 - 원래 클라이언트 전송 시간)
+            ulong originalClientTime = pkt.ClientTime;
+            ulong currentTime = (ulong)currentMicroseconds;
+            
+            // RTT = 현재 시간 - 원래 전송 시간 (마이크로초)
+            double rttMicroseconds = (double)(currentTime - originalClientTime);
+            double rttMs = rttMicroseconds / 1000.0; // 마이크로초를 밀리초로 변환
+            
+            // 비정상적인 값 필터링 (음수이거나 너무 큰 값)
+            if (rttMs < 0 || rttMs > 10000) // 10초 이상은 비정상
+            {
+                UnityEngine.Debug.LogWarning($"[RTT 측정] 비정상적인 RTT 값: {rttMs:F2}ms - 무시됨");
+                return;
+            }
+            
+            UnityEngine.Debug.Log($"[RTT 측정] {rttMs:F2}ms");
+        }
     }
 }

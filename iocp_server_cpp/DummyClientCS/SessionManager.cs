@@ -56,6 +56,30 @@ namespace DummyClientCS
             }
         }
 
+        public void SendForEachRtt()
+        {
+            if (!_canSendPackets) return; // ENTER_GAME 완료 전에는 패킷 송신 금지
+
+            lock (_lock)
+            {
+                foreach (ServerSession session in _sessions)
+                {
+                    Protocol.C_RTT rttPacket = new Protocol.C_RTT();
+                    
+                    // 현재 클라이언트 시간을 마이크로초 단위로 측정
+                    var now = DateTime.UtcNow;
+                    var ticks = now.Ticks;
+                    var microseconds = ticks / 10; // Ticks를 마이크로초로 변환 (1 tick = 100 nanoseconds)
+                    
+                    rttPacket.ClientTime = (ulong)microseconds;
+                    ArraySegment<byte> segment = ServerPacketManager.MakeSendBuffer(rttPacket);
+
+                    session.Send(segment);
+                    ClientPerformanceStats.Instance.OnPacketSent();
+                }
+            }
+        }
+
         public void SetCanSendPackets(bool canSend)
         {
             _canSendPackets = canSend;

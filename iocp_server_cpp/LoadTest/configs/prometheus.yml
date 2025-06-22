@@ -1,0 +1,70 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+scrape_configs:
+  # Prometheus 자체 메트릭
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # 시스템 메트릭 (Node Exporter)
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  # IOCP GameServer 메트릭
+  - job_name: 'gameserver'
+    metrics_path: '/metrics'
+    scrape_interval: 5s  # 게임서버는 더 자주 수집
+    static_configs:
+      - targets: ['host.docker.internal:10001']  # Windows Docker에서 호스트 접근 (포트 10001로 변경)
+    scrape_timeout: 4s  # scrape_interval보다 작아야 함
+
+  # DummyClient 메트릭들 (다중 인스턴스 - 30개 클라이언트 지원)
+  - job_name: 'dummy-clients'
+    metrics_path: '/metrics'
+    scrape_interval: 5s
+    static_configs:
+      - targets: 
+        - 'host.docker.internal:10100'  # Client 1
+        - 'host.docker.internal:10101'  # Client 2  
+        - 'host.docker.internal:10102'  # Client 3
+        - 'host.docker.internal:10103'  # Client 4
+        - 'host.docker.internal:10104'  # Client 5
+        - 'host.docker.internal:10105'  # Client 6
+        - 'host.docker.internal:10106'  # Client 7
+        - 'host.docker.internal:10107'  # Client 8
+        - 'host.docker.internal:10108'  # Client 9
+        - 'host.docker.internal:10109'  # Client 10
+        - 'host.docker.internal:10110'  # Client 11
+        - 'host.docker.internal:10111'  # Client 12
+        - 'host.docker.internal:10112'  # Client 13
+        - 'host.docker.internal:10113'  # Client 14
+        - 'host.docker.internal:10114'  # Client 15
+        - 'host.docker.internal:10115'  # Client 16
+        - 'host.docker.internal:10116'  # Client 17
+        - 'host.docker.internal:10117'  # Client 18
+        - 'host.docker.internal:10118'  # Client 19
+        - 'host.docker.internal:10119'  # Client 20
+        - 'host.docker.internal:10120'  # Client 21
+        - 'host.docker.internal:10121'  # Client 22
+        - 'host.docker.internal:10122'  # Client 23
+        - 'host.docker.internal:10123'  # Client 24
+        - 'host.docker.internal:10124'  # Client 25
+        - 'host.docker.internal:10125'  # Client 26
+        - 'host.docker.internal:10126'  # Client 27
+        - 'host.docker.internal:10127'  # Client 28
+        - 'host.docker.internal:10128'  # Client 29
+        - 'host.docker.internal:10129'  # Client 30
+    scrape_timeout: 4s  # scrape_interval보다 작아야 함
+
+  # Windows Performance Counters (옵션 - WMI Exporter 사용시)
+  - job_name: 'windows-perf'
+    static_configs:
+      - targets: ['host.docker.internal:9182']
+    scrape_interval: 30s 

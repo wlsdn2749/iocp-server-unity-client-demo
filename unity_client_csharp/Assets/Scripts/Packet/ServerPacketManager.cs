@@ -20,6 +20,8 @@ namespace Packet
 	    PKT_S_BROADCAST_MOVE = 1009,
 	    PKT_C_CHAT = 1010,
 	    PKT_S_BROADCAST_CHAT = 1011,
+	    PKT_C_RTT = 1012,
+	    PKT_S_RTT = 1013,
     }
     public class ServerPacketManager
     {
@@ -50,6 +52,7 @@ namespace Packet
         public static ArraySegment<byte> MakeSendBuffer(Protocol.C_LEAVE_GAME pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_LEAVE_GAME);
         public static ArraySegment<byte> MakeSendBuffer(Protocol.C_MOVE pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_MOVE);
         public static ArraySegment<byte> MakeSendBuffer(Protocol.C_CHAT pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_CHAT);
+        public static ArraySegment<byte> MakeSendBuffer(Protocol.C_RTT pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_RTT);
 
         void Register()
         {
@@ -64,6 +67,7 @@ namespace Packet
             RegisterHandler((ushort)PacketID.PKT_S_BROADCAST_ENTER_GAME, ServerPacketHandler.HANDLE_S_BROADCAST_ENTER_GAME, Protocol.S_BROADCAST_ENTER_GAME.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BROADCAST_MOVE, ServerPacketHandler.HANDLE_S_BROADCAST_MOVE, Protocol.S_BROADCAST_MOVE.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BROADCAST_CHAT, ServerPacketHandler.HANDLE_S_BROADCAST_CHAT, Protocol.S_BROADCAST_CHAT.Parser);
+            RegisterHandler((ushort)PacketID.PKT_S_RTT, ServerPacketHandler.HANDLE_S_RTT, Protocol.S_RTT.Parser);
             
                   
         }

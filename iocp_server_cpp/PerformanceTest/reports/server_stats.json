@@ -1,0 +1,13 @@
+{
+  "timestamp": 146017,
+  "connectedClients": 0,
+  "totalConnections": 21,
+  "totalPacketsReceived": 1891,
+  "totalPacketsSent": 5591,
+  "recentPacketsReceived": 0,
+  "recentPacketsSent": 0,
+  "tps": 12.9505,
+  "avgProcessingTime": 0.25153,
+  "maxProcessingTime": 1.877,
+  "uptimeMs": 146017
+}

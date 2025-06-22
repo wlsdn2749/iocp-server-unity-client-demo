@@ -21,10 +21,12 @@ namespace DummyClientCS
         
         private DateTime _startTime = DateTime.Now;
         private List<double> _latencies = new List<double>();
+        private List<double> _rttLatencies = new List<double>();
         private readonly object _lock = new object();
         
         private Timer _saveTimer;
         private int _processId;
+        private bool _enableFileSaving = false;
 
         private ClientPerformanceStats()
         {
@@ -56,8 +58,22 @@ namespace DummyClientCS
             }
         }
 
+        public void RecordRtt(double rttMs)
+        {
+            lock (_lock)
+            {
+                _rttLatencies.Add(rttMs);
+                // 최근 1000개만 유지 (메모리 절약)
+                if (_rttLatencies.Count > 1000)
+                {
+                    _rttLatencies.RemoveAt(0);
+                }
+            }
+        }
+
         public void StartPeriodicSave(int intervalSeconds = 1)
         {
+            _enableFileSaving = true;
             _saveTimer = new Timer(SaveStatsToFile, null, 
                 TimeSpan.FromSeconds(intervalSeconds), 
                 TimeSpan.FromSeconds(intervalSeconds));
@@ -65,11 +81,17 @@ namespace DummyClientCS
 
         private void SaveStatsToFile(object state)
         {
+            // 파일 저장이 비활성화된 경우 건너뜀
+            if (!_enableFileSaving)
+                return;
+                
             try
             {
                 var uptime = DateTime.Now - _startTime;
                 double avgLatency = 0.0;
                 double maxLatency = 0.0;
+                double avgRtt = 0.0;
+                double maxRtt = 0.0;
 
                 lock (_lock)
                 {
@@ -85,6 +107,20 @@ namespace DummyClientCS
                                 maxLatency = latency;
                         }
                         avgLatency = sum / _latencies.Count;
+                    }
+                    
+                    if (_rttLatencies.Count > 0)
+                    {
+                        double sum = 0;
+                        maxRtt = _rttLatencies[0];
+                        
+                        foreach (var rtt in _rttLatencies)
+                        {
+                            sum += rtt;
+                            if (rtt > maxRtt)
+                                maxRtt = rtt;
+                        }
+                        avgRtt = sum / _rttLatencies.Count;
                     }
                 }
 
@@ -102,6 +138,8 @@ namespace DummyClientCS
                     tps = tps,
                     avgLatency = avgLatency,
                     maxLatency = maxLatency,
+                    avgRtt = avgRtt,
+                    maxRtt = maxRtt,
                     uptimeMs = (long)uptime.TotalMilliseconds
                 };
 
@@ -122,8 +160,16 @@ namespace DummyClientCS
         public void Stop()
         {
             _saveTimer?.Dispose();
-            SaveStatsToFile(null); // 마지막 저장
-            Console.WriteLine($"📊 클라이언트 통계 저장 완료: client_stats_{_processId}.json");
+            
+            if (_enableFileSaving)
+            {
+                SaveStatsToFile(null); // 마지막 저장
+                Console.WriteLine($"📊 클라이언트 통계 저장 완료: client_stats_{_processId}.json");
+            }
+            else
+            {
+                Console.WriteLine("📊 클라이언트 통계 저장 건너뜀 (파일 저장 비활성화)");
+            }
         }
     }
 } 

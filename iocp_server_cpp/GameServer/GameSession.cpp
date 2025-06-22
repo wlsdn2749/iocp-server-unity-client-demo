@@ -3,7 +3,10 @@
 #include "GameSessionManager.h"
 #include "ClientPacketHandler.h"
 #include "Room.h"
+#include "PrometheusMetrics.h"
 
+// Prometheus 메트릭 (외부 선언)
+extern PrometheusMetrics* GPrometheusMetrics;
 
 void GameSession::OnConnected()
 {
@@ -42,6 +45,19 @@ void GameSession::OnRecvPacket(BYTE* buffer, int32 len)
 	
 	STATS_PACKET_RECEIVED();
 	STATS_RECORD_PROCESSING_TIME(duration.count() / 1000.0); // microseconds to milliseconds
+	
+	// Prometheus 메트릭 업데이트 (패킷 처리 시간)
+	double processingTimeMs = duration.count() / 1000.0;
+	if (GPrometheusMetrics) {
+		GPrometheusMetrics->UpdateProcessingTime(processingTimeMs);
+		
+		// 디버깅용 로그 (처음 몇 개만)
+		static int logCount = 0;
+		if (logCount < 5) {
+			std::cout << "[DEBUG] 패킷 처리 시간: " << processingTimeMs << "ms" << std::endl;
+			logCount++;
+		}
+	}
 }
 
 void GameSession::OnSend(int32 len)
@@ -49,4 +65,4 @@ void GameSession::OnSend(int32 len)
 	STATS_PACKET_SENT();
 	// Echo
 	// cout << "OnSend Len = " << len << endl;
-}
+}	

@@ -1,5 +1,7 @@
 ﻿#include "pch.h"
 #include <iostream>
+#include <psapi.h> // 메모리 측정을 위해
+#pragma comment(lib, "psapi.lib")
 
 #include "SendBuffer.h"
 #include "ThreadManager.h"
@@ -19,6 +21,10 @@
 #include "Genprocedures.h"
 #include "XMLParser.h"
 #include "PerformanceStats.h"
+#include "PrometheusMetrics.h"
+
+// Prometheus 메트릭 전역 객체
+PrometheusMetrics* GPrometheusMetrics = nullptr;
 
 // 패킷 직렬화 (Serialization)
 
@@ -54,6 +60,7 @@ BOOL WINAPI ConsoleHandler(DWORD signal) {
 }
 void DoWorkerJob(ServerServiceRef& service)
 {
+	static uint64 lastMemUpdateTick = 0; // 메모리 측정 주기 관리
 	while (true)
 	{
 		LEndTickCount = ::GetTickCount64() + WORKER_TICK;
@@ -66,6 +73,26 @@ void DoWorkerJob(ServerServiceRef& service)
 
 		// 글로벌 큐 (게임에서 처리되는 일감들을 처리함)
 		ThreadManager::DoGlobalQueueWork();
+
+		// Prometheus 메트릭 업데이트
+		if (GPrometheusMetrics)
+		{
+			GPrometheusMetrics->UpdateTps();
+
+			// 1초마다 메모리 사용량 측정
+			uint64 now = ::GetTickCount64();
+			if (now - lastMemUpdateTick >= 1000)
+			{
+				PROCESS_MEMORY_COUNTERS_EX pmc;
+				if (GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PROCESS_MEMORY_COUNTERS*>(&pmc), sizeof(pmc)))
+				{
+					// pmc.WorkingSetSize : 실제 물리 메모리 사용량
+					// pmc.PrivateUsage   : 커밋된 가상 메모리(Private Bytes)
+					GPrometheusMetrics->UpdateMemoryUsage(static_cast<int64>(pmc.PrivateUsage), 0); // 풀 메모리는 0으로 표기
+				}
+				lastMemUpdateTick = now;
+			}
+		}
 	}
 }
 
@@ -120,6 +147,14 @@ int main()
 	// 성능 통계 수집 시작
 	PerformanceStats::Instance()->StartPeriodicSave(1); // 1초마다 통계 저장
 	cout << "🚀 GameServer started with performance monitoring" << endl;
+
+	// Prometheus 메트릭 시작
+	GPrometheusMetrics = new PrometheusMetrics();
+	if (GPrometheusMetrics->Start()) {  // 기본 포트 10001 사용
+		cout << "📊 Prometheus 메트릭 서버 시작됨 (포트 10001)" << endl;
+	} else {
+		cout << "❌ Prometheus 메트릭 서버 시작 실패" << endl;
+	}
 
 	ServerServiceRef service = MakeShared<ServerService>(
 		NetAddress(L"127.0.0.1", 8421),
