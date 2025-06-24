@@ -23,10 +23,10 @@ public:
 	void Unbind();
 
 public:
-	bool	BindParam(int32 paramIndex, bool* value, SQLLEN* index);
+	bool	BindParam(int32 paramIndex, bool* value, SQLLEN* index); // bool도 지원 X
 	bool	BindParam(int32 paramIndex, float* value, SQLLEN* index);
 	bool	BindParam(int32 paramIndex, double* value, SQLLEN* index);
-	bool	BindParam(int32 paramIndex, int8* value, SQLLEN* index);
+	bool	BindParam(int32 paramIndex, int8* value, SQLLEN* index); // Unsigned int DB에서 지원 X
 	bool	BindParam(int32 paramIndex, int16* value, SQLLEN* index);
 	bool	BindParam(int32 paramIndex, int32* value, SQLLEN* index);
 	bool	BindParam(int32 paramIndex, int64* value, SQLLEN* index);
@@ -34,10 +34,10 @@ public:
 	bool	BindParam(int32 paramIndex, const WCHAR* str, SQLLEN* index);
 	bool	BindParam(int32 paramIndex, const BYTE* bin, int32 size, SQLLEN* index);
 
-	bool	BindCol(int32 columnIndex, bool* value, SQLLEN* index);
+	bool	BindCol(int32 columnIndex, bool* value, SQLLEN* index); // bool도 지원 X
 	bool	BindCol(int32 columnIndex, float* value, SQLLEN* index);
 	bool	BindCol(int32 columnIndex, double* value, SQLLEN* index);
-	bool	BindCol(int32 columnIndex, int8* value, SQLLEN* index);
+	bool	BindCol(int32 columnIndex, int8* value, SQLLEN* index); // Unsigned int DB에서 지원 X
 	bool	BindCol(int32 columnIndex, int16* value, SQLLEN* index);
 	bool	BindCol(int32 columnIndex, int32* value, SQLLEN* index);
 	bool	BindCol(int32 columnIndex, int64* value, SQLLEN* index);

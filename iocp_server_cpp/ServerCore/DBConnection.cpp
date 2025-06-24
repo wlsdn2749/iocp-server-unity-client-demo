@@ -163,12 +163,13 @@ bool DBConnection::BindParam(int32 paramIndex, const WCHAR* str, SQLLEN* index)
 	SQLULEN size = static_cast<SQLULEN>((::wcslen(str) + 1) * 2); // null문자  + wchar당 2니까 x2
 	*index = SQL_NTSL;
 
-	if (size > WVARCHAR_MAX)
+	if (size > WVARCHAR_MAX) // 4000
 		return BindParam(paramIndex, SQL_C_WCHAR, SQL_WLONGVARCHAR, size, (SQLPOINTER)str, index);
 	else
 		return BindParam(paramIndex, SQL_C_WCHAR, SQL_WVARCHAR, size, (SQLPOINTER)str, index);
 }
 
+// 바이너리를 저장할 때 사용  
 bool DBConnection::BindParam(int32 paramIndex, const BYTE* bin, int32 size, SQLLEN* index)
 {
 	if (bin == nullptr)

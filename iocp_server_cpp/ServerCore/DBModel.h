@@ -46,7 +46,7 @@ public:
 	String				_typeText;
 	int32				_maxLength = 0;
 	bool				_nullable = false;
-	bool				_identity = false;
+	bool				_identity = false; // 1씩 증가하는
 	int64				_seedValue = 0;
 	int64				_incrementValue = 0;
 	String				_default;

@@ -15,7 +15,7 @@ public:
 	void Clear();
 
 	DBConnection*	Pop(); // Pop하고 사용한다음에
-	void				Push(DBConnection* connection); // 여기서 반납 바로하므로, 굳이 smart_pointer 필요없음
+	void			Push(DBConnection* connection); // 여기서 반납 바로하므로, 굳이 smart_pointer 필요없음
 
 private:
 	USE_LOCK;

@@ -103,7 +103,7 @@
     <None Include="..\Common\Protobuf\bin\GenPackets.bat">
       <Filter>Protocol</Filter>
     </None>
-    <None Include="..\Common\Procedures\GenPackets.bat">
+    <None Include="..\Common\Procedures\GenProcs.bat">
       <Filter>DB</Filter>
     </None>
   </ItemGroup>

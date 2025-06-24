@@ -29,7 +29,7 @@ PrometheusMetrics* GPrometheusMetrics = nullptr;
 // 패킷 직렬화 (Serialization)
 
 //class Player
-//{
+//{r
 //public:
 //	int32 hp = 0;
 //	int32 attack = 0;
@@ -98,14 +98,14 @@ void DoWorkerJob(ServerServiceRef& service)
 
 int main()
 {
-	/*ASSERT_CRASH(GDBConnectionPool->Connect(1, L"Driver={ODBC Driver 17 for SQL Server};Server=(localdb)\\MSSQLLocalDB;Database=ServerDb;Trusted_Connection=Yes;"));
+	ASSERT_CRASH(GDBConnectionPool->Connect(1, L"Driver={ODBC Driver 17 for SQL Server};Server=(localdb)\\MSSQLLocalDB;Database=ServerDb;Trusted_Connection=Yes;"));
 
 	DBConnection* dbConn = GDBConnectionPool->Pop();
 	DBSynchronizer dbSync(*dbConn);
 	dbSync.Synchronize(L"GameDB.xml");
 
 	{
-		WCHAR name[] = L"NAMES";
+		WCHAR name[] = L"홍길동";
 		SP::InsertGold insertGold(*dbConn);
 		insertGold.In_Gold(100);
 		insertGold.In_Name(name);
@@ -132,10 +132,10 @@ int main()
 		while (getGold.Fetch())
 		{
 			GConsoleLogger->WriteStdOut(Color::BLUE,
-				L"ID[%d] Gold[%d] Name[%s]\n", id, gold, name);
+				L"ID[%d] Gold[%d] Name[%ls]\n", id, gold, name);
 		}
 
-	}*/
+	}
 
 	ClientPacketHandler::init();
 

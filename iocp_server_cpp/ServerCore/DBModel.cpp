@@ -7,6 +7,9 @@ using namespace DBModel;
 	Column
 --------------*/
 
+
+// Column을 생성하기 위한 Text를 만들어준다.
+// CREATE TABLE ....
 String Column::CreateText()
 {
 	return DBModel::Helpers::Format(
