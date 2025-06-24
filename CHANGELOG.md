@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.14] - 2025-06-24
+
+### 🚀 Features
+
+- *(DB)* MS-SQL DB Beta Supported
+
+### 🐛 Bug Fixes
+
+- In Will be added ConsoleLogger's Output, Korean output has been broken out. fixed it
+
 ## [0.0.13] - 2025-06-22
 
 ### ⚙️ Miscellaneous Tasks
