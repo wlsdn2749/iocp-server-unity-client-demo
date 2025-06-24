@@ -356,17 +356,17 @@ bool DBSynchronizer::GatherDBStoredProcedures()
 
 void DBSynchronizer::CompareDBModel()
 {
-	// ������Ʈ ��� �ʱ�ȭ.
+	// 업데이트 목록 초기화
 	_dependentIndexes.clear();
 	for (Vector<String>& queries : _updateQueries)
 		queries.clear();
 
-	// XML�� �ִ� ����� �켱 ���� �´�.
+	// XML에 있는 목록 우선적으로 가져옴
 	Map<String, DBModel::TableRef> xmlTableMap;
 	for (DBModel::TableRef& xmlTable : _xmlTables)
 		xmlTableMap[xmlTable->_name] = xmlTable;
 
-	// DB�� �����ϴ� ���̺���� ���鼭 XML�� ���ǵ� ���̺��� ���Ѵ�.
+	// DB에 실존하는 테이플블 보면서 XML과 비교
 	for (DBModel::TableRef& dbTable : _dbTables)
 	{
 		auto findTable = xmlTableMap.find(dbTable->_name);
@@ -386,7 +386,7 @@ void DBSynchronizer::CompareDBModel()
 		}
 	}
 
-	// �ʿ��� ���ŵ��� ���� XML ���̺� ���Ǵ� ���� �߰�.
+	// 맵에서 제거되지 않은 XML 인덱스 정의는 새로 추가.
 	for (auto& mapIt : xmlTableMap)
 	{
 		DBModel::TableRef& xmlTable = mapIt.second;

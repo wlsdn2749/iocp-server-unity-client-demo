@@ -221,7 +221,7 @@ CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
     <ClInclude Include="Struct.pb.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Common\Procedures\GenPackets.bat" />
+    <None Include="..\Common\Procedures\GenProcs.bat" />
     <None Include="..\Common\Protobuf\bin\Enum.proto" />
     <None Include="..\Common\Protobuf\bin\GenPackets.bat" />
     <None Include="..\Common\Protobuf\bin\Protocol.proto" />

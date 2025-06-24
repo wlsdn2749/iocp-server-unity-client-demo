@@ -28,3 +28,4 @@ exclude_commits = [
 # 태그 패턴에서 버전만 추출
 pattern = "v(?P<version>.*)"
 template = "## [v{{ version }}] - {{ timestamp | date(format=\"%Y-%m-%d\") }}"
+

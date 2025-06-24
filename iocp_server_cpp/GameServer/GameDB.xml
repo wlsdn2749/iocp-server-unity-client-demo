@@ -5,7 +5,7 @@
     <Column name="gold" type="int" notnull="false"/>
     <Column name="name" type="nvarchar(50)" notnull="false"/>
     <Column name="createDate" type="datetime" notnull="false"/>
-    <Index type="clustered">
+    <Index type="clustered"> 
       <PrimaryKey/>
       <Column name="id"/>
     </Index>
@@ -16,7 +16,7 @@
     <Param name="@createDate" type="datetime"/>
     <Body>
       <![CDATA[
-       INSERT INTO [dbo].[Gold] ([gold], [name], [createDate] VALUES(@gold, @name, @createDate)
+       INSERT INTO [dbo].[Gold] ([gold], [name], [createDate]) VALUES(@gold, @name, @createDate)
       ]]>
     </Body>
   </Procedure>
