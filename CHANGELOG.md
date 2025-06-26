@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.15] - 2025-06-26
+
+### 🚀 Features
+
+- *(DB)* DB feature Register added
+
+### 🚜 Refactor
+
+- DBBind and DBConnection automation don't support output parameters before, so fix it and refactor it
+
+### 📚 Documentation
+
+- Update readme.md MS-SQL supported
+
 ## [0.0.14] - 2025-06-24
 
 ### 🚀 Features
