@@ -76,6 +76,7 @@ DummyClientCS.exe
 ## 🎮 **주요 기능**
 
 ### **실시간 멀티플레이어 시스템**
+- ✅ **User Registration**: 회원가입 시스템 (이메일/패스워드 + Salt/Hash)
 - ✅ **Login/Logout**: 플레이어 인증 및 세션 관리
 - ✅ **Real-time Movement**: 실시간 위치 동기화 (.gif 참조)
 - ✅ **Live Chat System**: 실시간 채팅 브로드캐스팅
@@ -90,10 +91,16 @@ DummyClientCS.exe
 
 ## 🛠️ **자동화 도구 사용법**
 
-본 프로젝트는 **Protobuf를 사용한 패킷 자동화와 Jinja2를 사용한 코드 자동화**를 통해 개발 생산성을 극대화합니다.
+본 프로젝트는 **3가지 핵심 자동화**를 통해 개발 생산성을 극대화합니다:
 
-## 🔄 **패킷/코드 자동화 워크플로우**
+### **🔄 완전 자동화 시스템**
+1. **📦 Protobuf 패킷 자동화**: .proto → C++/C# 패킷 클래스 자동 생성
+2. **🗃️ DB 프로시저 자동화**: XML → C++ ORM 바인딩 코드 자동 생성  
+3. **🎨 Jinja2 템플릿 자동화**: 템플릿 기반 반복 코드 자동 생성
 
+## 🔄 **자동화 워크플로우**
+
+### **📦 패킷 자동화 워크플로우**
 ```mermaid
 flowchart TD
  subgraph Common\Protobuf\bin["Common\Protobuf\bin"]
@@ -118,8 +125,96 @@ flowchart TD
     OS_Batch --> VS_CodeGen
     VS_CodeGen --> VS_Impl
     PG_Revise -- MakeExe.bat 실행 후, /Templates 폴더와 GenPackets.Exe를 복사 --> CPB_A
-    
+```
 
+### **🗃️ DB ORM + 프로시저 자동화 워크플로우**
+```mermaid
+flowchart TD
+
+    subgraph XML_Config["GameDB.xml"]
+        XML_Define["DB Table or Column or Procedure정의"]
+    end
+    
+    subgraph Python_Gen["ProcedureGenerator"]
+        PY_Parse["XmlDBParser.py<br/>XML 파싱 + Jinja2 템플릿"]
+        PY_Template["Templates/Procedure.h<br/>ORM 바인딩 코드 생성"]
+    end
+
+    subgraph CPP_Code["C++ GameServer"]
+        CPP_Header["Genprocedures.h<br/>SP::Register 클래스 자동 생성"]
+        CPP_Usage["RegisterService.cpp<br/>accountRegister.ParamOut_AccId(accId)"]
+    end
+    
+    XML_Define --> PY_Parse
+    PY_Parse --> PY_Template
+    PY_Template -- Templates/ 와 .exe 파일을 Common/ProcedureGenerator로 옮기고 배치파일 실행 or 빌드--> CPP_Header
+    CPP_Header --> CPP_Usage
+```
+
+### **🎯 주요 자동화 기능**
+
+| 자동화 유형 | 입력 | 출력 | 핵심 기능 |
+|------------|------|------|----------|
+| **📦 패킷** | `.proto` | `C++/C# 클래스` | 네트워크 통신 코드 |
+| **🗃️ DB** | `XML + SQL` | `C++ ORM 클래스` | OUTPUT 파라미터 처리 |
+| **🎨 템플릿** | `Jinja2` | `반복 코드` | 코드 생성 엔진 |
+
+### **🗃️ DB 자동화 구현 예시**
+
+
+**1. XML 설정 (GameDB.xml)**
+```xml
+<Procedure name="Register">
+   <Param name="email" type="NVARCHAR(256)"/>
+   <Param name="pwHash" type="VARBINARY(64)"/>  
+   <Param name="pwSalt" type="VARBINARY(16)"/>
+   <Param name="accId" type="INT" dir="out"/>
+   <Param name="result" type="TINYINT" dir="out"/>
+   <Body>
+      <![CDATA[
+       INSERT INTO [dbo].[Account] ([email], [pwHash], [pwSalt]) VALUES(@email, @pwHash, @pwSalt)
+       SET @accId = SCOPE_IDENTITY();
+       SET @result = 0;
+      ]]>
+   </Body>
+</Procedure>
+```
+
+**1.1 실제 생성된 MS-SQL Stored Procedure**
+```SQL
+CREATE PROCEDURE [dbo].[spRegister] 	@email nvarchar(256) ,
+	@pwHash varbinary(64) ,
+	@pwSalt varbinary(16) ,
+	@accId int  OUTPUT,
+	@result tinyint  OUTPUT AS BEGIN 
+       INSERT INTO [dbo].[Account] ([email], [pwHash], [pwSalt]) VALUES(@email, @pwHash, @pwSalt)
+       SET @accId = SCOPE_IDENTITY();
+       SET @result = 0;
+       END
+```
+
+**2. 자동 생성된 C++ ORM 클래스**
+```cpp
+class Register : public DBBind<5, 0> {
+public:
+    void ParamIn_Email(const WCHAR* value, int32 len) { /*자동생성*/ }
+    void ParamIn_PwHash(BYTE* value, int32 len) { /*자동생성*/ }
+    void ParamIn_PwSalt(BYTE* value, int32 len) { /*자동생성*/ }
+    void ParamOut_AccId(int32& value) { /*OUTPUT 파라미터*/ }
+    void ParamOut_Result(int8& value) { /*OUTPUT 파라미터*/ }
+};
+```
+
+**3. 실제 사용 코드**
+```cpp
+// RegisterService.cpp
+SP::Register accountRegister(*conn);
+accountRegister.ParamIn_Email(email.c_str(), email.size());
+accountRegister.ParamIn_PwHash(pwHash.data(), 64);
+accountRegister.ParamIn_PwSalt(salt.data(), 16);
+accountRegister.ParamOut_AccId(accId);      // OUTPUT 파라미터
+accountRegister.ParamOut_Result(result);    // OUTPUT 파라미터
+bool success = accountRegister.Execute();   // SQLMoreResults() 자동 호출
 ```
 
 
@@ -175,12 +270,15 @@ cd iocp_server_cpp/PerformanceTest/scripts/
 | **성능 측정** | 없음 | **🆕 실시간 통계 수집 + Google Test** |
 | **테스트 자동화** | 수동 테스트 | **🆕 원클릭 완전 자동화** |
 | **복잡도** | 학습용 최소 예제 | **실전 활용 가능한 구조** |
+| **DB** | 간단한 I/O | **Output 파라미터 등 더 복잡한 DB I/O 가능** |
 
 ## 🧩 **기술 스택**
 
 ### **Server (C++)**
 - Windows / Visual Studio 2022 / WinSock2 IOCP
-- Google Protobuf 3.21.12 / ~~MSSQL Server (미구현)~~
+- **Google Protobuf** 3.21.12 
+- **OpenSSL**: SHA-512 패스워드 해싱 (Salt 기반)
+- **MSSQL Server** 
 
 ### **Client (C# Unity)**
 - Unity 6000.1.7f1 / Google.Protobuf 3.21.12
@@ -188,16 +286,11 @@ cd iocp_server_cpp/PerformanceTest/scripts/
 ### **Testing & Automation**
 - Google Test 3.21.12 / 실시간 JSON 로깅
 - Python 3.10 (PacketGenerator) / CMake 3.20+
-- **🆕 Prometheus + Grafana**: 실시간 부하테스트 모니터링
-- **🆕 Docker Compose**: 원클릭 모니터링 환경
+- Prometheus + Grafana: 실시간 부하테스트 모니터링
+- Docker Compose**: 원클릭 모니터링 환경
 
 ## 📈 **성능 기준값 (실측) -- 이 부분은 추후 보완 예정**
 
-| 항목 | 단일 클라이언트 | 3 클라이언트 | 5 클라이언트 |
-|------|----------------|-------------|-------------|
-| **서버 TPS** | 6.00 | 18.00 | 30.00 |
-| **평균 지연시간** | 8.30ms | 8.90ms | 9.50ms |
-| **패킷 손실률** | 1.00% | 1.00% | 1.00% |
 
 > 📊 **상세한 성능 데이터**: [`iocp_server_cpp/PerformanceTest/README.md`](iocp_server_cpp/PerformanceTest/README.md) 참조
 
