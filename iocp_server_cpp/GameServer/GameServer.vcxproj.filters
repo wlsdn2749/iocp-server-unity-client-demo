@@ -19,6 +19,9 @@
     <Filter Include="DB">
       <UniqueIdentifier>{965d8c21-a214-4294-9b86-fec2a73bcbc7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Auth">
+      <UniqueIdentifier>{6ab458ec-ca23-4777-ab20-4b5991d68f2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -50,6 +53,12 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>GameContents</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginService.cpp">
+      <Filter>Auth</Filter>
+    </ClCompile>
+    <ClCompile Include="RegisterService.cpp">
+      <Filter>Auth</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +97,15 @@
     </ClInclude>
     <ClInclude Include="PrometheusMetrics.h">
       <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="RegisterService.h">
+      <Filter>Auth</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginService.h">
+      <Filter>Auth</Filter>
+    </ClInclude>
+    <ClInclude Include="StringConvert.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

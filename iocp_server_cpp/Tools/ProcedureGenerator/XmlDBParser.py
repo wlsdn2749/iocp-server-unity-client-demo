@@ -43,11 +43,14 @@ class Param:
         name = node.attrib['name'].replace('@', '')
         self.name = name[0].upper() + name[1:]
         self.type = ReplaceType(node.attrib['type'])
+        self.direction = node.attrib.get('dir', 'in')  # 기본값은 'in'
+        self.is_output = self.direction == 'out'
 
 class Column:
     def __init__(self, name, type):
         self.name = name[0].upper() + name[1:]
         self.type = type
+
 
 def ParseColumns(node, tables):
     columns = []
@@ -92,4 +95,8 @@ def ReplaceType(type):
         return 'TIMESTAMP_STRUCT'
     if type.startswith('nvarchar'):
         return 'nvarchar'
+    if type.startswith('varbinary'):
+        return 'varbinary'
+    if type == 'tinyint':
+        return 'int8'
     return type

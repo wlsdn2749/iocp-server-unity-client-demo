@@ -8,20 +8,22 @@ namespace Packet
 {
     public enum PacketID : ushort
     {
-	    PKT_C_LOGIN = 1000,
-	    PKT_S_LOGIN = 1001,
-	    PKT_C_ENTER_GAME = 1002,
-	    PKT_S_ENTER_GAME = 1003,
-	    PKT_C_LEAVE_GAME = 1004,
-	    PKT_S_BROADCAST_LEAVE_GAME = 1005,
-	    PKT_S_PLAYERLIST = 1006,
-	    PKT_S_BROADCAST_ENTER_GAME = 1007,
-	    PKT_C_MOVE = 1008,
-	    PKT_S_BROADCAST_MOVE = 1009,
-	    PKT_C_CHAT = 1010,
-	    PKT_S_BROADCAST_CHAT = 1011,
-	    PKT_C_RTT = 1012,
-	    PKT_S_RTT = 1013,
+	    PKT_C_REGISTER = 1000,
+	    PKT_S_REGISTER = 1001,
+	    PKT_C_LOGIN = 1002,
+	    PKT_S_LOGIN = 1003,
+	    PKT_C_ENTER_GAME = 1004,
+	    PKT_S_ENTER_GAME = 1005,
+	    PKT_C_LEAVE_GAME = 1006,
+	    PKT_S_BROADCAST_LEAVE_GAME = 1007,
+	    PKT_S_PLAYERLIST = 1008,
+	    PKT_S_BROADCAST_ENTER_GAME = 1009,
+	    PKT_C_MOVE = 1010,
+	    PKT_S_BROADCAST_MOVE = 1011,
+	    PKT_C_CHAT = 1012,
+	    PKT_S_BROADCAST_CHAT = 1013,
+	    PKT_C_RTT = 1014,
+	    PKT_S_RTT = 1015,
     }
     public class ServerPacketManager
     {
@@ -47,6 +49,7 @@ namespace Packet
         Dictionary<ushort, Func<byte[], int, int, IMessage>> _messageParsers = new Dictionary<ushort, Func<byte[], int, int, IMessage>>();
 
         private readonly Dictionary<Type, ushort> _typeToId = new();
+        public static ArraySegment<byte> MakeSendBuffer(Protocol.C_REGISTER pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_REGISTER);
         public static ArraySegment<byte> MakeSendBuffer(Protocol.C_LOGIN pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_LOGIN);
         public static ArraySegment<byte> MakeSendBuffer(Protocol.C_ENTER_GAME pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_ENTER_GAME);
         public static ArraySegment<byte> MakeSendBuffer(Protocol.C_LEAVE_GAME pkt) => MakeSendBuffer(pkt, (ushort)PacketID.PKT_C_LEAVE_GAME);
@@ -60,6 +63,7 @@ namespace Packet
             {
                 _packetHandlers[i] = ServerPacketHandler.HANDLE_INVALID;
             }
+            RegisterHandler((ushort)PacketID.PKT_S_REGISTER, ServerPacketHandler.HANDLE_S_REGISTER, Protocol.S_REGISTER.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_LOGIN, ServerPacketHandler.HANDLE_S_LOGIN, Protocol.S_LOGIN.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_ENTER_GAME, ServerPacketHandler.HANDLE_S_ENTER_GAME, Protocol.S_ENTER_GAME.Parser);
             RegisterHandler((ushort)PacketID.PKT_S_BROADCAST_LEAVE_GAME, ServerPacketHandler.HANDLE_S_BROADCAST_LEAVE_GAME, Protocol.S_BROADCAST_LEAVE_GAME.Parser);

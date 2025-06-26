@@ -98,7 +98,7 @@ void DoWorkerJob(ServerServiceRef& service)
 
 int main()
 {
-	ASSERT_CRASH(GDBConnectionPool->Connect(1, L"Driver={ODBC Driver 17 for SQL Server};Server=(localdb)\\MSSQLLocalDB;Database=ServerDb;Trusted_Connection=Yes;"));
+	ASSERT_CRASH(GDBConnectionPool->Connect(2, L"Driver={ODBC Driver 17 for SQL Server};Server=(localdb)\\MSSQLLocalDB;Database=ServerDb;Trusted_Connection=Yes;"));
 
 	DBConnection* dbConn = GDBConnectionPool->Pop();
 	DBSynchronizer dbSync(*dbConn);
@@ -107,25 +107,25 @@ int main()
 	{
 		WCHAR name[] = L"홍길동";
 		SP::InsertGold insertGold(*dbConn);
-		insertGold.In_Gold(100);
-		insertGold.In_Name(name);
-		insertGold.In_CreateDate(TIMESTAMP_STRUCT{2020, 10, 19});
+		insertGold.ParamIn_Gold(100);
+		insertGold.ParamIn_Name(name);
+		insertGold.ParamIn_CreateDate(TIMESTAMP_STRUCT{2020, 10, 19});
 		insertGold.Execute();
 	}
 
 	{
 		SP::GetGold getGold(*dbConn);
-		getGold.In_Gold(100);
+		getGold.ParamIn_Gold(100);
 
 		int32 id = 0;
 		int32 gold = 0;
 		WCHAR name[100];
 		TIMESTAMP_STRUCT date;
 
-		getGold.Out_Id(OUT id);
-		getGold.Out_Gold(OUT gold);
-		getGold.Out_Name(OUT name);
-		getGold.Out_CreateDate(OUT date);
+		getGold.ColumnOut_Id(OUT id);
+		getGold.ColumnOut_Gold(OUT gold);
+		getGold.ColumnOut_Name(OUT name);
+		getGold.ColumnOut_CreateDate(OUT date);
 
 		getGold.Execute();
 
@@ -177,15 +177,5 @@ int main()
 		});
 	}
 
-	//DoWorkerJob(service);
-
-	/*Protocol::S_CHAT chatPkt;
-	chatPkt.set_msg(u8"Hello World ! I'm Server This message get from is Client");
-	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(chatPkt);
-	while (true)
-	{
-		service->Broadcast(sendBuffer);
-		this_thread::sleep_for(1s);
-	}*/
 	GThreadManager->Join();
 }

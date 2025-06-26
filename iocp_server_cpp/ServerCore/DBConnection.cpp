@@ -70,11 +70,20 @@ void DBConnection::Clear()
 	}
 }
 
-bool DBConnection::Execute(const WCHAR* query)
+bool DBConnection::Execute(const WCHAR* query, bool hasOutputParams)
 {
-	SQLRETURN ret = ::SQLExecDirectW(_statement, (SQLWCHAR*)query, SQL_NTSL);
+	SQLRETURN ret = ::SQLExecDirectW(_statement, (SQLWCHAR*)query, SQL_NTS);
+
 	if (ret == SQL_SUCCESS || ret == SQL_SUCCESS_WITH_INFO)
+	{
+		// OUTPUT 파라미터가 있는 경우에만 SQLMoreResults 호출
+		if (hasOutputParams)
+		{
+			::SQLMoreResults(_statement);
+		}
+		
 		return true;
+	}
 
 	HandleError(ret);
 	return false;
@@ -118,59 +127,59 @@ void DBConnection::Unbind()
 	::SQLFreeStmt(_statement, SQL_CLOSE);
 }
 
-bool DBConnection::BindParam(int32 paramIndex, bool* value, SQLLEN* index)
+bool DBConnection::BindParam(int32 paramIndex, bool* value, SQLLEN* index, SQLSMALLINT direction)
 {
-	return BindParam(paramIndex, SQL_C_TINYINT, SQL_TINYINT, size32(bool), value, index);
+	return BindParam(paramIndex, SQL_C_TINYINT, SQL_TINYINT, size32(bool), value, index, direction);
 }
 
-bool DBConnection::BindParam(int32 paramIndex, float* value, SQLLEN* index)
+bool DBConnection::BindParam(int32 paramIndex, float* value, SQLLEN* index, SQLSMALLINT direction)
 {
-	return BindParam(paramIndex, SQL_C_FLOAT, SQL_REAL, 0, value, index);
+	return BindParam(paramIndex, SQL_C_FLOAT, SQL_REAL, 0, value, index, direction);
 }
 
-bool DBConnection::BindParam(int32 paramIndex, double* value, SQLLEN* index)
+bool DBConnection::BindParam(int32 paramIndex, double* value, SQLLEN* index, SQLSMALLINT direction)
 {
-	return BindParam(paramIndex, SQL_C_DOUBLE, SQL_DOUBLE, 0, value, index);
+	return BindParam(paramIndex, SQL_C_DOUBLE, SQL_DOUBLE, 0, value, index, direction);
 }
 
-bool DBConnection::BindParam(int32 paramIndex, int8* value, SQLLEN* index)
+bool DBConnection::BindParam(int32 paramIndex, int8* value, SQLLEN* index, SQLSMALLINT direction)
 {
-	return BindParam(paramIndex, SQL_C_TINYINT, SQL_TINYINT, size32(int8), value, index);
+	return BindParam(paramIndex, SQL_C_TINYINT, SQL_TINYINT, size32(int8), value, index, direction);
 }
 
-bool DBConnection::BindParam(int32 paramIndex, int16* value, SQLLEN* index)
+bool DBConnection::BindParam(int32 paramIndex, int16* value, SQLLEN* index, SQLSMALLINT direction)
 {
-	return BindParam(paramIndex, SQL_C_SHORT, SQL_SMALLINT, size32(int16), value, index);
+	return BindParam(paramIndex, SQL_C_SHORT, SQL_SMALLINT, size32(int16), value, index, direction);
 }
 
-bool DBConnection::BindParam(int32 paramIndex, int32* value, SQLLEN* index)
+bool DBConnection::BindParam(int32 paramIndex, int32* value, SQLLEN* index, SQLSMALLINT direction)
 {
-	return BindParam(paramIndex, SQL_C_LONG, SQL_INTEGER, size32(int32), value, index);
+	return BindParam(paramIndex, SQL_C_LONG, SQL_INTEGER, size32(int32), value, index, direction);
 }
 
-bool DBConnection::BindParam(int32 paramIndex, int64* value, SQLLEN* index)
+bool DBConnection::BindParam(int32 paramIndex, int64* value, SQLLEN* index, SQLSMALLINT direction)
 {
-	return BindParam(paramIndex, SQL_C_SBIGINT, SQL_BIGINT, size32(int64), value, index);
+	return BindParam(paramIndex, SQL_C_SBIGINT, SQL_BIGINT, size32(int64), value, index, direction);
 }
 
-bool DBConnection::BindParam(int32 paramIndex, TIMESTAMP_STRUCT* value, SQLLEN* index)
+bool DBConnection::BindParam(int32 paramIndex, TIMESTAMP_STRUCT* value, SQLLEN* index, SQLSMALLINT direction)
 {
-	return BindParam(paramIndex, SQL_C_TYPE_TIMESTAMP, SQL_TYPE_TIMESTAMP, size32(TIMESTAMP_STRUCT), value, index);
+	return BindParam(paramIndex, SQL_C_TYPE_TIMESTAMP, SQL_TYPE_TIMESTAMP, size32(TIMESTAMP_STRUCT), value, index, direction);
 }
 
-bool DBConnection::BindParam(int32 paramIndex, const WCHAR* str, SQLLEN* index)
+bool DBConnection::BindParam(int32 paramIndex, const WCHAR* str, SQLLEN* index, SQLSMALLINT direction)
 {
 	SQLULEN size = static_cast<SQLULEN>((::wcslen(str) + 1) * 2); // null문자  + wchar당 2니까 x2
 	*index = SQL_NTSL;
 
 	if (size > WVARCHAR_MAX) // 4000
-		return BindParam(paramIndex, SQL_C_WCHAR, SQL_WLONGVARCHAR, size, (SQLPOINTER)str, index);
+		return BindParam(paramIndex, SQL_C_WCHAR, SQL_WLONGVARCHAR, size, (SQLPOINTER)str, index, direction);
 	else
-		return BindParam(paramIndex, SQL_C_WCHAR, SQL_WVARCHAR, size, (SQLPOINTER)str, index);
+		return BindParam(paramIndex, SQL_C_WCHAR, SQL_WVARCHAR, size, (SQLPOINTER)str, index, direction);
 }
 
 // 바이너리를 저장할 때 사용  
-bool DBConnection::BindParam(int32 paramIndex, const BYTE* bin, int32 size, SQLLEN* index)
+bool DBConnection::BindParam(int32 paramIndex, const BYTE* bin, int32 size, SQLLEN* index, SQLSMALLINT direction)
 {
 	if (bin == nullptr)
 	{
@@ -181,9 +190,9 @@ bool DBConnection::BindParam(int32 paramIndex, const BYTE* bin, int32 size, SQLL
 		*index = size;
 
 	if (size > BINARY_MAX)
-		return BindParam(paramIndex, SQL_C_BINARY, SQL_LONGVARBINARY, size, (BYTE*)bin, index);
+		return BindParam(paramIndex, SQL_C_BINARY, SQL_LONGVARBINARY, size, (BYTE*)bin, index, direction);
 	else
-		return BindParam(paramIndex, SQL_C_BINARY, SQL_BINARY, size, (BYTE*)bin, index);
+		return BindParam(paramIndex, SQL_C_BINARY, SQL_BINARY, size, (BYTE*)bin, index, direction);
 }
 
 bool DBConnection::BindCol(int32 columnIndex, bool* value, SQLLEN* index)
@@ -237,9 +246,16 @@ bool DBConnection::BindCol(int32 columnIndex, BYTE* bin, int32 size, SQLLEN* ind
 }
 
 bool DBConnection::BindParam(SQLUSMALLINT paramIndex, SQLSMALLINT cType, SQLSMALLINT sqlType, SQLLEN len,
-                             SQLPOINTER ptr, SQLLEN* index)
+                             SQLPOINTER ptr, SQLLEN* index, SQLSMALLINT direction)
 {
-	SQLRETURN ret = ::SQLBindParameter(_statement, paramIndex, SQL_PARAM_INPUT, cType, sqlType, len, 0, ptr, 0, index);
+	// OUTPUT 파라미터의 경우 특별한 처리
+	if (direction == SQL_PARAM_OUTPUT)
+	{
+		*index = 0; // OUTPUT 파라미터는 초기값을 0으로 설정
+	}
+	     
+	SQLRETURN ret = ::SQLBindParameter(_statement, paramIndex, direction, cType, sqlType, len, 0, ptr, 0, index);
+	
 	if (ret != SQL_SUCCESS && ret != SQL_SUCCESS_WITH_INFO)
 	{
 		HandleError(ret);

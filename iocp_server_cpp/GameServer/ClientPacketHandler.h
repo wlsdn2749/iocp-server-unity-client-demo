@@ -7,26 +7,29 @@ extern PacketHandlerFunc GPacketHandler[UINT16_MAX]; // 65535만큼의 배열 �
 
 enum : uint16
 {
-	PKT_C_LOGIN = 1000,
-	PKT_S_LOGIN = 1001,
-	PKT_C_ENTER_GAME = 1002,
-	PKT_S_ENTER_GAME = 1003,
-	PKT_C_LEAVE_GAME = 1004,
-	PKT_S_BROADCAST_LEAVE_GAME = 1005,
-	PKT_S_PLAYERLIST = 1006,
-	PKT_S_BROADCAST_ENTER_GAME = 1007,
-	PKT_C_MOVE = 1008,
-	PKT_S_BROADCAST_MOVE = 1009,
-	PKT_C_CHAT = 1010,
-	PKT_S_BROADCAST_CHAT = 1011,
-	PKT_C_RTT = 1012,
-	PKT_S_RTT = 1013,
+	PKT_C_REGISTER = 1000,
+	PKT_S_REGISTER = 1001,
+	PKT_C_LOGIN = 1002,
+	PKT_S_LOGIN = 1003,
+	PKT_C_ENTER_GAME = 1004,
+	PKT_S_ENTER_GAME = 1005,
+	PKT_C_LEAVE_GAME = 1006,
+	PKT_S_BROADCAST_LEAVE_GAME = 1007,
+	PKT_S_PLAYERLIST = 1008,
+	PKT_S_BROADCAST_ENTER_GAME = 1009,
+	PKT_C_MOVE = 1010,
+	PKT_S_BROADCAST_MOVE = 1011,
+	PKT_C_CHAT = 1012,
+	PKT_S_BROADCAST_CHAT = 1013,
+	PKT_C_RTT = 1014,
+	PKT_S_RTT = 1015,
 
 };
 
 // Custom Handler : 직접 컨텐츠 작업자가 CPP를 만들어야함
 
 bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len);
+bool Handle_C_REGISTER(PacketSessionRef& session, Protocol::C_REGISTER& pkt);
 bool Handle_C_LOGIN(PacketSessionRef& session, Protocol::C_LOGIN& pkt);
 bool Handle_C_ENTER_GAME(PacketSessionRef& session, Protocol::C_ENTER_GAME& pkt);
 bool Handle_C_LEAVE_GAME(PacketSessionRef& session, Protocol::C_LEAVE_GAME& pkt);
@@ -44,6 +47,7 @@ public:
 		{
 			GPacketHandler[i] = Handle_INVALID;
 		}
+		GPacketHandler[PKT_C_REGISTER] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_REGISTER>(Handle_C_REGISTER, session, buffer, len); };
 		GPacketHandler[PKT_C_LOGIN] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_LOGIN>(Handle_C_LOGIN, session, buffer, len); };
 		GPacketHandler[PKT_C_ENTER_GAME] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_ENTER_GAME>(Handle_C_ENTER_GAME, session, buffer, len); };
 		GPacketHandler[PKT_C_LEAVE_GAME] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {return HandlePacket<Protocol::C_LEAVE_GAME>(Handle_C_LEAVE_GAME, session, buffer, len); };
@@ -57,6 +61,7 @@ public:
 		PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
 		return GPacketHandler[header->id](session, buffer, len);
 	}
+	static SendBufferRef MakeSendBuffer(Protocol::S_REGISTER& pkt) { return MakeSendBuffer(pkt, PKT_S_REGISTER); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_LOGIN& pkt) { return MakeSendBuffer(pkt, PKT_S_LOGIN); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_ENTER_GAME& pkt) { return MakeSendBuffer(pkt, PKT_S_ENTER_GAME); };
 	static SendBufferRef MakeSendBuffer(Protocol::S_BROADCAST_LEAVE_GAME& pkt) { return MakeSendBuffer(pkt, PKT_S_BROADCAST_LEAVE_GAME); };

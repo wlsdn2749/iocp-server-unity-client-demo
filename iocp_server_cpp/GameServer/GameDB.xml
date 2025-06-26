@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GameDB>
+  <!-- ======= 계정 관련 DB =======-->
+  <Table name="Account">
+    <Column name="accountId" type="int" notnull="true" identity="1,1"/>
+    <Column name="email" type="nvarchar(256)" notnull="true"/>
+    <Column name="pwHash" type="varbinary(64)" notnull="true"/>
+    <Column name="pwSalt" type="varbinary(16)" notnull="true"/>
+    <Column name="createDate" type="datetime" notnull="true" default="SYSUTCDATETIME()"/>
+    <Index type="clustered">
+      <PrimaryKey/>
+      <Column name="accountId"/>
+    </Index>
+    <Index type="nonclustered">
+      <UniqueKey/>
+      <Column name="email"/>
+    </Index>
+  </Table>
+  <Procedure name="spRegister">
+    <Param name="@email" type="nvarchar(256)"/>
+    <Param name="@pwHash" type="varbinary(64)"/>
+    <Param name="@pwSalt" type="varbinary(16)"/>
+    <Param name="@accId" type="int" dir="out"/>
+    <Param name="@result" type="tinyint" dir="out"/>
+    <Body>
+      <![CDATA[
+       INSERT INTO [dbo].[Account] ([email], [pwHash], [pwSalt]) VALUES(@email, @pwHash, @pwSalt)
+       SET @accId = SCOPE_IDENTITY();
+       SET @result = 0;
+      ]]>
+    </Body>
+  </Procedure>
+  
+  
+ 
+  <!-- ======== 아래 Table, Procedures들은 예시임 ======= -->
   <Table name="Gold">
     <Column name="id" type="int" notnull="true" identity="1,1"/>
     <Column name="gold" type="int" notnull="false"/>

@@ -8,18 +8,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using Packet;
 using ServerCore;
-
 using Protocol;
 
 namespace DummyClientCS
 { 
-
-
     class ServerSession : PacketSession
     {
         public override void OnConnected(EndPoint endPoint)
         {
             Console.WriteLine($"onConnected : {endPoint}");
+
+            Protocol.C_REGISTER registerPkt = new C_REGISTER()
+            {
+                Email = "abc@123d.com",
+                Pw = "abcde"
+            };
+            var registerSendBuffer = ServerPacketManager.MakeSendBuffer(registerPkt);
+            Send(registerSendBuffer);
 
             Protocol.C_LOGIN loginPkt = new C_LOGIN();
             var sendBuffer = ServerPacketManager.MakeSendBuffer(loginPkt);

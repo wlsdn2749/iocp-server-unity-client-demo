@@ -1,13 +1,13 @@
 {
-  "timestamp": 26178,
-  "connectedClients": 0,
-  "totalConnections": 0,
-  "totalPacketsReceived": 0,
-  "totalPacketsSent": 0,
-  "recentPacketsReceived": 0,
-  "recentPacketsSent": 0,
-  "tps": 0,
-  "avgProcessingTime": 0,
-  "maxProcessingTime": 0,
-  "uptimeMs": 26178
+  "timestamp": 9108,
+  "connectedClients": 1,
+  "totalConnections": 1,
+  "totalPacketsReceived": 47,
+  "totalPacketsSent": 49,
+  "recentPacketsReceived": 6,
+  "recentPacketsSent": 6,
+  "tps": 5.1603,
+  "avgProcessingTime": 0.234681,
+  "maxProcessingTime": 2.838,
+  "uptimeMs": 9108
 }

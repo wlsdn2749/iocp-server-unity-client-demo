@@ -184,6 +184,9 @@ void DBSynchronizer::ParseXmlDB(const WCHAR* path)
 			DBModel::Param param;
 			param._name = paramNode.GetStringAttr(L"name");
 			param._type = paramNode.GetStringAttr(L"type");
+
+			String dirStr = paramNode.GetStringAttr(L"dir", L"in");
+			param._output = (dirStr == L"out" || dirStr == L"inout");
 			p->_parameters.push_back(param);
 		}
 
@@ -270,6 +273,12 @@ bool DBSynchronizer::GatherDBTables()
 		}
 
 		table->_columns.push_back(column);
+
+		/* WCHAR 형태의 데이터는 매번 초기화 해야함 ? */
+		::memset(tableName, 0, sizeof(tableName));
+		::memset(columnName, 0, sizeof(columnName));
+		::memset(defaultDefinition, 0, sizeof(defaultDefinition));
+		::memset(defaultConstraintName, 0, sizeof(defaultConstraintName));
 	}
 
 	return true;
@@ -319,11 +328,14 @@ bool DBSynchronizer::GatherDBIndexes()
 			findIndex = indexes.end() - 1;
 		}
 
-		// �ε����� �ɸ� column ã�Ƽ� �������ش�.
 		Vector<DBModel::ColumnRef>& columns = (*findTable)->_columns;
 		auto findColumn = std::find_if(columns.begin(), columns.end(), [columnId](DBModel::ColumnRef& column) { return column->_columnId == columnId; });
 		ASSERT_CRASH(findColumn != columns.end());
 		(*findIndex)->_columns.push_back(*findColumn);
+
+		/* WCHAR 형태의 데이터는 매번 초기화 해야함 ? */
+		::memset(indexName, 0, sizeof(indexName));
+		::memset(columnName, 0, sizeof(columnName));
 	}
 
 	return true;
@@ -349,6 +361,10 @@ bool DBSynchronizer::GatherDBStoredProcedures()
 			proc->_fullBody = String(body.begin(), std::find(body.begin(), body.end(), 0));
 		}
 		_dbProcedures.push_back(proc);
+
+		/* WCHAR 형태의 데이터는 매번 초기화 해야함 ? */
+		::memset(name, 0, sizeof(name));
+		std::fill(body.begin(), body.end(), 0);  // 모든 요소 0으로 초기화
 	}
 
 	return true;

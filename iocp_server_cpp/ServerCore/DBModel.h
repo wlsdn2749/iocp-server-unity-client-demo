@@ -106,6 +106,7 @@ struct Param
 {
 	String				_name;
 	String				_type;
+	bool				_output;
 };
 
 class Procedure

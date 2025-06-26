@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Room.h"
 #include "PrometheusMetrics.h"
+#include "RegisterService.h"
 
 // Prometheus 메트릭 (외부 선언)
 extern PrometheusMetrics* GPrometheusMetrics;
@@ -25,6 +26,16 @@ bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len)
 	PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
 
 	// TODO : log
+	return true;
+}
+
+bool Handle_C_REGISTER(PacketSessionRef& session, Protocol::C_REGISTER& pkt)
+{
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+	String email = StrToWstr(pkt.email());
+	String pw = StrToWstr(pkt.pw());
+	RegisterService::Instance().RequestRegister(session, email, pw);
+
 	return true;
 }
 

@@ -32,6 +32,7 @@ public:
 		::memset(_columnIndex, 0, sizeof(_columnIndex));
 		_paramFlag = 0;
 		_columnFlag = 0;
+		_hasOutputParams = false;
 		dbConnection.Unbind();
 	}
 
@@ -43,7 +44,7 @@ public:
 	bool Execute()
 	{
 		ASSERT_CRASH(Validate());
-		return _dbConnection.Execute(_query);
+		return _dbConnection.Execute(_query, _hasOutputParams);
 	}
 
 	bool Fetch()
@@ -53,29 +54,45 @@ public:
 
 public:
 	template<typename T> // 이 템플릿으로 대부분 처리되지만
-	void BindParam(int32 idx, T& value)
+	void BindParam(int32 idx, T& value, SQLSMALLINT direction = SQL_PARAM_INPUT)
 	{
-		_dbConnection.BindParam(idx + 1, &value, &_paramIndex[idx]); // idx는 0번부터 시작 -> 실제로는 1번이라 1더함
+		if (direction == SQL_PARAM_OUTPUT)
+		{
+			_hasOutputParams = true;
+		}
+		_dbConnection.BindParam(idx + 1, &value, &_paramIndex[idx], direction); // idx는 0번부터 시작 -> 실제로는 1번이라 1더함
 		_paramFlag |= (1LL << idx); // idx위치에 있는 데이터의 비트플래그를 1로 켜줌
 	}
 
-	void BindParam(int32 idx, const WCHAR* value) // 문자열 
+	void BindParam(int32 idx, const WCHAR* value, SQLSMALLINT direction = SQL_PARAM_INPUT) // 문자열 
 	{
-		_dbConnection.BindParam(idx + 1, value, &_paramIndex[idx]);
+		if (direction == SQL_PARAM_OUTPUT)
+		{
+			_hasOutputParams = true;
+		}
+		_dbConnection.BindParam(idx + 1, value, &_paramIndex[idx], direction);
 		_paramFlag |= (1LL << idx);
 	}
 
 	template<typename T, int32 N> // 바이트 배열
-	void BindParam(int32 idx, T(&value)[N])
+	void BindParam(int32 idx, T(&value)[N], SQLSMALLINT direction = SQL_PARAM_INPUT)
 	{
-		_dbConnection.BindParam(idx + 1, (const BYTE*)value, size32(T) * N, &_paramIndex[idx]);
+		if (direction == SQL_PARAM_OUTPUT)
+		{
+			_hasOutputParams = true;
+		}
+		_dbConnection.BindParam(idx + 1, (const BYTE*)value, size32(T) * N, &_paramIndex[idx], direction);
 		_paramFlag |= (1LL << idx);
 	}
 
 	template<typename T> // 바이트 배열의 개수
-	void BindParam(int32 idx, T* value, int32 N)
+	void BindParam(int32 idx, T* value, int32 N, SQLSMALLINT direction = SQL_PARAM_INPUT)
 	{
-		_dbConnection.BindParam(idx + 1, (const BYTE*)value, size32(T) * N, &_paramIndex[idx]);
+		if (direction == SQL_PARAM_OUTPUT)
+		{
+			_hasOutputParams = true;
+		}
+		_dbConnection.BindParam(idx + 1, (const BYTE*)value, size32(T) * N, &_paramIndex[idx], direction);
 		_paramFlag |= (1LL << idx); 
 	}
 
@@ -93,7 +110,7 @@ public:
 		_columnFlag |= (1LL << idx);
 	}
 
-	void BindCol(int32 idx, WCHAR* value, int32 len) // 포인터랑 개수
+	void BindCol(int32 idx, WCHAR* value, int32 len) // 포인터랑 길이
 	{
 		_dbConnection.BindCol(idx + 1, value, len - 1, &_columnIndex[idx]);
 		_columnFlag |= (1LL << idx);
@@ -114,5 +131,6 @@ protected:
 	SQLLEN			_columnIndex[ColumnCount > 0 ? ColumnCount : 1];
 	uint64			_paramFlag; // uint64니까, 데이터를 64개까지 처리가능
 	uint64			_columnFlag;
+	bool			_hasOutputParams;
 };
 

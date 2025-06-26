@@ -124,5 +124,14 @@ namespace Packet
             
             Console.WriteLine($"[RTT 측정] {rttMs:F2}ms");
         }
+
+        internal static void HANDLE_S_REGISTER(PacketSession session, S_REGISTER packet)
+        {
+            S_REGISTER pkt = packet as S_REGISTER;
+            ServerSession serverSession = session as ServerSession;
+            Console.WriteLine($"[패킷 처리] HANDLE_S_REGISTER PACKET - accountId: {pkt.AccountId} - result: {pkt.Result}");
+
+
+        }
     }
 }
