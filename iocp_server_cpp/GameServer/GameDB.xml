@@ -21,12 +21,20 @@
     <Param name="@pwHash" type="varbinary(64)"/>
     <Param name="@pwSalt" type="varbinary(16)"/>
     <Param name="@accId" type="int" dir="out"/>
-    <Param name="@result" type="tinyint" dir="out"/>
+    <Param name="@result" type="int" dir="out"/>
     <Body>
       <![CDATA[
        INSERT INTO [dbo].[Account] ([email], [pwHash], [pwSalt]) VALUES(@email, @pwHash, @pwSalt)
        SET @accId = SCOPE_IDENTITY();
        SET @result = 0;
+      ]]>
+    </Body>
+  </Procedure>
+  <Procedure name="spGetAccountHashSalt">
+    <Param name="@email" type="nvarchar(256)"/>
+    <Body>
+      <![CDATA[
+       SELECT pwHash, pwSalt FROM [dbo].[Account] where email = (@email)
       ]]>
     </Body>
   </Procedure>

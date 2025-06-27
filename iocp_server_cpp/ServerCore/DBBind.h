@@ -123,6 +123,17 @@ public:
 		_columnFlag |= (1LL << idx);
 	}
 
+	// Array 용 Overload
+	template<typename T, size_t N>
+	void BindCol(int32 idx, std::array<T, N>& value)
+	{
+		// value.data() -> 버퍼 첫 주소
+		// sizeof(T) * N -> 바이트 수
+
+		_dbConnection.BindCol(idx + 1, value.data(), size32(T) * N, &_columnIndex[idx]);
+		_columnFlag |= (1LL << idx);
+	}
+
 
 protected:
 	DBConnection&	_dbConnection;

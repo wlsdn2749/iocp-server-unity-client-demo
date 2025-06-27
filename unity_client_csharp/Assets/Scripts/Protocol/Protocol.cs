@@ -26,28 +26,29 @@ namespace Protocol {
           string.Concat(
             "Cg5Qcm90b2NvbC5wcm90bxIIUHJvdG9jb2waCkVudW0ucHJvdG8aDFN0cnVj",
             "dC5wcm90byInCgpDX1JFR0lTVEVSEg0KBWVtYWlsGAEgASgJEgoKAnB3GAIg",
-            "ASgJIi8KClNfUkVHSVNURVISEQoJYWNjb3VudElkGAEgASgNEg4KBnJlc3Vs",
-            "dBgCIAEoDSIJCgdDX0xPR0lOIj0KB1NfTE9HSU4SDwoHc3VjY2VzcxgBIAEo",
-            "CBIhCgdwbGF5ZXJzGAIgAygLMhAuUHJvdG9jb2wuUGxheWVyIiMKDENfRU5U",
-            "RVJfR0FNRRITCgtwbGF5ZXJJbmRleBgBIAEoBCIfCgxTX0VOVEVSX0dBTUUS",
-            "DwoHc3VjY2VzcxgBIAEoCCIOCgxDX0xFQVZFX0dBTUUiKgoWU19CUk9BRENB",
-            "U1RfTEVBVkVfR0FNRRIQCghwbGF5ZXJJZBgBIAEoBCJFCgxTX1BMQVlFUkxJ",
-            "U1QSEgoKbXlQbGF5ZXJJZBgBIAEoBBIhCgdwbGF5ZXJzGAIgAygLMhAuUHJv",
-            "dG9jb2wuUGxheWVyImIKFlNfQlJPQURDQVNUX0VOVEVSX0dBTUUSEAoIcGxh",
-            "eWVySWQYASABKAQSDAoEbmFtZRgCIAEoCRIMCgRwb3NYGAMgASgCEgwKBHBv",
-            "c1kYBCABKAISDAoEcG9zWhgFIAEoAiIyCgZDX01PVkUSDAoEcG9zWBgBIAEo",
-            "AhIMCgRwb3NZGAIgASgCEgwKBHBvc1oYAyABKAIiTgoQU19CUk9BRENBU1Rf",
-            "TU9WRRIQCghwbGF5ZXJJZBgBIAEoBBIMCgRwb3NYGAIgASgCEgwKBHBvc1kY",
-            "AyABKAISDAoEcG9zWhgEIAEoAiIVCgZDX0NIQVQSCwoDbXNnGAEgASgJIjEK",
-            "EFNfQlJPQURDQVNUX0NIQVQSEAoIcGxheWVySWQYASABKAQSCwoDbXNnGAIg",
-            "ASgJIhsKBUNfUlRUEhIKCmNsaWVudFRpbWUYASABKAQiLwoFU19SVFQSEgoK",
-            "Y2xpZW50VGltZRgBIAEoBBISCgpzZXJ2ZXJUaW1lGAIgASgEYgZwcm90bzM="));
+            "ASgJIi8KClNfUkVHSVNURVISEQoJYWNjb3VudElkGAEgASgFEg4KBnJlc3Vs",
+            "dBgCIAEoBSIkCgdDX0xPR0lOEg0KBWVtYWlsGAEgASgJEgoKAnB3GAIgASgJ",
+            "Ij0KB1NfTE9HSU4SDwoHc3VjY2VzcxgBIAEoCBIhCgdwbGF5ZXJzGAIgAygL",
+            "MhAuUHJvdG9jb2wuUGxheWVyIiMKDENfRU5URVJfR0FNRRITCgtwbGF5ZXJJ",
+            "bmRleBgBIAEoBCIfCgxTX0VOVEVSX0dBTUUSDwoHc3VjY2VzcxgBIAEoCCIO",
+            "CgxDX0xFQVZFX0dBTUUiKgoWU19CUk9BRENBU1RfTEVBVkVfR0FNRRIQCghw",
+            "bGF5ZXJJZBgBIAEoBCJFCgxTX1BMQVlFUkxJU1QSEgoKbXlQbGF5ZXJJZBgB",
+            "IAEoBBIhCgdwbGF5ZXJzGAIgAygLMhAuUHJvdG9jb2wuUGxheWVyImIKFlNf",
+            "QlJPQURDQVNUX0VOVEVSX0dBTUUSEAoIcGxheWVySWQYASABKAQSDAoEbmFt",
+            "ZRgCIAEoCRIMCgRwb3NYGAMgASgCEgwKBHBvc1kYBCABKAISDAoEcG9zWhgF",
+            "IAEoAiIyCgZDX01PVkUSDAoEcG9zWBgBIAEoAhIMCgRwb3NZGAIgASgCEgwK",
+            "BHBvc1oYAyABKAIiTgoQU19CUk9BRENBU1RfTU9WRRIQCghwbGF5ZXJJZBgB",
+            "IAEoBBIMCgRwb3NYGAIgASgCEgwKBHBvc1kYAyABKAISDAoEcG9zWhgEIAEo",
+            "AiIVCgZDX0NIQVQSCwoDbXNnGAEgASgJIjEKEFNfQlJPQURDQVNUX0NIQVQS",
+            "EAoIcGxheWVySWQYASABKAQSCwoDbXNnGAIgASgJIhsKBUNfUlRUEhIKCmNs",
+            "aWVudFRpbWUYASABKAQiLwoFU19SVFQSEgoKY2xpZW50VGltZRgBIAEoBBIS",
+            "CgpzZXJ2ZXJUaW1lGAIgASgEYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Protocol.EnumReflection.Descriptor, global::Protocol.StructReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_REGISTER), global::Protocol.C_REGISTER.Parser, new[]{ "Email", "Pw" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_REGISTER), global::Protocol.S_REGISTER.Parser, new[]{ "AccountId", "Result" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_LOGIN), global::Protocol.C_LOGIN.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_LOGIN), global::Protocol.C_LOGIN.Parser, new[]{ "Email", "Pw" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_LOGIN), global::Protocol.S_LOGIN.Parser, new[]{ "Success", "Players" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_ENTER_GAME), global::Protocol.C_ENTER_GAME.Parser, new[]{ "PlayerIndex" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_ENTER_GAME), global::Protocol.S_ENTER_GAME.Parser, new[]{ "Success" }, null, null, null, null),
@@ -340,10 +341,10 @@ namespace Protocol {
 
     /// <summary>Field number for the "accountId" field.</summary>
     public const int AccountIdFieldNumber = 1;
-    private uint accountId_;
+    private int accountId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public uint AccountId {
+    public int AccountId {
       get { return accountId_; }
       set {
         accountId_ = value;
@@ -352,10 +353,10 @@ namespace Protocol {
 
     /// <summary>Field number for the "result" field.</summary>
     public const int ResultFieldNumber = 2;
-    private uint result_;
+    private int result_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public uint Result {
+    public int Result {
       get { return result_; }
       set {
         result_ = value;
@@ -408,11 +409,11 @@ namespace Protocol {
     #else
       if (AccountId != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(AccountId);
+        output.WriteInt32(AccountId);
       }
       if (Result != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt32(Result);
+        output.WriteInt32(Result);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -426,11 +427,11 @@ namespace Protocol {
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
       if (AccountId != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(AccountId);
+        output.WriteInt32(AccountId);
       }
       if (Result != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt32(Result);
+        output.WriteInt32(Result);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -443,10 +444,10 @@ namespace Protocol {
     public int CalculateSize() {
       int size = 0;
       if (AccountId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(AccountId);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(AccountId);
       }
       if (Result != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Result);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Result);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -482,11 +483,11 @@ namespace Protocol {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            AccountId = input.ReadUInt32();
+            AccountId = input.ReadInt32();
             break;
           }
           case 16: {
-            Result = input.ReadUInt32();
+            Result = input.ReadInt32();
             break;
           }
         }
@@ -505,11 +506,11 @@ namespace Protocol {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            AccountId = input.ReadUInt32();
+            AccountId = input.ReadInt32();
             break;
           }
           case 16: {
-            Result = input.ReadUInt32();
+            Result = input.ReadInt32();
             break;
           }
         }
@@ -553,6 +554,8 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public C_LOGIN(C_LOGIN other) : this() {
+      email_ = other.email_;
+      pw_ = other.pw_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -560,6 +563,30 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public C_LOGIN Clone() {
       return new C_LOGIN(this);
+    }
+
+    /// <summary>Field number for the "email" field.</summary>
+    public const int EmailFieldNumber = 1;
+    private string email_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Email {
+      get { return email_; }
+      set {
+        email_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "pw" field.</summary>
+    public const int PwFieldNumber = 2;
+    private string pw_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Pw {
+      get { return pw_; }
+      set {
+        pw_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -577,6 +604,8 @@ namespace Protocol {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (Email != other.Email) return false;
+      if (Pw != other.Pw) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -584,6 +613,8 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
+      if (Email.Length != 0) hash ^= Email.GetHashCode();
+      if (Pw.Length != 0) hash ^= Pw.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -602,6 +633,14 @@ namespace Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
+      if (Email.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Email);
+      }
+      if (Pw.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Pw);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -612,6 +651,14 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Email.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Email);
+      }
+      if (Pw.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Pw);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -622,6 +669,12 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
+      if (Email.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Email);
+      }
+      if (Pw.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Pw);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -633,6 +686,12 @@ namespace Protocol {
     public void MergeFrom(C_LOGIN other) {
       if (other == null) {
         return;
+      }
+      if (other.Email.Length != 0) {
+        Email = other.Email;
+      }
+      if (other.Pw.Length != 0) {
+        Pw = other.Pw;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -649,6 +708,14 @@ namespace Protocol {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
+          case 10: {
+            Email = input.ReadString();
+            break;
+          }
+          case 18: {
+            Pw = input.ReadString();
+            break;
+          }
         }
       }
     #endif
@@ -664,6 +731,14 @@ namespace Protocol {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
+          case 10: {
+            Email = input.ReadString();
+            break;
+          }
+          case 18: {
+            Pw = input.ReadString();
+            break;
+          }
         }
       }
     }
@@ -719,6 +794,9 @@ namespace Protocol {
     /// <summary>Field number for the "success" field.</summary>
     public const int SuccessFieldNumber = 1;
     private bool success_;
+    /// <summary>
+    /// 성공 여부
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Success {

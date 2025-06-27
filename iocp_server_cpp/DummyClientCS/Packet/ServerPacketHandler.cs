@@ -26,6 +26,10 @@ namespace Packet
             S_LOGIN pkt = packet as S_LOGIN;
 
             if (pkt.Success == false)
+            {
+                Console.WriteLine("[패킷 처리] 로그인 실패!");
+                return;
+            }
                 // 실패 했음
 
             if (pkt.Players.Count == 0)

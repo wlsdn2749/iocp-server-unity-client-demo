@@ -68,7 +68,7 @@ Bytes64 RegisterService::CalcPwHash(wstring_view pw, const Bytes16& salt) const
 
 void RegisterService::DoDbWork(SessionRef session, wstring email, Bytes64 pwHash, Bytes16 salt)
 {
-    int8    result = 99;   // FAILED
+    int32   result = 99;   // FAILED
     int32   accId = -1;
 
     DBConnection* conn = GDBConnectionPool->Pop();
@@ -112,7 +112,7 @@ void RegisterService::DoDbWork(SessionRef session, wstring email, Bytes64 pwHash
  *  1  : 이메일 중복
  *  99 : 실패
  */
-void RegisterService::Finish(SessionRef session, int8 result, int32 accountId)
+void RegisterService::Finish(SessionRef session, int32 result, int32 accountId)
 {
     // 회원가입 결과 패킷 생성 및 전송
     // TODO: Protocol.proto에 C_REGISTER, S_REGISTER 메시지 추가 후 구현
@@ -128,7 +128,6 @@ void RegisterService::Finish(SessionRef session, int8 result, int32 accountId)
         {
             pkt.set_accountid(accountId);
         }
-
 
         auto sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
         session->Send(sendBuffer);

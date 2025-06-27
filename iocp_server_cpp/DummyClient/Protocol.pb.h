@@ -412,22 +412,22 @@ class S_REGISTER final :
     kAccountIdFieldNumber = 1,
     kResultFieldNumber = 2,
   };
-  // uint32 accountId = 1;
+  // int32 accountId = 1;
   void clear_accountid();
-  uint32_t accountid() const;
-  void set_accountid(uint32_t value);
+  int32_t accountid() const;
+  void set_accountid(int32_t value);
   private:
-  uint32_t _internal_accountid() const;
-  void _internal_set_accountid(uint32_t value);
+  int32_t _internal_accountid() const;
+  void _internal_set_accountid(int32_t value);
   public:
 
-  // uint32 result = 2;
+  // int32 result = 2;
   void clear_result();
-  uint32_t result() const;
-  void set_result(uint32_t value);
+  int32_t result() const;
+  void set_result(int32_t value);
   private:
-  uint32_t _internal_result() const;
-  void _internal_set_result(uint32_t value);
+  int32_t _internal_result() const;
+  void _internal_set_result(int32_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:Protocol.S_REGISTER)
@@ -438,8 +438,8 @@ class S_REGISTER final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    uint32_t accountid_;
-    uint32_t result_;
+    int32_t accountid_;
+    int32_t result_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -448,9 +448,10 @@ class S_REGISTER final :
 // -------------------------------------------------------------------
 
 class C_LOGIN final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:Protocol.C_LOGIN) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.C_LOGIN) */ {
  public:
   inline C_LOGIN() : C_LOGIN(nullptr) {}
+  ~C_LOGIN() override;
   explicit PROTOBUF_CONSTEXPR C_LOGIN(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
   C_LOGIN(const C_LOGIN& from);
@@ -523,15 +524,29 @@ class C_LOGIN final :
   C_LOGIN* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
     return CreateMaybeMessage<C_LOGIN>(arena);
   }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const C_LOGIN& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const C_LOGIN& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const C_LOGIN& from) {
+    C_LOGIN::MergeImpl(*this, from);
   }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const C_LOGIN& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
-  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
   public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(C_LOGIN* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
@@ -552,6 +567,38 @@ class C_LOGIN final :
 
   // accessors -------------------------------------------------------
 
+  enum : int {
+    kEmailFieldNumber = 1,
+    kPwFieldNumber = 2,
+  };
+  // string email = 1;
+  void clear_email();
+  const std::string& email() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_email(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_email();
+  PROTOBUF_NODISCARD std::string* release_email();
+  void set_allocated_email(std::string* email);
+  private:
+  const std::string& _internal_email() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_email(const std::string& value);
+  std::string* _internal_mutable_email();
+  public:
+
+  // string pw = 2;
+  void clear_pw();
+  const std::string& pw() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_pw(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_pw();
+  PROTOBUF_NODISCARD std::string* release_pw();
+  void set_allocated_pw(std::string* pw);
+  private:
+  const std::string& _internal_pw() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_pw(const std::string& value);
+  std::string* _internal_mutable_pw();
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.C_LOGIN)
  private:
   class _Internal;
@@ -560,7 +607,11 @@ class C_LOGIN final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr email_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr pw_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
+  union { Impl_ _impl_; };
   friend struct ::TableStruct_Protocol_2eproto;
 };
 // -------------------------------------------------------------------
@@ -2748,42 +2799,42 @@ inline void C_REGISTER::set_allocated_pw(std::string* pw) {
 
 // S_REGISTER
 
-// uint32 accountId = 1;
+// int32 accountId = 1;
 inline void S_REGISTER::clear_accountid() {
-  _impl_.accountid_ = 0u;
+  _impl_.accountid_ = 0;
 }
-inline uint32_t S_REGISTER::_internal_accountid() const {
+inline int32_t S_REGISTER::_internal_accountid() const {
   return _impl_.accountid_;
 }
-inline uint32_t S_REGISTER::accountid() const {
+inline int32_t S_REGISTER::accountid() const {
   // @@protoc_insertion_point(field_get:Protocol.S_REGISTER.accountId)
   return _internal_accountid();
 }
-inline void S_REGISTER::_internal_set_accountid(uint32_t value) {
+inline void S_REGISTER::_internal_set_accountid(int32_t value) {
   
   _impl_.accountid_ = value;
 }
-inline void S_REGISTER::set_accountid(uint32_t value) {
+inline void S_REGISTER::set_accountid(int32_t value) {
   _internal_set_accountid(value);
   // @@protoc_insertion_point(field_set:Protocol.S_REGISTER.accountId)
 }
 
-// uint32 result = 2;
+// int32 result = 2;
 inline void S_REGISTER::clear_result() {
-  _impl_.result_ = 0u;
+  _impl_.result_ = 0;
 }
-inline uint32_t S_REGISTER::_internal_result() const {
+inline int32_t S_REGISTER::_internal_result() const {
   return _impl_.result_;
 }
-inline uint32_t S_REGISTER::result() const {
+inline int32_t S_REGISTER::result() const {
   // @@protoc_insertion_point(field_get:Protocol.S_REGISTER.result)
   return _internal_result();
 }
-inline void S_REGISTER::_internal_set_result(uint32_t value) {
+inline void S_REGISTER::_internal_set_result(int32_t value) {
   
   _impl_.result_ = value;
 }
-inline void S_REGISTER::set_result(uint32_t value) {
+inline void S_REGISTER::set_result(int32_t value) {
   _internal_set_result(value);
   // @@protoc_insertion_point(field_set:Protocol.S_REGISTER.result)
 }
@@ -2791,6 +2842,106 @@ inline void S_REGISTER::set_result(uint32_t value) {
 // -------------------------------------------------------------------
 
 // C_LOGIN
+
+// string email = 1;
+inline void C_LOGIN::clear_email() {
+  _impl_.email_.ClearToEmpty();
+}
+inline const std::string& C_LOGIN::email() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_LOGIN.email)
+  return _internal_email();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void C_LOGIN::set_email(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.email_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Protocol.C_LOGIN.email)
+}
+inline std::string* C_LOGIN::mutable_email() {
+  std::string* _s = _internal_mutable_email();
+  // @@protoc_insertion_point(field_mutable:Protocol.C_LOGIN.email)
+  return _s;
+}
+inline const std::string& C_LOGIN::_internal_email() const {
+  return _impl_.email_.Get();
+}
+inline void C_LOGIN::_internal_set_email(const std::string& value) {
+  
+  _impl_.email_.Set(value, GetArenaForAllocation());
+}
+inline std::string* C_LOGIN::_internal_mutable_email() {
+  
+  return _impl_.email_.Mutable(GetArenaForAllocation());
+}
+inline std::string* C_LOGIN::release_email() {
+  // @@protoc_insertion_point(field_release:Protocol.C_LOGIN.email)
+  return _impl_.email_.Release();
+}
+inline void C_LOGIN::set_allocated_email(std::string* email) {
+  if (email != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.email_.SetAllocated(email, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.email_.IsDefault()) {
+    _impl_.email_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Protocol.C_LOGIN.email)
+}
+
+// string pw = 2;
+inline void C_LOGIN::clear_pw() {
+  _impl_.pw_.ClearToEmpty();
+}
+inline const std::string& C_LOGIN::pw() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_LOGIN.pw)
+  return _internal_pw();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void C_LOGIN::set_pw(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.pw_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Protocol.C_LOGIN.pw)
+}
+inline std::string* C_LOGIN::mutable_pw() {
+  std::string* _s = _internal_mutable_pw();
+  // @@protoc_insertion_point(field_mutable:Protocol.C_LOGIN.pw)
+  return _s;
+}
+inline const std::string& C_LOGIN::_internal_pw() const {
+  return _impl_.pw_.Get();
+}
+inline void C_LOGIN::_internal_set_pw(const std::string& value) {
+  
+  _impl_.pw_.Set(value, GetArenaForAllocation());
+}
+inline std::string* C_LOGIN::_internal_mutable_pw() {
+  
+  return _impl_.pw_.Mutable(GetArenaForAllocation());
+}
+inline std::string* C_LOGIN::release_pw() {
+  // @@protoc_insertion_point(field_release:Protocol.C_LOGIN.pw)
+  return _impl_.pw_.Release();
+}
+inline void C_LOGIN::set_allocated_pw(std::string* pw) {
+  if (pw != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.pw_.SetAllocated(pw, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.pw_.IsDefault()) {
+    _impl_.pw_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Protocol.C_LOGIN.pw)
+}
 
 // -------------------------------------------------------------------
 

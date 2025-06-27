@@ -442,3 +442,21 @@ crashlytics-build.properties
 Assets/results
 
 .vscode
+server_stats.json
+
+# Protobuf Automated
+Protocol.pb.cc
+Protocol.pb.h
+Enum.pb.cc
+Enum.pb.h
+Struct.pb.cc
+Struct.pb.h
+
+Protocol.cs
+Enum.cs
+Struct.cs
+
+# Procedure Automated
+GenProc.exe
+GenProcedures.h
+

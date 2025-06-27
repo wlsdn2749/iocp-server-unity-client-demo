@@ -3,7 +3,7 @@
 using Bytes16 = Array<BYTE, 16>;
 using Bytes64 = Array<BYTE, 64>;
 
-class RegisterService : public JobQueue
+class RegisterService
 						
 {
 public:
@@ -21,5 +21,5 @@ private:
 
     void DoDbWork(SessionRef session, wstring email, Bytes64 pwHash, Bytes16 salt);
 
-    void Finish(SessionRef session, int8 result, int32 accountId);
+    void Finish(SessionRef session, int32 result, int32 accountId);
 };

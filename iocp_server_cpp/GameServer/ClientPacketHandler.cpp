@@ -2,6 +2,7 @@
 #include "ClientPacketHandler.h"
 
 #include "GameSession.h"
+#include "LoginService.h"
 #include "Player.h"
 #include "Room.h"
 #include "PrometheusMetrics.h"
@@ -50,10 +51,36 @@ bool Handle_C_LOGIN(PacketSessionRef& session, Protocol::C_LOGIN& pkt)
 	}
 
 	//// TODO : validation 체크
+	int result = 0;
+	String email = StrToWstr(pkt.email());
+	String pw = StrToWstr(pkt.pw());
 
+	LoginService::Instance().RequestLogin(session, email, pw, OUT result);
+
+
+	// 로그인 실패한경우.
+	if (result != 0)
+	{
+		cout << "로그인 실패" << endl;
+		Protocol::S_LOGIN loginPkt;
+		loginPkt.set_success(false);
+		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(loginPkt);
+		session->Send(sendBuffer);
+
+		return true;
+	}
+
+
+	// 여기 아래는 로그인 성공한 경우.
 	Protocol::S_LOGIN loginPkt;
 	loginPkt.set_success(true);
 	static Atomic<uint64> idGenerator = 1;
+
+
+	// 만약 플레이어를 DB에서 가져올거면
+	// player도 넘겨야할듯? 넘기든가 받든가.
+
+
 
 	{
 		auto player = loginPkt.add_players();
