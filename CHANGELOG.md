@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.18] - 2025-06-30
+
+### 🚀 Features
+
+- *(DB-Register-UnityClient)* 유니티 클라이언트 Register UI 추가, Register부분의 예외처리가 지금 DB Flow에 의해 조금 방해되는 상태임. 이를 수정해야함
+
 ## [0.0.16] - 2025-06-27
 
 ### 🚀 Features
