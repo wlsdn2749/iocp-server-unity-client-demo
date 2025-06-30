@@ -26,24 +26,24 @@ namespace Protocol {
           string.Concat(
             "Cg5Qcm90b2NvbC5wcm90bxIIUHJvdG9jb2waCkVudW0ucHJvdG8aDFN0cnVj",
             "dC5wcm90byInCgpDX1JFR0lTVEVSEg0KBWVtYWlsGAEgASgJEgoKAnB3GAIg",
-            "ASgJIi8KClNfUkVHSVNURVISEQoJYWNjb3VudElkGAEgASgFEg4KBnJlc3Vs",
-            "dBgCIAEoBSIkCgdDX0xPR0lOEg0KBWVtYWlsGAEgASgJEgoKAnB3GAIgASgJ",
-            "IlMKB1NfTE9HSU4SJQoGcmVzdWx0GAEgASgOMhUuUHJvdG9jb2wuTG9naW5S",
-            "ZXN1bHQSIQoHcGxheWVycxgCIAMoCzIQLlByb3RvY29sLlBsYXllciIjCgxD",
-            "X0VOVEVSX0dBTUUSEwoLcGxheWVySW5kZXgYASABKAQiHwoMU19FTlRFUl9H",
-            "QU1FEg8KB3N1Y2Nlc3MYASABKAgiDgoMQ19MRUFWRV9HQU1FIioKFlNfQlJP",
-            "QURDQVNUX0xFQVZFX0dBTUUSEAoIcGxheWVySWQYASABKAQiRQoMU19QTEFZ",
-            "RVJMSVNUEhIKCm15UGxheWVySWQYASABKAQSIQoHcGxheWVycxgCIAMoCzIQ",
-            "LlByb3RvY29sLlBsYXllciJiChZTX0JST0FEQ0FTVF9FTlRFUl9HQU1FEhAK",
-            "CHBsYXllcklkGAEgASgEEgwKBG5hbWUYAiABKAkSDAoEcG9zWBgDIAEoAhIM",
-            "CgRwb3NZGAQgASgCEgwKBHBvc1oYBSABKAIiMgoGQ19NT1ZFEgwKBHBvc1gY",
-            "ASABKAISDAoEcG9zWRgCIAEoAhIMCgRwb3NaGAMgASgCIk4KEFNfQlJPQURD",
-            "QVNUX01PVkUSEAoIcGxheWVySWQYASABKAQSDAoEcG9zWBgCIAEoAhIMCgRw",
-            "b3NZGAMgASgCEgwKBHBvc1oYBCABKAIiFQoGQ19DSEFUEgsKA21zZxgBIAEo",
-            "CSIxChBTX0JST0FEQ0FTVF9DSEFUEhAKCHBsYXllcklkGAEgASgEEgsKA21z",
-            "ZxgCIAEoCSIbCgVDX1JUVBISCgpjbGllbnRUaW1lGAEgASgEIi8KBVNfUlRU",
-            "EhIKCmNsaWVudFRpbWUYASABKAQSEgoKc2VydmVyVGltZRgCIAEoBGIGcHJv",
-            "dG8z"));
+            "ASgJIkkKClNfUkVHSVNURVISEQoJYWNjb3VudElkGAEgASgFEigKBnJlc3Vs",
+            "dBgCIAEoDjIYLlByb3RvY29sLlJlZ2lzdGVyUmVzdWx0IiQKB0NfTE9HSU4S",
+            "DQoFZW1haWwYASABKAkSCgoCcHcYAiABKAkiUwoHU19MT0dJThIlCgZyZXN1",
+            "bHQYASABKA4yFS5Qcm90b2NvbC5Mb2dpblJlc3VsdBIhCgdwbGF5ZXJzGAIg",
+            "AygLMhAuUHJvdG9jb2wuUGxheWVyIiMKDENfRU5URVJfR0FNRRITCgtwbGF5",
+            "ZXJJbmRleBgBIAEoBCIfCgxTX0VOVEVSX0dBTUUSDwoHc3VjY2VzcxgBIAEo",
+            "CCIOCgxDX0xFQVZFX0dBTUUiKgoWU19CUk9BRENBU1RfTEVBVkVfR0FNRRIQ",
+            "CghwbGF5ZXJJZBgBIAEoBCJFCgxTX1BMQVlFUkxJU1QSEgoKbXlQbGF5ZXJJ",
+            "ZBgBIAEoBBIhCgdwbGF5ZXJzGAIgAygLMhAuUHJvdG9jb2wuUGxheWVyImIK",
+            "FlNfQlJPQURDQVNUX0VOVEVSX0dBTUUSEAoIcGxheWVySWQYASABKAQSDAoE",
+            "bmFtZRgCIAEoCRIMCgRwb3NYGAMgASgCEgwKBHBvc1kYBCABKAISDAoEcG9z",
+            "WhgFIAEoAiIyCgZDX01PVkUSDAoEcG9zWBgBIAEoAhIMCgRwb3NZGAIgASgC",
+            "EgwKBHBvc1oYAyABKAIiTgoQU19CUk9BRENBU1RfTU9WRRIQCghwbGF5ZXJJ",
+            "ZBgBIAEoBBIMCgRwb3NYGAIgASgCEgwKBHBvc1kYAyABKAISDAoEcG9zWhgE",
+            "IAEoAiIVCgZDX0NIQVQSCwoDbXNnGAEgASgJIjEKEFNfQlJPQURDQVNUX0NI",
+            "QVQSEAoIcGxheWVySWQYASABKAQSCwoDbXNnGAIgASgJIhsKBUNfUlRUEhIK",
+            "CmNsaWVudFRpbWUYASABKAQiLwoFU19SVFQSEgoKY2xpZW50VGltZRgBIAEo",
+            "BBISCgpzZXJ2ZXJUaW1lGAIgASgEYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Protocol.EnumReflection.Descriptor, global::Protocol.StructReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -354,10 +354,10 @@ namespace Protocol {
 
     /// <summary>Field number for the "result" field.</summary>
     public const int ResultFieldNumber = 2;
-    private int result_;
+    private global::Protocol.RegisterResult result_ = global::Protocol.RegisterResult.RegisterSuccess;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int Result {
+    public global::Protocol.RegisterResult Result {
       get { return result_; }
       set {
         result_ = value;
@@ -389,7 +389,7 @@ namespace Protocol {
     public override int GetHashCode() {
       int hash = 1;
       if (AccountId != 0) hash ^= AccountId.GetHashCode();
-      if (Result != 0) hash ^= Result.GetHashCode();
+      if (Result != global::Protocol.RegisterResult.RegisterSuccess) hash ^= Result.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -412,9 +412,9 @@ namespace Protocol {
         output.WriteRawTag(8);
         output.WriteInt32(AccountId);
       }
-      if (Result != 0) {
+      if (Result != global::Protocol.RegisterResult.RegisterSuccess) {
         output.WriteRawTag(16);
-        output.WriteInt32(Result);
+        output.WriteEnum((int) Result);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -430,9 +430,9 @@ namespace Protocol {
         output.WriteRawTag(8);
         output.WriteInt32(AccountId);
       }
-      if (Result != 0) {
+      if (Result != global::Protocol.RegisterResult.RegisterSuccess) {
         output.WriteRawTag(16);
-        output.WriteInt32(Result);
+        output.WriteEnum((int) Result);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -447,8 +447,8 @@ namespace Protocol {
       if (AccountId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(AccountId);
       }
-      if (Result != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Result);
+      if (Result != global::Protocol.RegisterResult.RegisterSuccess) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -465,7 +465,7 @@ namespace Protocol {
       if (other.AccountId != 0) {
         AccountId = other.AccountId;
       }
-      if (other.Result != 0) {
+      if (other.Result != global::Protocol.RegisterResult.RegisterSuccess) {
         Result = other.Result;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -488,7 +488,7 @@ namespace Protocol {
             break;
           }
           case 16: {
-            Result = input.ReadInt32();
+            Result = (global::Protocol.RegisterResult) input.ReadEnum();
             break;
           }
         }
@@ -511,7 +511,7 @@ namespace Protocol {
             break;
           }
           case 16: {
-            Result = input.ReadInt32();
+            Result = (global::Protocol.RegisterResult) input.ReadEnum();
             break;
           }
         }
@@ -794,7 +794,7 @@ namespace Protocol {
 
     /// <summary>Field number for the "result" field.</summary>
     public const int ResultFieldNumber = 1;
-    private global::Protocol.LoginResult result_ = global::Protocol.LoginResult.Success;
+    private global::Protocol.LoginResult result_ = global::Protocol.LoginResult.LoginSuccess;
     /// <summary>
     /// 성공 여부
     /// </summary>
@@ -845,7 +845,7 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Result != global::Protocol.LoginResult.Success) hash ^= Result.GetHashCode();
+      if (Result != global::Protocol.LoginResult.LoginSuccess) hash ^= Result.GetHashCode();
       hash ^= players_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -865,7 +865,7 @@ namespace Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Result != global::Protocol.LoginResult.Success) {
+      if (Result != global::Protocol.LoginResult.LoginSuccess) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Result);
       }
@@ -880,7 +880,7 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Result != global::Protocol.LoginResult.Success) {
+      if (Result != global::Protocol.LoginResult.LoginSuccess) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Result);
       }
@@ -895,7 +895,7 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Result != global::Protocol.LoginResult.Success) {
+      if (Result != global::Protocol.LoginResult.LoginSuccess) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
       }
       size += players_.CalculateSize(_repeated_players_codec);
@@ -911,7 +911,7 @@ namespace Protocol {
       if (other == null) {
         return;
       }
-      if (other.Result != global::Protocol.LoginResult.Success) {
+      if (other.Result != global::Protocol.LoginResult.LoginSuccess) {
         Result = other.Result;
       }
       players_.Add(other.players_);

@@ -13,13 +13,12 @@ public:
 	    static RegisterService s;
         return s;
     }
-    void RequestRegister(SessionRef session, wstring_view email, wstring_view plainPw);
+    void RequestRegister(SessionRef session, wstring_view email, wstring_view plainPw,
+        OUT Protocol::RegisterResult& result, OUT int32& accountId);
 
 private:
     Bytes16 MakeSalt() const;
     Bytes64 CalcPwHash(wstring_view pw, const Bytes16& salt) const;
 
-    void DoDbWork(SessionRef session, wstring email, Bytes64 pwHash, Bytes16 salt);
-
-    void Finish(SessionRef session, int32 result, int32 accountId);
+    void DoDbWork(SessionRef session, wstring email, Bytes64 pwHash, Bytes16 salt, OUT Protocol::RegisterResult& result, OUT int32& accountId);
 };

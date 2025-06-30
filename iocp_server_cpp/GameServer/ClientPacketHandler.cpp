@@ -35,8 +35,18 @@ bool Handle_C_REGISTER(PacketSessionRef& session, Protocol::C_REGISTER& pkt)
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
 	String email = StrToWstr(pkt.email());
 	String pw = StrToWstr(pkt.pw());
-	RegisterService::Instance().RequestRegister(session, email, pw);
 
+	Protocol::RegisterResult result = {};
+	int32 accountId = -1;
+	RegisterService::Instance().RequestRegister(session, email, pw, OUT result, OUT accountId);
+
+	// 여기까지 오면, result, accountId가 채워져있음.
+	Protocol::S_REGISTER registerPkt;
+
+	registerPkt.set_result(result);
+	registerPkt.set_accountid(accountId);
+	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(registerPkt);
+	session->Send(sendBuffer);
 	return true;
 }
 
@@ -68,9 +78,9 @@ bool Handle_C_LOGIN(PacketSessionRef& session, Protocol::C_LOGIN& pkt)
 	loginResult = static_cast<Protocol::LoginResult>(result); // DB작업에 실행된 기존 result값을 switch에 사용하기 위해 바꿈
 	switch (loginResult)
 	{
-	case Protocol::LoginResult::EMAIL_NOT_FOUND:
-	case Protocol::LoginResult::PW_MISMATCH:
-	case Protocol::LoginResult::SERVER_ERROR:
+	case Protocol::LoginResult::LOGIN_EMAIL_NOT_FOUND:
+	case Protocol::LoginResult::LOGIN_PW_MISMATCH:
+	case Protocol::LoginResult::LOGIN_SERVER_ERROR:
 	{
 		cout << "로그인 실패" << endl;
 		Protocol::S_LOGIN loginPkt;
@@ -82,7 +92,7 @@ bool Handle_C_LOGIN(PacketSessionRef& session, Protocol::C_LOGIN& pkt)
 	}
 
 		// -------------  여기 아래는 로그인 성공한 경우. -------------------
-	case Protocol::LoginResult::SUCCESS:
+	case Protocol::LoginResult::LOGIN_SUCCESS:
 	default:
 	{
 		Protocol::S_LOGIN loginPkt;

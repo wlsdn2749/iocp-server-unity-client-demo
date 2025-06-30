@@ -46,9 +46,6 @@ public class LoginUI : MonoBehaviour
         gameObject.SetActive(false);
         registerPanel.SetActive(true);
     }
-
-    // 서버에서 S_Login 결과가 오면 PacketHandler 쪽에서:
-    //   - 성공: LoginPanel.SetActive(false); GamePanel.SetActive(true);
-    //   - 실패: loginBtn.interactable = true; 오류 토스트 출력
-
+    
+    // TODO 버튼 비활성화 (중복 방지)
 }

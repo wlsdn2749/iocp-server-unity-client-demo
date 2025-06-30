@@ -11,7 +11,36 @@ public class PlayerManager
     public static PlayerManager Instance { get; } = new PlayerManager();
     
     public int TotalPlayerCount => (_myPlayer != null ? 1 : 0) + _players.Count;
-    
+    public void Register(S_REGISTER packet)
+    {
+        var result = packet.Result;
+        
+        switch (result)
+        {
+            case RegisterResult.RegisterDuplicateEmail:
+                Debug.LogWarning("📧 회원가입 실패: 이미 사용 중인 이메일입니다.");
+                // 여기서 EmailInputField.Focus() 등 UI 처리
+                return;
+
+            case RegisterResult.RegisterServerError:
+                Debug.LogError("🔑 회원가입 실패: 서버 내부 오류.");
+                return;
+
+            case RegisterResult.RegisterDefaultError:
+                Debug.LogError("🔑 회원가입 실패: 기본 에러.");
+                return;
+
+            case RegisterResult.RegisterSuccess:
+                Debug.Log("✅ 회원가입 성공!");
+                //    여기서는 로그인 화면으로 이동 후, 사용자에게 로그인 유도
+                UIManager.Instance.SetState(UIState.Login); 
+                return;
+
+            default:
+                Debug.LogError($"⚠️ 알 수 없는 결과 코드: {(int)result}");
+                return;
+        }
+    }
     public void Login(S_LOGIN packet)
     {
         // enum 형 따로 변수에 담아두면 보기 편함
@@ -19,19 +48,23 @@ public class PlayerManager
 
         switch (result)
         {
-            case LoginResult.EmailNotFound:
+            case LoginResult.LoginEmailNotFound:
                 Debug.LogWarning("🔑 로그인 실패: 가입되지 않은 이메일입니다.");
                 return;
 
-            case LoginResult.PwMismatch:
+            case LoginResult.LoginPwMismatch:
                 Debug.LogWarning("🔑 로그인 실패: 비밀번호 불일치.");
                 return;
 
-            case LoginResult.ServerError:
+            case LoginResult.LoginServerError:
                 Debug.LogError("🔑 로그인 실패: 서버 내부 오류.");
                 return;
+            
+            case LoginResult.LoginDefaultError:
+                Debug.LogError("로그인 실패: 기본 에러.");
+                return;
 
-            case LoginResult.Success:
+            case LoginResult.LoginSuccess:
                 Debug.Log("✅ 로그인 성공!");
                 if (packet.Players.Count == 0)
                 {
@@ -130,4 +163,5 @@ public class PlayerManager
             }
         }
     }
+
 }

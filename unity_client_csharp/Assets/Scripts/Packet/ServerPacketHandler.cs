@@ -18,7 +18,13 @@ namespace Packet
         {
             Debug.Log("[패킷 처리] INVALID PACKET (알수 없는 패킷 ID 요청!)");
         }
-
+    
+        public static void HANDLE_S_REGISTER(PacketSession session, S_REGISTER packet)
+        {
+            S_REGISTER pkt = packet as S_REGISTER;
+            ServerSession serverSession = session as ServerSession;
+            PlayerManager.Instance.Register(pkt);
+        }
         
         // (CLIENT) C_LOGIN -> (SERVER) S_LOGIN에 응답하기 위한 패킷
         public static void HANDLE_S_LOGIN(PacketSession session, S_LOGIN packet)
@@ -91,10 +97,6 @@ namespace Packet
             }
             
             UnityEngine.Debug.Log($"[RTT 측정] {rttMs:F2}ms");
-        }
-        public static void HANDLE_S_REGISTER(PacketSession session, S_REGISTER packet)
-        {
-            throw new NotImplementedException();
         }
     }
 }

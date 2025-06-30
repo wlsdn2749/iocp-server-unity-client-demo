@@ -26,12 +26,16 @@ namespace Protocol {
           string.Concat(
             "CgpFbnVtLnByb3RvEghQcm90b2NvbCpoCgpQbGF5ZXJUeXBlEhQKEFBMQVlF",
             "Ul9UWVBFX05PTkUQABIWChJQTEFZRVJfVFlQRV9LTklHSFQQARIUChBQTEFZ",
-            "RVJfVFlQRV9NQUdFEAISFgoSUExBWUVSX1RZUEVfQVJDSEVSEAMqUgoLTG9n",
-            "aW5SZXN1bHQSCwoHU1VDQ0VTUxAAEhMKD0VNQUlMX05PVF9GT1VORBACEg8K",
-            "C1BXX01JU01BVENIEAMSEAoMU0VSVkVSX0VSUk9SEARiBnByb3RvMw=="));
+            "RVJfVFlQRV9NQUdFEAISFgoSUExBWUVSX1RZUEVfQVJDSEVSEAMqgwEKC0xv",
+            "Z2luUmVzdWx0EhEKDUxPR0lOX1NVQ0NFU1MQABIZChVMT0dJTl9FTUFJTF9O",
+            "T1RfRk9VTkQQAhIVChFMT0dJTl9QV19NSVNNQVRDSBADEhYKEkxPR0lOX1NF",
+            "UlZFUl9FUlJPUhBiEhcKE0xPR0lOX0RFRkFVTFRfRVJST1IQYyp7Cg5SZWdp",
+            "c3RlclJlc3VsdBIUChBSRUdJU1RFUl9TVUNDRVNTEAASHAoYUkVHSVNURVJf",
+            "RFVQTElDQVRFX0VNQUlMEAESGQoVUkVHSVNURVJfU0VSVkVSX0VSUk9SEGIS",
+            "GgoWUkVHSVNURVJfREVGQVVMVF9FUlJPUhBjYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Protocol.PlayerType), typeof(global::Protocol.LoginResult), }, null, null));
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Protocol.PlayerType), typeof(global::Protocol.LoginResult), typeof(global::Protocol.RegisterResult), }, null, null));
     }
     #endregion
 
@@ -45,19 +49,39 @@ namespace Protocol {
   }
 
   public enum LoginResult {
-    [pbr::OriginalName("SUCCESS")] Success = 0,
+    [pbr::OriginalName("LOGIN_SUCCESS")] LoginSuccess = 0,
     /// <summary>
     /// Email 미등록
     /// </summary>
-    [pbr::OriginalName("EMAIL_NOT_FOUND")] EmailNotFound = 2,
+    [pbr::OriginalName("LOGIN_EMAIL_NOT_FOUND")] LoginEmailNotFound = 2,
     /// <summary>
     /// 비밀번호 불일치
     /// </summary>
-    [pbr::OriginalName("PW_MISMATCH")] PwMismatch = 3,
+    [pbr::OriginalName("LOGIN_PW_MISMATCH")] LoginPwMismatch = 3,
     /// <summary>
     /// 기타 내부 오류
     /// </summary>
-    [pbr::OriginalName("SERVER_ERROR")] ServerError = 4,
+    [pbr::OriginalName("LOGIN_SERVER_ERROR")] LoginServerError = 98,
+    /// <summary>
+    /// 기본 에러
+    /// </summary>
+    [pbr::OriginalName("LOGIN_DEFAULT_ERROR")] LoginDefaultError = 99,
+  }
+
+  public enum RegisterResult {
+    [pbr::OriginalName("REGISTER_SUCCESS")] RegisterSuccess = 0,
+    /// <summary>
+    /// 이메일 중복
+    /// </summary>
+    [pbr::OriginalName("REGISTER_DUPLICATE_EMAIL")] RegisterDuplicateEmail = 1,
+    /// <summary>
+    /// 기타 내부 오류
+    /// </summary>
+    [pbr::OriginalName("REGISTER_SERVER_ERROR")] RegisterServerError = 98,
+    /// <summary>
+    /// 기본 에러
+    /// </summary>
+    [pbr::OriginalName("REGISTER_DEFAULT_ERROR")] RegisterDefaultError = 99,
   }
 
   #endregion

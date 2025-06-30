@@ -18,8 +18,8 @@ namespace SP
     	template<typename T> void ParamIn_PwHash(T* v, int32 count) { BindParam(1, v, count); };
     	template<typename T, int32 N> void ParamIn_PwSalt(T(&v)[N]) { BindParam(2, v); };
     	template<typename T> void ParamIn_PwSalt(T* v, int32 count) { BindParam(2, v, count); };
-    	  void ParamOut_AccId(OUT int32& v) { BindParam(3, v, SQL_PARAM_OUTPUT); };
-    	  void ParamOut_Result(OUT int32& v) { BindParam(4, v, SQL_PARAM_OUTPUT); };
+    	void ParamOut_AccId(OUT int32& v) { BindParam(3, v, SQL_PARAM_OUTPUT); };
+    	void ParamOut_Result(OUT int32& v) { BindParam(4, v, SQL_PARAM_OUTPUT); };
 
     private:
     	int32 _accId = {};
@@ -35,7 +35,9 @@ namespace SP
     	void ParamIn_Email(WCHAR* v, int32 count) { BindParam(0, v, count); };
     	void ParamIn_Email(const WCHAR* v, int32 count) { BindParam(0, v, count); };
     	template<typename T, int32 N> void ColumnOut_PwHash(OUT T(&v)[N]) { BindCol(0, v); }
+    	template<typename T, size_t N> void ColumnOut_PwHash(OUT std::array<T, N>& v) { BindCol(0, v); } // Array 전용 템플릿
     	template<typename T, int32 N> void ColumnOut_PwSalt(OUT T(&v)[N]) { BindCol(1, v); }
+    	template<typename T, size_t N> void ColumnOut_PwSalt(OUT std::array<T, N>& v) { BindCol(1, v); } // Array 전용 템플릿
 
     private:
     };
@@ -65,12 +67,9 @@ namespace SP
     	void ParamIn_Gold(int32& v) { BindParam(0, v); };
     	void ParamIn_Gold(int32&& v) { _gold = std::move(v); BindParam(0, _gold); };
     	void ColumnOut_Id(OUT int32& v) { BindCol(0, v); };
-    	template<typename T, size_t N> void ColumnOut_Id(OUT std::array<T, N>& v) { BindCol(0, v.data()); }
     	void ColumnOut_Gold(OUT int32& v) { BindCol(1, v); };
-    	template<typename T, size_t N> void ColumnOut_Gold(OUT std::array<T, N>& v) { BindCol(1, v.data()); }
     	template<int32 N> void ColumnOut_Name(OUT WCHAR(&v)[N]) { BindCol(2, v); };
     	void ColumnOut_CreateDate(OUT TIMESTAMP_STRUCT& v) { BindCol(3, v); };
-    	template<typename T, size_t N> void ColumnOut_CreateDate(OUT std::array<T, N>& v) { BindCol(3, v.data()); }
 
     private:
     	int32 _gold = {};
