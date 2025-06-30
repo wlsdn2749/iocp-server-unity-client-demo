@@ -13,6 +13,7 @@ using System.Net.Sockets;
 public class NetworkManager : MonoBehaviour
 {
     public static NetworkManager Instance { get; private set; }
+    private ServerSession _session = new ServerSession();
 
     void Awake()
     {
@@ -27,7 +28,7 @@ public class NetworkManager : MonoBehaviour
         Instance = this;
     }
 
-    private ServerSession _session = new ServerSession();
+    
 
     public void Send(ArraySegment<byte> sendBuff)
     {

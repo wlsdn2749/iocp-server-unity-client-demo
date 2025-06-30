@@ -14,22 +14,47 @@ public class PlayerManager
     
     public void Login(S_LOGIN packet)
     {
-        if (packet.Success == false)
-            return;
+        // enum 형 따로 변수에 담아두면 보기 편함
+        var result = packet.Result;
 
-        if (packet.Players.Count == 0)
+        switch (result)
         {
-            // 캐릭터 생성창으로 이동
+            case LoginResult.EmailNotFound:
+                Debug.LogWarning("🔑 로그인 실패: 가입되지 않은 이메일입니다.");
+                return;
+
+            case LoginResult.PwMismatch:
+                Debug.LogWarning("🔑 로그인 실패: 비밀번호 불일치.");
+                return;
+
+            case LoginResult.ServerError:
+                Debug.LogError("🔑 로그인 실패: 서버 내부 오류.");
+                return;
+
+            case LoginResult.Success:
+                Debug.Log("✅ 로그인 성공!");
+                if (packet.Players.Count == 0)
+                {
+                    Debug.Log("👤 캐릭터가 없어서 생성 창으로 이동해야 합니다.");
+                    // TODO: CharacterCreationUI.Show();
+                    return; // 캐릭터 먼저 만들고 나가므로 아래 로직 스킵
+                }
+                break;
+
+            default:
+                Debug.LogError($"⚠️ 알 수 없는 결과 코드: {(int)result}");
+                return; // 예측 못 한 코드면 입장 차단
         }
 
-        // 입장 UI 버튼 눌러서 게임 입장
-        Protocol.C_ENTER_GAME enterGamePkt = new C_ENTER_GAME()
+        // --- 성공 & 캐릭터 존재 → 게임 입장 패킷 전송 -----------------
+        var enterGamePkt = new C_ENTER_GAME
         {
-            PlayerIndex = 0, // 첫번째 캐릭터로 입장
+            PlayerIndex = 0 // 첫 번째 캐릭터 *고정*
         };
+
         var sendBuffer = ServerPacketManager.MakeSendBuffer(enterGamePkt);
         NetworkManager.Instance.Send(sendBuffer);
-        return;
+        UIManager.Instance.SetState(UIState.Game); // ★ 로비/게임 화면으로 전환
     }
     public void Add(S_PLAYERLIST packet)
     {

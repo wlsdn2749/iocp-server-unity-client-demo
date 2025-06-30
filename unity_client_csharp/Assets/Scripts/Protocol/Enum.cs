@@ -26,11 +26,12 @@ namespace Protocol {
           string.Concat(
             "CgpFbnVtLnByb3RvEghQcm90b2NvbCpoCgpQbGF5ZXJUeXBlEhQKEFBMQVlF",
             "Ul9UWVBFX05PTkUQABIWChJQTEFZRVJfVFlQRV9LTklHSFQQARIUChBQTEFZ",
-            "RVJfVFlQRV9NQUdFEAISFgoSUExBWUVSX1RZUEVfQVJDSEVSEANiBnByb3Rv",
-            "Mw=="));
+            "RVJfVFlQRV9NQUdFEAISFgoSUExBWUVSX1RZUEVfQVJDSEVSEAMqUgoLTG9n",
+            "aW5SZXN1bHQSCwoHU1VDQ0VTUxAAEhMKD0VNQUlMX05PVF9GT1VORBACEg8K",
+            "C1BXX01JU01BVENIEAMSEAoMU0VSVkVSX0VSUk9SEARiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Protocol.PlayerType), }, null, null));
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Protocol.PlayerType), typeof(global::Protocol.LoginResult), }, null, null));
     }
     #endregion
 
@@ -41,6 +42,22 @@ namespace Protocol {
     [pbr::OriginalName("PLAYER_TYPE_KNIGHT")] Knight = 1,
     [pbr::OriginalName("PLAYER_TYPE_MAGE")] Mage = 2,
     [pbr::OriginalName("PLAYER_TYPE_ARCHER")] Archer = 3,
+  }
+
+  public enum LoginResult {
+    [pbr::OriginalName("SUCCESS")] Success = 0,
+    /// <summary>
+    /// Email 미등록
+    /// </summary>
+    [pbr::OriginalName("EMAIL_NOT_FOUND")] EmailNotFound = 2,
+    /// <summary>
+    /// 비밀번호 불일치
+    /// </summary>
+    [pbr::OriginalName("PW_MISMATCH")] PwMismatch = 3,
+    /// <summary>
+    /// 기타 내부 오류
+    /// </summary>
+    [pbr::OriginalName("SERVER_ERROR")] ServerError = 4,
   }
 
   #endregion

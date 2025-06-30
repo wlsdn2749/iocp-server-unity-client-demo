@@ -32,18 +32,18 @@ void LoginService::DoDbWork(SessionRef session, wstring email, wstring_view pw, 
 			if (Validate(pw, salt, hash))
 			{
 				cout << "로그인 성공" << endl;
-				result = 0;
+				result = Protocol::LoginResult::SUCCESS;
 			}
 			else
 			{
 				cout << "로그인 실패 // 비밀번호가 일치 하지 않습니다." << endl;
-				result = 3;
+				result = Protocol::LoginResult::PW_MISMATCH;
 			}
 		}
 		else // Fetch가 실패해 데이터가 없는 경우
 		{
 			cout << "로그인 실패 // Email이 등록되어 있지 않습니다" << endl;
-			result = 2;
+			result = Protocol::LoginResult::EMAIL_NOT_FOUND;
 			
 		}
 

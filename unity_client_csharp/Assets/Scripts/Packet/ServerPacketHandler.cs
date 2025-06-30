@@ -92,5 +92,9 @@ namespace Packet
             
             UnityEngine.Debug.Log($"[RTT 측정] {rttMs:F2}ms");
         }
+        public static void HANDLE_S_REGISTER(PacketSession session, S_REGISTER packet)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

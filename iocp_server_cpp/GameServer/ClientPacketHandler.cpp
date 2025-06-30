@@ -52,61 +52,74 @@ bool Handle_C_LOGIN(PacketSessionRef& session, Protocol::C_LOGIN& pkt)
 
 	//// TODO : validation 체크
 	int result = 0;
+	Protocol::LoginResult loginResult = {};
 	String email = StrToWstr(pkt.email());
 	String pw = StrToWstr(pkt.pw());
 
 	LoginService::Instance().RequestLogin(session, email, pw, OUT result);
 
 
-	// 로그인 실패한경우.
-	if (result != 0)
+	// 로그인
+	// result = 0 : 성공
+	// result = 4 : Server Error
+	// result = 3 : 비밀번호 일치 X
+	// result = 2 : Email 등록 X
+
+	loginResult = static_cast<Protocol::LoginResult>(result); // DB작업에 실행된 기존 result값을 switch에 사용하기 위해 바꿈
+	switch (loginResult)
+	{
+	case Protocol::LoginResult::EMAIL_NOT_FOUND:
+	case Protocol::LoginResult::PW_MISMATCH:
+	case Protocol::LoginResult::SERVER_ERROR:
 	{
 		cout << "로그인 실패" << endl;
 		Protocol::S_LOGIN loginPkt;
-		loginPkt.set_success(false);
+		loginPkt.set_result(loginResult);
 		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(loginPkt);
 		session->Send(sendBuffer);
 
 		return true;
 	}
 
-
-	// 여기 아래는 로그인 성공한 경우.
-	Protocol::S_LOGIN loginPkt;
-	loginPkt.set_success(true);
-	static Atomic<uint64> idGenerator = 1;
-
-
-	// 만약 플레이어를 DB에서 가져올거면
-	// player도 넘겨야할듯? 넘기든가 받든가.
-
-
-
+		// -------------  여기 아래는 로그인 성공한 경우. -------------------
+	case Protocol::LoginResult::SUCCESS:
+	default:
 	{
-		auto player = loginPkt.add_players();
-		player->set_name(u8"Tommy");
-		player->set_playertype(Protocol::PLAYER_TYPE_KNIGHT);
-		player->set_posx(0);
-		player->set_posy(5);
-		player->set_posz(0);
+		Protocol::S_LOGIN loginPkt;
+		loginPkt.set_result(loginResult);
+		static Atomic<uint64> idGenerator = 1;
 
-		PlayerRef playerRef = MakeShared<Player>();
-		playerRef->playerId = idGenerator++;
-		playerRef->name = player->name();
-		playerRef->type = player->playertype();
-		playerRef->ownerSession = gameSession;
 
-		playerRef->posX = player->posx();
-		playerRef->posY = player->posy();
-		playerRef->posZ = player->posz();
+		// 만약 플레이어를 DB에서 가져올거면
+		// player도 넘겨야할듯? 넘기든가 받든가.
 
-		gameSession->_players.push_back(playerRef);
+		{
+			auto player = loginPkt.add_players();
+			player->set_name(u8"Tommy");
+			player->set_playertype(Protocol::PLAYER_TYPE_KNIGHT);
+			player->set_posx(0);
+			player->set_posy(5);
+			player->set_posz(0);
+
+			PlayerRef playerRef = MakeShared<Player>();
+			playerRef->playerId = idGenerator++;
+			playerRef->name = player->name();
+			playerRef->type = player->playertype();
+			playerRef->ownerSession = gameSession;
+
+			playerRef->posX = player->posx();
+			playerRef->posY = player->posy();
+			playerRef->posZ = player->posz();
+
+			gameSession->_players.push_back(playerRef);
+		}
+
+		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(loginPkt);
+		session->Send(sendBuffer);
+
+		return true;
 	}
-
-	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(loginPkt);
-	session->Send(sendBuffer);
-
-	return true;
+	}
 }
 
 bool Handle_C_ENTER_GAME(PacketSessionRef& session, Protocol::C_ENTER_GAME& pkt)

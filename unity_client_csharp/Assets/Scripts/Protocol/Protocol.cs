@@ -28,28 +28,29 @@ namespace Protocol {
             "dC5wcm90byInCgpDX1JFR0lTVEVSEg0KBWVtYWlsGAEgASgJEgoKAnB3GAIg",
             "ASgJIi8KClNfUkVHSVNURVISEQoJYWNjb3VudElkGAEgASgFEg4KBnJlc3Vs",
             "dBgCIAEoBSIkCgdDX0xPR0lOEg0KBWVtYWlsGAEgASgJEgoKAnB3GAIgASgJ",
-            "Ij0KB1NfTE9HSU4SDwoHc3VjY2VzcxgBIAEoCBIhCgdwbGF5ZXJzGAIgAygL",
-            "MhAuUHJvdG9jb2wuUGxheWVyIiMKDENfRU5URVJfR0FNRRITCgtwbGF5ZXJJ",
-            "bmRleBgBIAEoBCIfCgxTX0VOVEVSX0dBTUUSDwoHc3VjY2VzcxgBIAEoCCIO",
-            "CgxDX0xFQVZFX0dBTUUiKgoWU19CUk9BRENBU1RfTEVBVkVfR0FNRRIQCghw",
-            "bGF5ZXJJZBgBIAEoBCJFCgxTX1BMQVlFUkxJU1QSEgoKbXlQbGF5ZXJJZBgB",
-            "IAEoBBIhCgdwbGF5ZXJzGAIgAygLMhAuUHJvdG9jb2wuUGxheWVyImIKFlNf",
-            "QlJPQURDQVNUX0VOVEVSX0dBTUUSEAoIcGxheWVySWQYASABKAQSDAoEbmFt",
-            "ZRgCIAEoCRIMCgRwb3NYGAMgASgCEgwKBHBvc1kYBCABKAISDAoEcG9zWhgF",
-            "IAEoAiIyCgZDX01PVkUSDAoEcG9zWBgBIAEoAhIMCgRwb3NZGAIgASgCEgwK",
-            "BHBvc1oYAyABKAIiTgoQU19CUk9BRENBU1RfTU9WRRIQCghwbGF5ZXJJZBgB",
-            "IAEoBBIMCgRwb3NYGAIgASgCEgwKBHBvc1kYAyABKAISDAoEcG9zWhgEIAEo",
-            "AiIVCgZDX0NIQVQSCwoDbXNnGAEgASgJIjEKEFNfQlJPQURDQVNUX0NIQVQS",
-            "EAoIcGxheWVySWQYASABKAQSCwoDbXNnGAIgASgJIhsKBUNfUlRUEhIKCmNs",
-            "aWVudFRpbWUYASABKAQiLwoFU19SVFQSEgoKY2xpZW50VGltZRgBIAEoBBIS",
-            "CgpzZXJ2ZXJUaW1lGAIgASgEYgZwcm90bzM="));
+            "IlMKB1NfTE9HSU4SJQoGcmVzdWx0GAEgASgOMhUuUHJvdG9jb2wuTG9naW5S",
+            "ZXN1bHQSIQoHcGxheWVycxgCIAMoCzIQLlByb3RvY29sLlBsYXllciIjCgxD",
+            "X0VOVEVSX0dBTUUSEwoLcGxheWVySW5kZXgYASABKAQiHwoMU19FTlRFUl9H",
+            "QU1FEg8KB3N1Y2Nlc3MYASABKAgiDgoMQ19MRUFWRV9HQU1FIioKFlNfQlJP",
+            "QURDQVNUX0xFQVZFX0dBTUUSEAoIcGxheWVySWQYASABKAQiRQoMU19QTEFZ",
+            "RVJMSVNUEhIKCm15UGxheWVySWQYASABKAQSIQoHcGxheWVycxgCIAMoCzIQ",
+            "LlByb3RvY29sLlBsYXllciJiChZTX0JST0FEQ0FTVF9FTlRFUl9HQU1FEhAK",
+            "CHBsYXllcklkGAEgASgEEgwKBG5hbWUYAiABKAkSDAoEcG9zWBgDIAEoAhIM",
+            "CgRwb3NZGAQgASgCEgwKBHBvc1oYBSABKAIiMgoGQ19NT1ZFEgwKBHBvc1gY",
+            "ASABKAISDAoEcG9zWRgCIAEoAhIMCgRwb3NaGAMgASgCIk4KEFNfQlJPQURD",
+            "QVNUX01PVkUSEAoIcGxheWVySWQYASABKAQSDAoEcG9zWBgCIAEoAhIMCgRw",
+            "b3NZGAMgASgCEgwKBHBvc1oYBCABKAIiFQoGQ19DSEFUEgsKA21zZxgBIAEo",
+            "CSIxChBTX0JST0FEQ0FTVF9DSEFUEhAKCHBsYXllcklkGAEgASgEEgsKA21z",
+            "ZxgCIAEoCSIbCgVDX1JUVBISCgpjbGllbnRUaW1lGAEgASgEIi8KBVNfUlRU",
+            "EhIKCmNsaWVudFRpbWUYASABKAQSEgoKc2VydmVyVGltZRgCIAEoBGIGcHJv",
+            "dG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Protocol.EnumReflection.Descriptor, global::Protocol.StructReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_REGISTER), global::Protocol.C_REGISTER.Parser, new[]{ "Email", "Pw" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_REGISTER), global::Protocol.S_REGISTER.Parser, new[]{ "AccountId", "Result" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_LOGIN), global::Protocol.C_LOGIN.Parser, new[]{ "Email", "Pw" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_LOGIN), global::Protocol.S_LOGIN.Parser, new[]{ "Success", "Players" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_LOGIN), global::Protocol.S_LOGIN.Parser, new[]{ "Result", "Players" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_ENTER_GAME), global::Protocol.C_ENTER_GAME.Parser, new[]{ "PlayerIndex" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_ENTER_GAME), global::Protocol.S_ENTER_GAME.Parser, new[]{ "Success" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_LEAVE_GAME), global::Protocol.C_LEAVE_GAME.Parser, null, null, null, null, null),
@@ -780,7 +781,7 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public S_LOGIN(S_LOGIN other) : this() {
-      success_ = other.success_;
+      result_ = other.result_;
       players_ = other.players_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -791,18 +792,18 @@ namespace Protocol {
       return new S_LOGIN(this);
     }
 
-    /// <summary>Field number for the "success" field.</summary>
-    public const int SuccessFieldNumber = 1;
-    private bool success_;
+    /// <summary>Field number for the "result" field.</summary>
+    public const int ResultFieldNumber = 1;
+    private global::Protocol.LoginResult result_ = global::Protocol.LoginResult.Success;
     /// <summary>
     /// 성공 여부
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Success {
-      get { return success_; }
+    public global::Protocol.LoginResult Result {
+      get { return result_; }
       set {
-        success_ = value;
+        result_ = value;
       }
     }
 
@@ -835,7 +836,7 @@ namespace Protocol {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Success != other.Success) return false;
+      if (Result != other.Result) return false;
       if(!players_.Equals(other.players_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -844,7 +845,7 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Success != false) hash ^= Success.GetHashCode();
+      if (Result != global::Protocol.LoginResult.Success) hash ^= Result.GetHashCode();
       hash ^= players_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -864,9 +865,9 @@ namespace Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Success != false) {
+      if (Result != global::Protocol.LoginResult.Success) {
         output.WriteRawTag(8);
-        output.WriteBool(Success);
+        output.WriteEnum((int) Result);
       }
       players_.WriteTo(output, _repeated_players_codec);
       if (_unknownFields != null) {
@@ -879,9 +880,9 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Success != false) {
+      if (Result != global::Protocol.LoginResult.Success) {
         output.WriteRawTag(8);
-        output.WriteBool(Success);
+        output.WriteEnum((int) Result);
       }
       players_.WriteTo(ref output, _repeated_players_codec);
       if (_unknownFields != null) {
@@ -894,8 +895,8 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Success != false) {
-        size += 1 + 1;
+      if (Result != global::Protocol.LoginResult.Success) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
       }
       size += players_.CalculateSize(_repeated_players_codec);
       if (_unknownFields != null) {
@@ -910,8 +911,8 @@ namespace Protocol {
       if (other == null) {
         return;
       }
-      if (other.Success != false) {
-        Success = other.Success;
+      if (other.Result != global::Protocol.LoginResult.Success) {
+        Result = other.Result;
       }
       players_.Add(other.players_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -930,7 +931,7 @@ namespace Protocol {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Success = input.ReadBool();
+            Result = (global::Protocol.LoginResult) input.ReadEnum();
             break;
           }
           case 18: {
@@ -953,7 +954,7 @@ namespace Protocol {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Success = input.ReadBool();
+            Result = (global::Protocol.LoginResult) input.ReadEnum();
             break;
           }
           case 18: {
