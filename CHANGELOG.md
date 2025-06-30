@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.16] - 2025-06-27
+
+### 🚀 Features
+
+- *(DB)* DB feature Login added, for that, DBBind's Some overload function changed and automation code changned
+
 ## [0.0.15] - 2025-06-26
 
 ### 🚀 Features
