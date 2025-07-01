@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.19] - 2025-07-01
+
+### 🐛 Bug Fixes
+
+- *(chat)* 채팅 패킷을 주고 받는과정에서 끊기는것을 Profiler로 확인, 그리고 로직을 수정하여 해결함
+
 ## [0.0.18] - 2025-06-30
 
 ### 🚀 Features
