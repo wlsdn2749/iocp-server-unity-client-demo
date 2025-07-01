@@ -130,7 +130,7 @@ namespace DummyClientCS
                     prometheusExporter?.SetConnectionStatus(true);
                     return session;
                 },
-                1);
+                10);
 
             // Move 패킷을 주기적으로 보내는 Task
             Task.Run(async () =>

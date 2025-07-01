@@ -46,7 +46,7 @@ namespace DummyClientCS
 
             Protocol.C_LOGIN loginPkt = new C_LOGIN()
             {
-                Email = "abdc@123d.com",
+                Email = "abc@123d.com",
                 Pw = "abcde",
             };
             var sendBuffer = ServerPacketManager.MakeSendBuffer(loginPkt);

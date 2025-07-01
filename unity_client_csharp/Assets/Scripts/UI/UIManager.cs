@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        
+        SetState(UIState.Login);
     }
     
     public void SetState(UIState next)

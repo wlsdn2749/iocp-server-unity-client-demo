@@ -10,7 +10,7 @@ void LoginService::RequestLogin(SessionRef session, wstring_view email, wstring_
 {
 	Bytes16 salt = { };
 	Bytes64 hash = { };
-	DoDbWork(session, wstring(email), plainPw, OUT salt, OUT hash, result); // Salt와 Hash 획득
+	DoDbWork(session, wstring(email), plainPw, OUT salt, OUT hash, OUT result); // Salt와 Hash 획득
 
 }
 
@@ -46,9 +46,6 @@ void LoginService::DoDbWork(SessionRef session, wstring email, wstring_view pw, 
 			result = Protocol::LoginResult::LOGIN_EMAIL_NOT_FOUND;
 			
 		}
-
-
-		
 	}
 	GDBConnectionPool->Push(conn);
 
