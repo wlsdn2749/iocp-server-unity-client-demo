@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.20] - 2025-07-01
+
+### 🐛 Bug Fixes
+
+- *(move)* 이동 패킷의 뒤로 끊김 현상은, 단순히 브로드캐스팅 하는 과정에서, 자기가 보낸 패킷을 갱신해서 그런 것임
+
 ## [0.0.19] - 2025-07-01
 
 ### 🐛 Bug Fixes
