@@ -149,7 +149,7 @@ namespace Packet
             // 성능 통계 업데이트
             ClientPerformanceStats.Instance?.RecordRtt(rttMs);
             
-            Console.WriteLine($"[RTT 측정] {rttMs:F2}ms");
+            //Console.WriteLine($"[RTT 측정] {rttMs:F2}ms");
         }
 
         internal static void HANDLE_S_REGISTER(PacketSession session, S_REGISTER packet)

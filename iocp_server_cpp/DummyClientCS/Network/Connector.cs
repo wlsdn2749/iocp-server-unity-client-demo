@@ -30,6 +30,25 @@ namespace ServerCore
             
         }
 
+        // 점진적 연결
+        public async Task ConnectGradually(
+            IPEndPoint endPoint,
+            Func<Session> sessionFactory,
+            int totalCount,
+            int batchSize   = 5,
+            int intervalMs  = 50)            // 50 ms = 0.05 s
+        {
+            int connected = 0;
+            while (connected < totalCount)
+            {
+                int toMake = Math.Min(batchSize, totalCount - connected);
+                Connect(endPoint, sessionFactory, toMake);   // 기존 메서드 그대로 호출
+                connected += toMake;
+
+                await Task.Delay(intervalMs);                // 스레드를 블로킹하지 않음
+            }
+        }
+
         void RegisterConnect(SocketAsyncEventArgs args)
         {
             // as의 경우 Socket type이 아닌 경우 null 발생

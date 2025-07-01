@@ -29,6 +29,8 @@ void Room::Enter(PlayerRef player)
 	SendBufferRef playerListBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
 	player->ownerSession->Send(playerListBuffer);
 
+	cout << "플레이어 목록 전송" << endl;
+
 	////// 3. (전체 멤버에게) 입장 브로드캐스트
 	Protocol::S_BROADCAST_ENTER_GAME enterPkt;
 	enterPkt.set_playerid(player->playerId);

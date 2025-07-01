@@ -74,6 +74,7 @@ void ThreadManager::DoGlobalQueueWork()
 		if (jobQueue == nullptr)
 			break;
 
+		cout << "실행대기" << endl;
 		jobQueue->Execute();
 	}
 }

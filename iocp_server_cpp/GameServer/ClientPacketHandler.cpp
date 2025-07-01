@@ -168,7 +168,7 @@ bool Handle_C_LEAVE_GAME(PacketSessionRef& session, Protocol::C_LEAVE_GAME& pkt)
 bool Handle_C_CHAT(PacketSessionRef& session, Protocol::C_CHAT& pkt)
 {
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
-	std::cout << pkt.msg() << endl;
+	//std::cout << pkt.msg() << endl;
 
 	// Prometheus 메트릭 업데이트
 	if (GPrometheusMetrics) {

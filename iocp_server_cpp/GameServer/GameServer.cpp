@@ -163,7 +163,7 @@ int main()
 		100);
 
 	ASSERT_CRASH(service->Start());
-	for (int32 i = 0; i < 5; i++)
+	for (int32 i = 0; i < 5; i++) // worker count
 	{
 		GThreadManager->Launch([&service]()
 		{

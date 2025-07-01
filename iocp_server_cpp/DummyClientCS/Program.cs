@@ -124,13 +124,25 @@ namespace DummyClientCS
             IPEndPoint endPoint = new IPEndPoint(ipAddr, 8421);
 
             Connector connector = new Connector();
-            connector.Connect(endPoint,
-                () => { 
+            //connector.Connect(endPoint,
+            //    () => { 
+            //        var session = SessionManager.Instance.Generate();
+            //        prometheusExporter?.SetConnectionStatus(true);
+            //        return session;
+            //    },
+            //    40);
+
+            _ = connector.ConnectGradually(
+                endPoint,
+                () =>
+                {
                     var session = SessionManager.Instance.Generate();
                     prometheusExporter?.SetConnectionStatus(true);
                     return session;
                 },
-                10);
+                totalCount: 100,   // 전체 40개
+                batchSize: 5,    // 한 번에 5개
+                intervalMs: 50);  // 50 ms 간격
 
             // Move 패킷을 주기적으로 보내는 Task
             Task.Run(async () =>

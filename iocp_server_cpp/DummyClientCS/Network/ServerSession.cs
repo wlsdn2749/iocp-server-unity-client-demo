@@ -33,7 +33,7 @@ namespace DummyClientCS
 
         public override void OnConnected(EndPoint endPoint)
         {
-            Console.WriteLine($"onConnected : {endPoint}");
+            //Console.WriteLine($"onConnected : {endPoint}");
 
             // 중복처리 안되있어서 일단 비활성화
             //Protocol.C_REGISTER registerPkt = new C_REGISTER()

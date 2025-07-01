@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace ServerCore
 {
@@ -39,7 +40,6 @@ namespace ServerCore
         public sealed override int OnRecv(ArraySegment<byte> buffer) // buffer를 통해 얼마만큼의 데이터를 처리했는지 반환
         {
             int processLen = 0;
-            int packetCount = 0;
             while (true)
             {
                 // 최소한 헤더는 파싱할 수 있는지 확인
@@ -55,14 +55,10 @@ namespace ServerCore
 
                 // 패킷 하나가 완성 → 상위 핸들러로 전달
                 OnRecvPacket(new ArraySegment<byte>(buffer.Array, buffer.Offset, header.Size));
-                packetCount++;
 
                 processLen += header.Size;
                 buffer = new ArraySegment<byte>(buffer.Array, buffer.Offset + header.Size, buffer.Count - header.Size);
             }
-
-            if(packetCount > 1)
-                Console.WriteLine($"패킷 모아보내기 : {packetCount}");
 
             return processLen;
         }
@@ -187,7 +183,7 @@ namespace ServerCore
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine($"OnSendCompleted Failed {e}");
+                        Debug.Log($"OnSendCompleted Failed {e}");
                     }
                 }
             }
@@ -263,7 +259,7 @@ namespace ServerCore
                 }
                 catch(Exception e)
                 {
-                    Console.WriteLine($"OnReceived Failed {e}");
+                    Debug.Log($"OnReceived Failed {e}");
                 }
             }
 

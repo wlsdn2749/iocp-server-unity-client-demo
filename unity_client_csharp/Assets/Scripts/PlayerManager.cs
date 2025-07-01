@@ -117,7 +117,7 @@ public class PlayerManager
     {
         if (_myPlayer.PlayerId == packet.PlayerId)
         {
-            _myPlayer.transform.position = new Vector3(packet.PosX, packet.PosY, packet.PosZ);
+            // _myPlayer.transform.position = new Vector3(packet.PosX, packet.PosY, packet.PosZ);
         }
         else
         {

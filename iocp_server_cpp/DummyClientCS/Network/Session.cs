@@ -61,9 +61,6 @@ namespace ServerCore
                 buffer = new ArraySegment<byte>(buffer.Array, buffer.Offset + header.Size, buffer.Count - header.Size);
             }
 
-            if(packetCount > 1)
-                Console.WriteLine($"패킷 모아보내기 : {packetCount}");
-
             return processLen;
         }
 

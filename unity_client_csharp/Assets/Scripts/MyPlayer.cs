@@ -57,23 +57,9 @@ public class MyPlayer : Player
     {
         while (true)
         {
-            Debug.Log("SendPacket!");
+            // Debug.Log("SendPacket!");
             yield return new WaitForSeconds(3.0f);
-            // C_CHAT chatPkt = new C_CHAT();
-            // chatPkt.Msg = "Hello World !"; // 대소문자 주의: C#은 PascalCase로 자동 변환됨
-            // byte[] sendBuffer = chatPkt.ToByteArray();
-            //
-            // ushort packetId = 1004; /* C_CHAT에 해당하는 패킷 번호, 예: 1004 */;
-            // ushort bodySize = (ushort)sendBuffer.Length;
-            // ushort totalSize = (ushort)(bodySize + 4); // 헤더 4바이트
-            //
-            // byte[] finalPacket = new byte[totalSize];
-            // Buffer.BlockCopy(BitConverter.GetBytes(totalSize), 0, finalPacket, 0, 2); // size
-            // Buffer.BlockCopy(BitConverter.GetBytes(packetId), 0, finalPacket, 2, 2);  // id
-            // Buffer.BlockCopy(sendBuffer, 0, finalPacket, 4, bodySize);                // protobuf 본문
-            //
-            // _network.Send(finalPacket);
-
+            
             Protocol.C_CHAT chatPkt = new Protocol.C_CHAT()
             {
                 Msg = "Hello World!"

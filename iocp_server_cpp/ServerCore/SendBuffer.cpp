@@ -47,7 +47,7 @@ SendBufferRef SendBufferChunk::Open(uint32 allocSize)
 
 void SendBufferChunk::Close(uint32 writeSize)
 {
-	ASSERT_CRASH(_open = true) // open을 안했는데 close하는건 말이안되는 거임 (Single thread)
+	ASSERT_CRASH(_open == true) // open을 안했는데 close하는건 말이안되는 거임 (Single thread)
 	_open = false;
 	_usedSize += writeSize;
 }
@@ -103,6 +103,6 @@ void SendBufferManager::Push(SendBufferChunkRef buffer)
 
 void SendBufferManager::PushGlobal(SendBufferChunk* buffer)
 {
-	cout << "PUSHGLOBAL SENDBUFFERCHUNK" << endl;
+	//cout << "PUSHGLOBAL SENDBUFFERCHUNK" << endl;
 	GSendBufferManager->Push(SendBufferChunkRef(buffer, PushGlobal)); // buffer를 그대로 받아서, 다시 넣음
 }

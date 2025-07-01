@@ -43,13 +43,14 @@ namespace Packet
             S_BROADCAST_CHAT pkt = packet as S_BROADCAST_CHAT;
             ServerSession serverSession = session as ServerSession;
             
-            UnityEngine.Debug.Log($"[Server's Broadcast] {pkt.PlayerId}: {pkt.Msg}");
+            // UnityEngine.Debug.Log($"[Server's Broadcast] {pkt.PlayerId}: {pkt.Msg}");
             UI.ChatUIManager.Instance?.AddMessage(pkt.PlayerId.ToString(), pkt.Msg);
         }
         public static void HANDLE_S_PLAYERLIST(PacketSession session, S_PLAYERLIST packet)
         {
             S_PLAYERLIST pkt = packet as S_PLAYERLIST;
             ServerSession serverSession = session as ServerSession;
+            Debug.Log("목록 받기 완료");
             PlayerManager.Instance.Add(pkt);
         }
         public static void HANDLE_S_BROADCAST_ENTER_GAME(PacketSession session, S_BROADCAST_ENTER_GAME packet)
@@ -96,7 +97,7 @@ namespace Packet
                 return;
             }
             
-            UnityEngine.Debug.Log($"[RTT 측정] {rttMs:F2}ms");
+            // UnityEngine.Debug.Log($"[RTT 측정] {rttMs:F2}ms");
         }
     }
 }

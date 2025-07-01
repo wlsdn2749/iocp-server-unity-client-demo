@@ -70,7 +70,7 @@ public class NetworkManager : MonoBehaviour
                 var sendBuffer = ServerPacketManager.MakeSendBuffer(rttPacket);
                 _session.Send(sendBuffer);
                 
-                Debug.Log("[RTT 패킷 전송]");
+                // Debug.Log("[RTT 패킷 전송]");
             }
             catch (System.Exception e)
             {
@@ -82,7 +82,6 @@ public class NetworkManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         List<IMessage> packetList = PacketQueue.Instance.PopAll();
         
         foreach(IMessage pkt in packetList)
