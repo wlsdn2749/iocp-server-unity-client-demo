@@ -10,6 +10,7 @@ shared_ptr<Room> GRoom = make_shared<Room>();
 
 void Room::Enter(PlayerRef player)
 {
+	cout << "엔터 진입" << endl;
 	// 1. 방 멤버로 등록
 	_players[player->playerId] = player;
 

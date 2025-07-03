@@ -26,17 +26,6 @@
 // Prometheus 메트릭 전역 객체
 PrometheusMetrics* GPrometheusMetrics = nullptr;
 
-// 패킷 직렬화 (Serialization)
-
-//class Player
-//{r
-//public:
-//	int32 hp = 0;
-//	int32 attack = 0;
-//	Player* target = nullptr;
-//	vector<int32> buffs;
-//};
-
 enum
 {
 	WORKER_TICK = 64
@@ -102,7 +91,7 @@ int main()
 
 	DBConnection* dbConn = GDBConnectionPool->Pop();
 	DBSynchronizer dbSync(*dbConn);
-	dbSync.Synchronize(L"GameDB.xml");
+	dbSync.Synchronize(L"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/GameServer/GameDB.xml");
 
 	{
 		WCHAR name[] = L"홍길동";

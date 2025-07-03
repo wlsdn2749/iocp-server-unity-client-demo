@@ -41,7 +41,7 @@ public class MyPlayer : Player
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.05f); // 50ms
+            yield return new WaitForSeconds(0.25f); // 250ms
             Vector3 pos = transform.position;
             C_MOVE movePacket = new C_MOVE()
             {
@@ -58,7 +58,7 @@ public class MyPlayer : Player
         while (true)
         {
             // Debug.Log("SendPacket!");
-            yield return new WaitForSeconds(3.0f);
+            yield return new WaitForSeconds(2.0f);
             
             Protocol.C_CHAT chatPkt = new Protocol.C_CHAT()
             {

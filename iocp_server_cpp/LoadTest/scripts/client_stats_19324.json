@@ -1,0 +1,14 @@
+{
+  "processId": 19324,
+  "timestamp": 235014,
+  "totalPacketsSent": 6457869,
+  "totalPacketsReceived": 10218350,
+  "recentPacketsSent": 25790,
+  "recentPacketsReceived": 39607,
+  "tps": 27478.56528542286,
+  "avgLatency": 0,
+  "maxLatency": 0,
+  "avgRtt": 0.241247,
+  "maxRtt": 116.782,
+  "uptimeMs": 235014
+}

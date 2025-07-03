@@ -26,10 +26,16 @@ namespace DummyClientCS
         {
             // 명령줄 인수 파싱
             string clientId = System.Diagnostics.Process.GetCurrentProcess().Id.ToString();
-            int httpPort = 8081;
+            int httpPort = 10101;
             int moveInterval = 250;
             int chatInterval = 2000;
             bool isGTestMode = false;
+            
+            // 연결 관련 설정
+            string connectionMode = "direct"; // "direct" 또는 "gradually"
+            int totalConnections = 10;
+            int batchSize = 5;
+            int intervalMs = 50;
 
             for (int i = 0; i < args.Length; i++)
             {
@@ -43,6 +49,14 @@ namespace DummyClientCS
                     int.TryParse(args[i + 1], out chatInterval);
                 else if (args[i] == "--gtest" || args[i] == "--performance-test")
                     isGTestMode = true;
+                else if (args[i] == "--connection-mode" && i + 1 < args.Length)
+                    connectionMode = args[i + 1].ToLower();
+                else if (args[i] == "--connections" && i + 1 < args.Length)
+                    int.TryParse(args[i + 1], out totalConnections);
+                else if (args[i] == "--batch-size" && i + 1 < args.Length)
+                    int.TryParse(args[i + 1], out batchSize);
+                else if (args[i] == "--interval" && i + 1 < args.Length)
+                    int.TryParse(args[i + 1], out intervalMs);
             }
             
             // 환경 변수로도 gTest 모드 확인
@@ -60,6 +74,13 @@ namespace DummyClientCS
             Console.WriteLine($"   - Move Interval: {moveInterval}ms");
             Console.WriteLine($"   - Chat Interval: {chatInterval}ms");
             Console.WriteLine($"   - gTest Mode: {isGTestMode}");
+            Console.WriteLine($"   - 연결 모드: {connectionMode}");
+            Console.WriteLine($"   - 총 연결 수: {totalConnections}");
+            if (connectionMode == "gradually")
+            {
+                Console.WriteLine($"   - 배치 크기: {batchSize}");
+                Console.WriteLine($"   - 연결 간격: {intervalMs}ms");
+            }
             
             // 성능 통계 수집 시작 (gTest 모드에서만)
             if (isGTestMode)
@@ -124,25 +145,33 @@ namespace DummyClientCS
             IPEndPoint endPoint = new IPEndPoint(ipAddr, 8421);
 
             Connector connector = new Connector();
-            //connector.Connect(endPoint,
-            //    () => { 
-            //        var session = SessionManager.Instance.Generate();
-            //        prometheusExporter?.SetConnectionStatus(true);
-            //        return session;
-            //    },
-            //    40);
-
-            _ = connector.ConnectGradually(
-                endPoint,
-                () =>
-                {
-                    var session = SessionManager.Instance.Generate();
-                    prometheusExporter?.SetConnectionStatus(true);
-                    return session;
-                },
-                totalCount: 100,   // 전체 40개
-                batchSize: 5,    // 한 번에 5개
-                intervalMs: 50);  // 50 ms 간격
+            
+            if (connectionMode == "direct")
+            {
+                Console.WriteLine($"🔗 직접 연결 모드로 {totalConnections}개 클라이언트 연결 중...");
+                connector.Connect(endPoint,
+                    () => { 
+                        var session = SessionManager.Instance.Generate();
+                        prometheusExporter?.SetConnectionStatus(true);
+                        return session;
+                    },
+                    totalConnections);
+            }
+            else // gradually
+            {
+                Console.WriteLine($"🔗 점진적 연결 모드로 {totalConnections}개 클라이언트 연결 중...");
+                _ = connector.ConnectGradually(
+                    endPoint,
+                    () =>
+                    {
+                        var session = SessionManager.Instance.Generate();
+                        prometheusExporter?.SetConnectionStatus(true);
+                        return session;
+                    },
+                    totalCount: totalConnections,
+                    batchSize: batchSize,
+                    intervalMs: intervalMs);
+            }
 
             // Move 패킷을 주기적으로 보내는 Task
             Task.Run(async () =>

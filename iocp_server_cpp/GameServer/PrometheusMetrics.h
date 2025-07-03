@@ -28,6 +28,11 @@ private:
     std::atomic<int64> _chatPacketsReceived{0};
     std::atomic<int64> _rttPacketsReceived{0};
     
+    // JobQueue 메트릭들
+    std::atomic<int64> _jobQueuePushedTotal{0};
+    std::atomic<int64> _jobQueueExecutedTotal{0};
+    std::atomic<int64> _jobQueuePendingCount{0};
+    
     // 성능 메트릭들
     std::atomic<double> _avgProcessingTime{0.0};
     std::atomic<double> _maxProcessingTime{0.0};
@@ -64,6 +69,11 @@ public:
     void IncrementMovePackets() { _movePacketsReceived++; }
     void IncrementChatPackets() { _chatPacketsReceived++; }
     void IncrementRttPackets() { _rttPacketsReceived++; }
+    
+    // JobQueue 메트릭 업데이트 함수들
+    void IncrementJobQueuePushed() { _jobQueuePushedTotal++; }
+    void IncrementJobQueueExecuted() { _jobQueueExecutedTotal++; }
+    void UpdateJobQueuePending(int64 pendingCount) { _jobQueuePendingCount = pendingCount; }
     
     void UpdateProcessingTime(double timeMs) {
         // 최대값 업데이트
@@ -165,6 +175,19 @@ public:
         }
         oss << "server_processing_time_seconds_bucket{le=\"+Inf\"} " 
             << _processingTimeBuckets[9].load() << "\n\n";
+        
+        // JobQueue 메트릭들
+        oss << "# HELP server_jobqueue_pushed_total Total jobs pushed to JobQueue\n";
+        oss << "# TYPE server_jobqueue_pushed_total counter\n";
+        oss << "server_jobqueue_pushed_total " << _jobQueuePushedTotal.load() << "\n\n";
+        
+        oss << "# HELP server_jobqueue_executed_total Total jobs executed from JobQueue\n";
+        oss << "# TYPE server_jobqueue_executed_total counter\n";
+        oss << "server_jobqueue_executed_total " << _jobQueueExecutedTotal.load() << "\n\n";
+        
+        oss << "# HELP server_jobqueue_pending_jobs Currently pending jobs in JobQueue\n";
+        oss << "# TYPE server_jobqueue_pending_jobs gauge\n";
+        oss << "server_jobqueue_pending_jobs " << _jobQueuePendingCount.load() << "\n\n";
         
         // 메모리 메트릭들
         oss << "# HELP server_memory_usage_bytes Memory usage in bytes\n";

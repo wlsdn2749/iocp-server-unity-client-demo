@@ -1,0 +1,14 @@
+{
+  "processId": 41412,
+  "timestamp": 429009,
+  "totalPacketsSent": 14151781,
+  "totalPacketsReceived": 22185753,
+  "recentPacketsSent": 37152,
+  "recentPacketsReceived": 0,
+  "tps": 32987.111066114114,
+  "avgLatency": 0,
+  "maxLatency": 0,
+  "avgRtt": 0.06823500000000003,
+  "maxRtt": 0.177,
+  "uptimeMs": 429009
+}

@@ -1,12 +1,23 @@
 #include "pch.h"
 #include "JobQueue.h"
 #include "GlobalQueue.h"
+#include "../GameServer/PrometheusMetrics.h"
+
+// PrometheusMetrics 전역 객체 extern 선언
+extern PrometheusMetrics* GPrometheusMetrics;
 
 /*------------------------
 		JobQueue
  -----------------------*/
+
 void JobQueue::Push(JobRef job, bool pushOnly)
 {
+	
+	// PrometheusMetrics 업데이트
+	if (GPrometheusMetrics) {
+		GPrometheusMetrics->IncrementJobQueuePushed();
+	}
+	
 	const int32 prevCount = _jobCount.fetch_add(1); // 카운트 증가
 	_jobs.Push(job); // WRITE_LOCK // 잡 실행
 
@@ -44,8 +55,22 @@ void JobQueue::Execute()
 
 		const int32 jobCount = static_cast<int32>(jobs.size());
 
+		cout << "JobCount는? " << jobCount << endl;
+
 		for (int32 i = 0; i < jobCount; i++)
+		{
 			jobs[i]->Execute(); // 잡 실행
+			
+			// PrometheusMetrics 업데이트
+			if (GPrometheusMetrics) {
+				GPrometheusMetrics->IncrementJobQueueExecuted();
+			}
+		}
+		
+		// PrometheusMetrics에 현재 대기 중인 작업 수 업데이트
+		if (GPrometheusMetrics) {
+			GPrometheusMetrics->UpdateJobQueuePending(_jobCount.load());
+		}
 
 		// 남은 일감 0개라면 종료
 		if (_jobCount.fetch_sub(jobCount) == jobCount) // 카운트 증감

@@ -229,9 +229,11 @@ namespace ServerCore
 
         void OnRecvCompleted(object sender, SocketAsyncEventArgs args)
         {
+           
             if(args.BytesTransferred > 0 && args.SocketError == SocketError.Success)
             {
                 //TODO
+                Debug.Log("Recv something");
                 try
                 {
                     // Write 커서 이동

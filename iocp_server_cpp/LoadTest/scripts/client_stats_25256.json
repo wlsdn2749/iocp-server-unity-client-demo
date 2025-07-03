@@ -1,0 +1,14 @@
+{
+  "processId": 25256,
+  "timestamp": 1102006,
+  "totalPacketsSent": 19559969,
+  "totalPacketsReceived": 30781717,
+  "recentPacketsSent": 16600,
+  "recentPacketsReceived": 0,
+  "tps": 17749.421048856864,
+  "avgLatency": 0,
+  "maxLatency": 0,
+  "avgRtt": 0.2768610000000002,
+  "maxRtt": 80.175,
+  "uptimeMs": 1102006
+}

@@ -1,0 +1,14 @@
+{
+  "processId": 41408,
+  "timestamp": 27027,
+  "totalPacketsSent": 0,
+  "totalPacketsReceived": 0,
+  "recentPacketsSent": 0,
+  "recentPacketsReceived": 0,
+  "tps": 0,
+  "avgLatency": 0,
+  "maxLatency": 0,
+  "avgRtt": 0,
+  "maxRtt": 0,
+  "uptimeMs": 27027
+}
