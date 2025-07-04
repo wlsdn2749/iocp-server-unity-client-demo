@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.21] - 2025-07-03
+
+### 🐛 Bug Fixes
+
+- *(Load)* 100명 이상 부하테스트 추가 및 동시접속자 100명 이상 끊김 현상 해결
+
 ## [0.0.20] - 2025-07-01
 
 ### 🐛 Bug Fixes
