@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.22] - 2025-07-04
+
+### 📚 Documentation
+
+- Readme.md 수정 및 트 슈팅 파일 Docs/에 정리
+
 ## [0.0.21] - 2025-07-03
 
 ### 🐛 Bug Fixes
