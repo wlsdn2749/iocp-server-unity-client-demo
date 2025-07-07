@@ -48,6 +48,7 @@ namespace DummyClientCS
             {
                 Email = "abc@123d.com",
                 Pw = "abcde",
+                Type = Protocol.PlayerType.Dummy,
             };
             var sendBuffer = ServerPacketManager.MakeSendBuffer(loginPkt);
             Send(sendBuffer);

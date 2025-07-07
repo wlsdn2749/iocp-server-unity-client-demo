@@ -34,11 +34,13 @@ void Room::Enter(PlayerRef player)
 
 	////// 3. (전체 멤버에게) 입장 브로드캐스트
 	Protocol::S_BROADCAST_ENTER_GAME enterPkt;
-	enterPkt.set_playerid(player->playerId);
-	enterPkt.set_name(player->name);
-	enterPkt.set_posx(player->posX);
-	enterPkt.set_posy(player->posY);
-	enterPkt.set_posz(player->posZ);
+	auto* myPlayer = enterPkt.mutable_player();   // 포인터 반환
+	myPlayer->set_id(player->playerId);
+	myPlayer->set_name(player->name);
+	myPlayer->set_playertype(player->type);
+	myPlayer->set_posx(player->posX);
+	myPlayer->set_posy(player->posY);
+	myPlayer->set_posz(player->posZ);
 	SendBufferRef enterBuffer = ClientPacketHandler::MakeSendBuffer(enterPkt);
 
 	BroadCast(enterBuffer);

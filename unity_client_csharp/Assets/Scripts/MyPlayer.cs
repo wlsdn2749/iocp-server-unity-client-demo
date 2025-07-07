@@ -3,31 +3,18 @@ using System.Collections;
 using Google.Protobuf;
 using Packet;
 using UnityEngine;
-using Protocol;
 using UnityEngine.Rendering;
 
 public class MyPlayer : Player
 {
-    public float moveSpeed = 15f;
-
-    private Rigidbody _rigid;
-    private Vector3 _moveDir = Vector3.zero;
-    
-    void Start() 
+    /* ---------- 초기화 ---------- */
+    protected override void Awake()
     {
-        _rigid = GetComponent<Rigidbody>();
-        Debug.Log("My Player Start");
-        SetColor(Color.green);
-        StartCoroutine(nameof(CoSendPacket));
+        base.Awake();
+        StartCoroutine(nameof(CoSendChatPacket));
         StartCoroutine(nameof(CoSendMovePacket));
     }
-
-    void FixedUpdate()
-    {
-        Vector3 moveVelocity = _moveDir * moveSpeed;
-        _rigid.MovePosition(_rigid.position + moveVelocity * Time.fixedDeltaTime);
-    }
-
+    
     
     void Update()
     {
@@ -37,13 +24,16 @@ public class MyPlayer : Player
 
         _moveDir = new Vector3(h, 0, v).normalized;
     }
+    
+    /* ---------- RTT ---------- */
+    public override void SetRtt(double rtt) => _tag?.UpdateRtt(rtt);
     IEnumerator CoSendMovePacket()
     {
         while (true)
         {
             yield return new WaitForSeconds(0.25f); // 250ms
             Vector3 pos = transform.position;
-            C_MOVE movePacket = new C_MOVE()
+            Protocol.C_MOVE movePacket = new Protocol.C_MOVE()
             {
                 PosX = pos.x,
                 PosY = pos.y,
@@ -53,7 +43,7 @@ public class MyPlayer : Player
             NetworkManager.Instance.Send(sendBuffer);
         }
     }
-    IEnumerator CoSendPacket()
+    IEnumerator CoSendChatPacket()
     {
         while (true)
         {

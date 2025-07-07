@@ -1,16 +1,37 @@
+using System;
 using System.Collections.Generic;
 using Protocol;
 using UnityEngine;
 using Packet;
+using Object = UnityEngine.Object;
 
-public class PlayerManager
+public class PlayerManager : MonoBehaviour
 {
-    private MyPlayer _myPlayer;
+    [Header("Prefabs / Parents")]
+    [SerializeField] private GameObject playerPrefab;    // "Resources/Player" 대신 인스펙터 지정
+    [SerializeField] private NameTagUI   nameTagPrefab;  // UI 프리팹 (앞서 만든 것)
+    [SerializeField] private RectTransform nameTagLayer; // Canvas 하위 빈 오브젝트
+    
+    [SerializeField] private Material matMyPlayer;  // 흰색 + 아웃라인
+    [SerializeField] private Material matPlayer; // 초록
+    [SerializeField] private Material matDummy; // 회색·투명 60 %
+    
+    public MyPlayer MyPlayer { get; private set; }
     private Dictionary<ulong, Player> _players = new Dictionary<ulong, Player>();
 
-    public static PlayerManager Instance { get; } = new PlayerManager();
-    
-    public int TotalPlayerCount => (_myPlayer != null ? 1 : 0) + _players.Count;
+    public static PlayerManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
+    public int TotalPlayerCount => (MyPlayer != null ? 1 : 0) + _players.Count;
     public void Register(S_REGISTER packet)
     {
         var result = packet.Result;
@@ -92,32 +113,87 @@ public class PlayerManager
     public void Add(S_PLAYERLIST packet)
     {
         Debug.Log("PlayerList를 받아 Add 요청 받음");
-        Object obj = Resources.Load("Player");
-        
+
         foreach (Protocol.Player p in packet.Players)
         {
-            GameObject go = Object.Instantiate(obj) as GameObject;
-            if(packet.MyPlayerId == p.Id) // 자기 자신인 경우.
-            {
-                MyPlayer myPlayer = go.AddComponent<MyPlayer>();
-                myPlayer.PlayerId = p.Id;
-                myPlayer.transform.position = new Vector3(p.PosX, p.PosY, p.PosZ);
-                _myPlayer = myPlayer;
-            }
-            else
-            {
-                Player player = go.AddComponent<Player>();
-                player.PlayerId = p.Id;
-                player.transform.position = new Vector3(p.PosX, p.PosY, p.PosZ);
-                _players.Add(p.Id, player);
-            }
+            SpawnPlayer(p, packet.MyPlayerId);
         }
+    }
+
+    /* ---------------------------------------------------------------------- */
+    /*  SpawnPlayer : 1명 생성 & NameTag 연결                               */
+    /* ---------------------------------------------------------------------- */
+    private void SpawnPlayer(Protocol.Player p, ulong myId)
+    {
+        // ┌─── ① 플레이어 GameObject 생성 ──────────────────────────────────┐
+        var go = Object.Instantiate(playerPrefab);
+        go.transform.position = new Vector3(p.PosX, p.PosY, p.PosZ);
+
+        Debug.Log($"Position: {go.transform.position}");
+        /* 1) 플레이어 타입 판단 --------------------------------------- */
+        bool isSelf  = p.Id == myId;
+        bool isDummy = p.PlayerType == PlayerType.Dummy;
+        Material mat = isSelf    ? matMyPlayer
+            : isDummy   ? matDummy
+            :             matPlayer;
+
+        /* 2) 머티리얼 적용 (공유 머티리얼 유지) ------------------------- */
+        ApplySharedMaterial(go, mat);
+        
+        // ┌─── ② 타입 구분 (자신 / 타인) ───────────────────────────────────┐
+        Player baseComp;
+        if (isSelf)
+        {
+            var me = go.AddComponent<MyPlayer>();
+            me.PlayerId = p.Id;
+            MyPlayer = me;
+            baseComp = me;
+        }
+        else
+        {
+            var other = go.AddComponent<Player>();
+            other.PlayerId = p.Id;
+            _players.Add(p.Id, other);
+            baseComp = other;
+        }
+
+        // ┌─── ③ NameTag UI 인스턴스화 ─────────────────────────────────────┐
+        var tag = Object.Instantiate(nameTagPrefab, nameTagLayer, false);
+        tag.Init(baseComp.transform, p.Id, isSelf);
+        baseComp.AttachNameTag(tag);
+    }
+    
+    
+    /// <summary>
+    /// “내 캐릭터” 여부를 따질 필요 없이
+    /// **다른 플레이어**만 생성할 때 사용하는 헬퍼.
+    /// </summary>
+    private void SpawnRemotePlayer(Protocol.Player p)
+    {
+        // ┌─── ① 오브젝트 배치 ───────────────────────────────────────────────┐
+        var go = Instantiate(playerPrefab);
+        go.transform.position = new Vector3(p.PosX, p.PosY, p.PosZ);
+
+        // ┌─── ② 머티리얼 지정 (Dummy / 일반) ────────────────────────────────┐
+        bool isDummy = p.PlayerType == PlayerType.Dummy;
+        Material mat = isDummy ? matDummy : matPlayer;
+        ApplySharedMaterial(go, mat);
+
+        // ┌─── ③ Player 컴포넌트 등록 - 모두 ‘타인’ 취급 ─────────────────────┐
+        var other = go.AddComponent<Player>();
+        other.PlayerId = p.Id;
+        _players.Add(p.Id, other);
+
+        // ┌─── ④ NameTag UI 생성 ────────────────────────────────────────────┐
+        var tag = Instantiate(nameTagPrefab, nameTagLayer, false);
+        tag.Init(other.transform, p.Id, /*isSelf:*/ false);
+        other.AttachNameTag(tag);
     }
     public void Move(S_BROADCAST_MOVE packet)
     {
-        if (_myPlayer.PlayerId == packet.PlayerId)
+        if (MyPlayer.PlayerId == packet.PlayerId)
         {
-            // _myPlayer.transform.position = new Vector3(packet.PosX, packet.PosY, packet.PosZ);
+            // MyPlayer.transform.position = new Vector3(packet.PosX, packet.PosY, packet.PosZ);
         }
         else
         {
@@ -131,27 +207,33 @@ public class PlayerManager
             }
         }
     }
+    
+    private static void ApplySharedMaterial(GameObject go, Material sharedMat)
+    {
+        if (go.TryGetComponent(out MeshRenderer mr))
+        {
+            mr.sharedMaterial = sharedMat; // ▶ 공유 자원, 런타임에 복제 X
+            mr.enabled        = true;      // 혹시 비활성화되어 있다면
+            // Instancing 옵션은 머티리얼 쪽에서 이미 On
+        }
+    }
     //
     public void EnterGame(S_BROADCAST_ENTER_GAME packet)
     {
         Debug.Log("EnterGameBroadCast를 받아, EnterGame호출");
-        if (packet.PlayerId == _myPlayer.PlayerId)
-            return;
-        
-        Object obj = Resources.Load("Player");
-        GameObject go = Object.Instantiate(obj) as GameObject;
-        
-        Player player = go.AddComponent<Player>();
-        player.transform.position = new Vector3(packet.PosX, packet.PosY, packet.PosZ);
-        _players.Add(packet.PlayerId, player);
+        Protocol.Player p = packet.Player;
+
+        if (p.Id == MyPlayer.PlayerId) return;
+
+        SpawnRemotePlayer(p); // 0은 더미값
     }
     
     public void LeaveGame(S_BROADCAST_LEAVE_GAME packet)
     {
-        if (_myPlayer.PlayerId == packet.PlayerId)
+        if (MyPlayer.PlayerId == packet.PlayerId)
         {
-            GameObject.Destroy(_myPlayer.gameObject);
-            _myPlayer = null;
+            GameObject.Destroy(MyPlayer.gameObject);
+            MyPlayer = null;
         }
         else
         {

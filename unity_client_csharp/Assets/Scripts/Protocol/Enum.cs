@@ -24,15 +24,16 @@ namespace Protocol {
     static EnumReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgpFbnVtLnByb3RvEghQcm90b2NvbCpoCgpQbGF5ZXJUeXBlEhQKEFBMQVlF",
-            "Ul9UWVBFX05PTkUQABIWChJQTEFZRVJfVFlQRV9LTklHSFQQARIUChBQTEFZ",
-            "RVJfVFlQRV9NQUdFEAISFgoSUExBWUVSX1RZUEVfQVJDSEVSEAMqgwEKC0xv",
-            "Z2luUmVzdWx0EhEKDUxPR0lOX1NVQ0NFU1MQABIZChVMT0dJTl9FTUFJTF9O",
-            "T1RfRk9VTkQQAhIVChFMT0dJTl9QV19NSVNNQVRDSBADEhYKEkxPR0lOX1NF",
-            "UlZFUl9FUlJPUhBiEhcKE0xPR0lOX0RFRkFVTFRfRVJST1IQYyp7Cg5SZWdp",
-            "c3RlclJlc3VsdBIUChBSRUdJU1RFUl9TVUNDRVNTEAASHAoYUkVHSVNURVJf",
-            "RFVQTElDQVRFX0VNQUlMEAESGQoVUkVHSVNURVJfU0VSVkVSX0VSUk9SEGIS",
-            "GgoWUkVHSVNURVJfREVGQVVMVF9FUlJPUhBjYgZwcm90bzM="));
+            "CgpFbnVtLnByb3RvEghQcm90b2NvbCqWAQoKUGxheWVyVHlwZRIUChBQTEFZ",
+            "RVJfVFlQRV9OT05FEAASFgoSUExBWUVSX1RZUEVfS05JR0hUEAESFAoQUExB",
+            "WUVSX1RZUEVfTUFHRRACEhYKElBMQVlFUl9UWVBFX0FSQ0hFUhADEhUKEVBM",
+            "QVlFUl9UWVBFX0RVTU1ZEAQSFQoRUExBWUVSX1RZUEVfSFVNQU4QBSqDAQoL",
+            "TG9naW5SZXN1bHQSEQoNTE9HSU5fU1VDQ0VTUxAAEhkKFUxPR0lOX0VNQUlM",
+            "X05PVF9GT1VORBACEhUKEUxPR0lOX1BXX01JU01BVENIEAMSFgoSTE9HSU5f",
+            "U0VSVkVSX0VSUk9SEGISFwoTTE9HSU5fREVGQVVMVF9FUlJPUhBjKnsKDlJl",
+            "Z2lzdGVyUmVzdWx0EhQKEFJFR0lTVEVSX1NVQ0NFU1MQABIcChhSRUdJU1RF",
+            "Ul9EVVBMSUNBVEVfRU1BSUwQARIZChVSRUdJU1RFUl9TRVJWRVJfRVJST1IQ",
+            "YhIaChZSRUdJU1RFUl9ERUZBVUxUX0VSUk9SEGNiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Protocol.PlayerType), typeof(global::Protocol.LoginResult), typeof(global::Protocol.RegisterResult), }, null, null));
@@ -46,6 +47,8 @@ namespace Protocol {
     [pbr::OriginalName("PLAYER_TYPE_KNIGHT")] Knight = 1,
     [pbr::OriginalName("PLAYER_TYPE_MAGE")] Mage = 2,
     [pbr::OriginalName("PLAYER_TYPE_ARCHER")] Archer = 3,
+    [pbr::OriginalName("PLAYER_TYPE_DUMMY")] Dummy = 4,
+    [pbr::OriginalName("PLAYER_TYPE_HUMAN")] Human = 5,
   }
 
   public enum LoginResult {

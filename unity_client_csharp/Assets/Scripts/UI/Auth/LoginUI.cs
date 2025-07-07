@@ -1,7 +1,8 @@
 using Packet;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;            
+using TMPro;
+using Protocol;
 
 public class LoginUI : MonoBehaviour
 {
@@ -35,7 +36,8 @@ public class LoginUI : MonoBehaviour
         var pkt = new Protocol.C_LOGIN
         {
             Email = email,
-            Pw    = pw // 평문 
+            Pw    = pw, // 평문 
+            Type  = Protocol.PlayerType.Human,
         };
         var sendBuffer = ServerPacketManager.MakeSendBuffer(pkt);
         NetworkManager.Instance.Send(sendBuffer); // 프로젝트의 전송 헬퍼 사용

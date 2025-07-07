@@ -106,9 +106,9 @@ bool Handle_C_LOGIN(PacketSessionRef& session, Protocol::C_LOGIN& pkt)
 		{
 			auto player = loginPkt.add_players();
 			player->set_name(u8"Tommy");
-			player->set_playertype(Protocol::PLAYER_TYPE_KNIGHT);
+			player->set_playertype(pkt.type());
 			player->set_posx(0);
-			player->set_posy(5);
+			player->set_posy(10);
 			player->set_posz(0);
 
 			PlayerRef playerRef = MakeShared<Player>();

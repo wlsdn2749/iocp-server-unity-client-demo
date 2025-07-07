@@ -97,6 +97,7 @@ namespace Packet
                 return;
             }
             
+            PlayerManager.Instance.MyPlayer?.SetRtt(rttMs);
             // UnityEngine.Debug.Log($"[RTT 측정] {rttMs:F2}ms");
         }
     }

@@ -1,6 +1,10 @@
 <table>
   <tr>
-    <td><img src="/statics/demo.gif" width="800" height="450"></td>
+    <tr>
+      <img src="/statics/demo.gif" width="800" height="450">
+   </tr>
+   <td>
+      <img src="/statics/sample_scene_01.png" width="800" height="450">
   </tr>
 </table>
 

@@ -27,9 +27,9 @@ namespace DummyClientCS
                 foreach (ServerSession session in _sessions)
                 {
                     Protocol.C_MOVE movePacket = new Protocol.C_MOVE();
-                    movePacket.PosX = _rand.Next(-50, 50);
-                    movePacket.PosY = 0;
-                    movePacket.PosZ = _rand.Next(-50, 50);
+                    movePacket.PosX = _rand.Next(-100, 100);
+                    movePacket.PosY = 10;
+                    movePacket.PosZ = _rand.Next(-100, 100);
                     ArraySegment<byte> segment = ServerPacketManager.MakeSendBuffer(movePacket);
 
                     session.Send(segment);
