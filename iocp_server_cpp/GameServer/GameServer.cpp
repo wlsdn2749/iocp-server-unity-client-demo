@@ -93,6 +93,9 @@ int main()
 	DBSynchronizer dbSync(*dbConn);
 	dbSync.Synchronize(L"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/GameServer/GameDB.xml");
 
+
+	// GRoom이 전역적으로 존재하므로 한번 만 여기서 실행
+	GRoom->StartTick();
 	{
 		WCHAR name[] = L"홍길동";
 		SP::InsertGold insertGold(*dbConn);

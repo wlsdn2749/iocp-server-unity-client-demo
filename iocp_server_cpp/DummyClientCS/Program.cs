@@ -27,7 +27,7 @@ namespace DummyClientCS
             // 명령줄 인수 파싱
             string clientId = System.Diagnostics.Process.GetCurrentProcess().Id.ToString();
             int httpPort = 10101;
-            int moveInterval = 250;
+            int moveInterval = 50;
             int chatInterval = 2000;
             bool isGTestMode = false;
             

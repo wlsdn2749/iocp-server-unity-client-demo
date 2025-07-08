@@ -11,6 +11,11 @@ public:
 	float						posX = 0;
 	float						posY = 0;
 	float						posZ = 0;
-	
+
+public:
+	float						dirX = 0;
+	float						dirY = 0;
+	float						dirZ = 0;
+	float						speed = 0;
 };
 

@@ -191,19 +191,18 @@ public class PlayerManager : MonoBehaviour
     }
     public void Move(S_BROADCAST_MOVE packet)
     {
-        if (MyPlayer.PlayerId == packet.PlayerId)
+        foreach (var mv in packet.PlayerMoves)
         {
-            // MyPlayer.transform.position = new Vector3(packet.PosX, packet.PosY, packet.PosZ);
-        }
-        else
-        {
-            Player player = null;
-            // _players에 packet.playerId라는 Key가 있으면 True반환하고 player에 그 value를 넘김
-            // False인 경우 Value의 Default값이 Player에 넘어감
-            if (_players.TryGetValue(packet.PlayerId, out player))
+            /*-------- 내 플레이어(로컬입력) -----------------*/
+            if (MyPlayer.PlayerId == mv.PlayerId)
             {
-                //Debug.Log($"Pos x,y,z = ({packet.PosX}, {packet.PosY}, {packet.PosZ})");
-                player.OnMovePacket(packet);
+                // TODO 보정치 적용? 혹은 X
+                // MyPlayer.CorrectFromServer(mv); 
+                continue;
+            }
+            if (_players.TryGetValue(mv.PlayerId, out Player player))
+            {
+                player.OnMovePacket(mv); // PlayerMove
             }
         }
     }

@@ -4,7 +4,18 @@
 
 class Room : public JobQueue
 {
+/*----------Room Tick-----------*/
+public:
+	void StartTick(); // 최초 1번만 호출
+private:
+	void OnTick(); // 예약 Job이 실행하는 함수
+	void ReserveNextTick(); // 다음 Tick 예약
+	void ProcessTick(float dt); // 기존 로직
 
+public:
+	// 게임 데이터 로직 처리
+	void UpdateMoveInput(uint64 pid, Protocol::PlayerMoveInput inp);
+	
 public:
 	// 싱글 스레드 환경인 마냥 처리
 	// Job방식을 통해 특정 스레드 1개가 Dispatch하ㅁ로
@@ -15,6 +26,11 @@ public:
 
 private:
 	map<uint64, PlayerRef> _players; // playerId -> player Object
+	uint64 _lastTickMs = 0;
+	const float kWorldLimit = 80.f; // 벽은 80으로 고정
+	const float kFixedDt = 0.05f; // 클라와 같은 Tick
+	const uint64 kFixedMs = 50;
+
 };
 
 extern shared_ptr<Room> GRoom;

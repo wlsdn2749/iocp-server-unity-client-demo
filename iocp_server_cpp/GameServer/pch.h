@@ -13,6 +13,7 @@
 
 #include "CorePch.h"
 #include "Enum.pb.h"
+#include "Struct.pb.h"
 #include "StringConvert.h"
 
 using GameSessionRef	= shared_ptr<class GameSession>;

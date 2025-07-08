@@ -7,6 +7,12 @@ using UnityEngine.Rendering;
 
 public class MyPlayer : Player
 {
+    [Header("Move Settings")]
+    [SerializeField] private float moveSpeed = 15f;
+    [SerializeField] private float sendPeriod = 0.05f;
+
+    private Vector3 _localDir = Vector3.zero;
+    
     /* ---------- 초기화 ---------- */
     protected override void Awake()
     {
@@ -22,7 +28,14 @@ public class MyPlayer : Player
         float h = Input.GetAxisRaw("Horizontal"); // A, D
         float v = Input.GetAxisRaw("Vertical");   // W, S
 
-        _moveDir = new Vector3(h, 0, v).normalized;
+        _localDir = new Vector3(h, 0, v).normalized;
+    }
+    
+    void FixedUpdate()
+    {
+        Vector3 next = _rigid.position
+                       + _localDir * (moveSpeed * Time.fixedDeltaTime);
+        _rigid.MovePosition(next);
     }
     
     /* ---------- RTT ---------- */
@@ -31,15 +44,21 @@ public class MyPlayer : Player
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.25f); // 250ms
-            Vector3 pos = transform.position;
-            Protocol.C_MOVE movePacket = new Protocol.C_MOVE()
+            yield return new WaitForSeconds(sendPeriod); // 50ms
+            
+            Protocol.PlayerMoveInput input = new Protocol.PlayerMoveInput
             {
-                PosX = pos.x,
-                PosY = pos.y,
-                PosZ = pos.z,
+                Speed = (_localDir.sqrMagnitude > 0.0001f) ? moveSpeed : 0f,
+                Dir   = new Protocol.Vec3
+                {
+                    X = _localDir.x,
+                    Y = _localDir.y,
+                    Z = _localDir.z
+                }
             };
-            ArraySegment<byte> sendBuffer = ServerPacketManager.MakeSendBuffer(movePacket);
+
+            Protocol.C_MOVE movePkt = new Protocol.C_MOVE { Input = input };
+            ArraySegment<byte> sendBuffer = ServerPacketManager.MakeSendBuffer(movePkt);
             NetworkManager.Instance.Send(sendBuffer);
         }
     }
