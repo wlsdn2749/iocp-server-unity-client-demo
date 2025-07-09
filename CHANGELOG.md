@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.24] - 2025-07-08
+
+### 🚜 Refactor
+
+- *(Move)* 이동 로직을 수정했다. 기존에 A좌표에서 B좌표로 가는걸 Client가 Simulation 했다면, 지금은 서버에서 이동을 처리하고 방향과 위치를 넘겨주어 클라이언트에서 Lerp로 자연스럽게 가도록 변경했다. 이전의 코드에서는 클라이언트를 실행할때마다 초기위치가 완전 랜덤이라 수정이 필요했음
+
 ## [0.0.23] - 2025-07-07
 
 ### ⚙️ Miscellaneous Tasks
