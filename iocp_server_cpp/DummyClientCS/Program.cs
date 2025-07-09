@@ -34,7 +34,7 @@ namespace DummyClientCS
             
             // 연결 관련 설정
             string connectionMode = "gradually"; // "direct" 또는 "gradually"
-            int totalConnections = 150;
+            int totalConnections = 230;
             int batchSize = 5;
             int intervalMs = 200;
 

@@ -225,6 +225,7 @@ CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
     <ClInclude Include="PerformanceStats.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PrometheusMetrics.h" />
+    <ClInclude Include="ProtobufSizeUtil.h" />
     <ClInclude Include="Protocol.pb.h" />
     <ClInclude Include="ClientPacketHandler.h" />
     <ClInclude Include="RegisterService.h" />

@@ -6,40 +6,75 @@
 #include "GameSession.h"
 #include "Protocol.pb.h"
 
+#include "SendBuffer.h"
+
+#include "ProtobufSizeUtil.h"
+
 shared_ptr<Room> GRoom = make_shared<Room>();
 
 void Room::Enter(PlayerRef enteringPlayer)
 {
+	const int   totalPlayers = static_cast<int>(_players.size());
+	const int   batch = ProtobufSizeUtil::MaxPlayersPerPlayerListPacket(_moveSeq + 1); // 자동 batch
+	auto        it = _players.begin();
+
 	cout << "엔터 진입" << endl;
 	// 1. 방 멤버로 등록
 	_players[enteringPlayer->playerId] = enteringPlayer;
 
 	//// 2. (입장한 플레이어에게) 현재 방 플레이어 전체 리스트 송신.
-	Protocol::S_PLAYERLIST pkt;
-	for (const auto& kv : _players)
+
+	while (it != _players.end())
 	{
-		const PlayerRef& p = kv.second;          // 가독성을 위해 별칭
-		Protocol::Player* info = pkt.add_players();
+		Protocol::S_PLAYERLIST pkt;
+		pkt.set_myplayerid(enteringPlayer->playerId);
 
-        info->set_id        (p->playerId);
-        info->set_name      (p->name);
-        info->set_playertype(p->type);
-        info->set_posx      (p->posX);
-        info->set_posy      (p->posY);
-        info->set_posz      (p->posZ);
+		int pushed = 0;
+		while (pushed < batch && it != _players.end())
+		{
+			PlayerRef p = (it++)->second;
 
-	   /* std::cout << "[" << "PLAYERLIST" << "] id=" << p->playerId
-	              << " | name=\"" << p->name << "\""
-	              << " | type="   << static_cast<int>(p->type)
-	              << " | pos=("   << p->posX << ", "
-	                              << p->posY << ", "
-	                              << p->posZ << ")\n";*/
+			Protocol::Player* info = pkt.add_players();
+
+			info->set_id(p->playerId);
+			info->set_name(p->name);
+			info->set_playertype(p->type);
+			info->set_posx(p->posX);
+			info->set_posy(p->posY);
+			info->set_posz(p->posZ);
+
+			++pushed;
+		}
+
+		cout << pushed << "만큼 플레이어 목록 전송 " << endl;
+		auto playerListBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+		enteringPlayer->ownerSession->Send(playerListBuffer);
 	}
-	pkt.set_myplayerid(enteringPlayer->playerId);
-	SendBufferRef playerListBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
-	enteringPlayer->ownerSession->Send(playerListBuffer);
+	/* 기존 코드
+	//Protocol::S_PLAYERLIST pkt;
+	//for (const auto& kv : _players)
+	//{
+	//	const PlayerRef& p = kv.second;          // 가독성을 위해 별칭
+	//	Protocol::Player* info = pkt.add_players();
 
-	cout << "플레이어 목록 전송" << endl;
+ //       info->set_id        (p->playerId);
+ //       info->set_name      (p->name);
+ //       info->set_playertype(p->type);
+ //       info->set_posx      (p->posX);
+ //       info->set_posy      (p->posY);
+ //       info->set_posz      (p->posZ);
+
+	//   std::cout << "[" << "PLAYERLIST" << "] id=" << p->playerId
+	//              << " | name=\"" << p->name << "\""
+	//              << " | type="   << static_cast<int>(p->type)
+	//              << " | pos=("   << p->posX << ", "
+	//                              << p->posY << ", "
+	//                              << p->posZ << ")\n";
+	//}
+	//pkt.set_myplayerid(enteringPlayer->playerId);
+	//SendBufferRef playerListBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+	//enteringPlayer->ownerSession->Send(playerListBuffer);
+	*/
 
 	////// 3. (전체 멤버에게) 입장 브로드캐스트
 	Protocol::S_BROADCAST_ENTER_GAME enterPkt;
@@ -166,53 +201,104 @@ void Room::ReserveNextTick()
 	GJobTimer->Reserve(delayMs, shared_from_this(), tickJob);
 }
 
+void Room::BroadCastMoveSnap(float dt)
+{
+	const int   totalPlayers = static_cast<int>(_players.size());
+	const int   batch = ProtobufSizeUtil::MaxPlayersPerMovePacket(_moveSeq + 1); // 자동 batch
+	auto        it = _players.begin();
+
+	const int seq = ++_moveSeq;
+
+	while (it != _players.end())
+	{
+		Protocol::S_BROADCAST_MOVE movePkt;
+		movePkt.set_seq(seq);
+
+		int pushed = 0;
+		while (pushed < batch && it != _players.end())
+		{
+			PlayerRef p = (it++)->second;
+
+			p->posX += p->dirX * p->speed * dt;
+			p->posY += p->dirY * p->speed * dt;
+			p->posZ += p->dirZ * p->speed * dt;
+			/* 2) **경계 클램프**  ------------------------------*/
+			p->posX = std::clamp(p->posX, -kWorldLimit, kWorldLimit);
+			p->posZ = std::clamp(p->posZ, -kWorldLimit, kWorldLimit);
+
+
+			/* 패킷 하나에 여러 플레이어를 담는다면 add_players() 식으로 */
+			Protocol::PlayerMove* info = movePkt.add_playermoves();   // or 새로 만드는 방식
+			info->set_playerid(p->playerId);
+
+			Protocol::Vec3* pos = info->mutable_pos(); // pos부분
+			pos->set_x(p->posX);
+			pos->set_y(p->posY);
+			pos->set_z(p->posZ);
+
+			Protocol::PlayerMoveInput* playerMoveInput = info->mutable_input();
+			Protocol::Vec3* dir = playerMoveInput->mutable_dir();; // dir
+			dir->set_x(p->dirX);
+			dir->set_y(p->dirY);
+			dir->set_z(p->dirZ);
+			playerMoveInput->set_speed(p->speed);
+
+			++pushed;
+		}
+
+		cout << pushed << "만큼 보냄 " << endl;
+		auto buf = ClientPacketHandler::MakeSendBuffer(movePkt);
+		BroadCast(buf);
+	}
+}
 void Room::ProcessTick(float dt)
 {
 
 #pragma region 이동 브로드 캐스팅
 	/*-----------Server-Side Player Move Broadcasting---------------------*/
-	Protocol::S_BROADCAST_MOVE movePkt;
-	movePkt.set_seq(++_moveSeq);
+	BroadCastMoveSnap(dt);
+	//Protocol::S_BROADCAST_MOVE movePkt;
+	//movePkt.set_seq(++_moveSeq);
 
-	for (auto& kv : _players)
-	{
-		PlayerRef p = kv.second;
+	//for (auto& kv : _players)
+	//{
+	//	PlayerRef p = kv.second;
 
-		/* 위치 적분 */
-		p->posX += p->dirX * p->speed * dt;
-		p->posY += p->dirY * p->speed * dt;
-		p->posZ += p->dirZ * p->speed * dt;
-		/* 2) **경계 클램프**  ------------------------------*/
-		p->posX = std::clamp(p->posX, -kWorldLimit, kWorldLimit);
-		p->posZ = std::clamp(p->posZ, -kWorldLimit, kWorldLimit);
+	//	/* 위치 적분 */
+	//	p->posX += p->dirX * p->speed * dt;
+	//	p->posY += p->dirY * p->speed * dt;
+	//	p->posZ += p->dirZ * p->speed * dt;
+	//	/* 2) **경계 클램프**  ------------------------------*/
+	//	p->posX = std::clamp(p->posX, -kWorldLimit, kWorldLimit);
+	//	p->posZ = std::clamp(p->posZ, -kWorldLimit, kWorldLimit);
 
 
-		/* 패킷 하나에 여러 플레이어를 담는다면 add_players() 식으로 */
-		Protocol::PlayerMove* info = movePkt.add_playermoves();   // or 새로 만드는 방식
-		info->set_playerid(p->playerId);
+	//	/* 패킷 하나에 여러 플레이어를 담는다면 add_players() 식으로 */
+	//	Protocol::PlayerMove* info = movePkt.add_playermoves();   // or 새로 만드는 방식
+	//	info->set_playerid(p->playerId);
 
-		Protocol::Vec3* pos = info->mutable_pos(); // pos부분
-		pos->set_x(p->posX);
-		pos->set_y(p->posY);
-		pos->set_z(p->posZ);
-		
-		Protocol::PlayerMoveInput* playerMoveInput = info->mutable_input();
-		Protocol::Vec3* dir = playerMoveInput->mutable_dir();; // dir
-		dir->set_x(p->dirX);
-		dir->set_y(p->dirY);
-		dir->set_z(p->dirZ);
-		playerMoveInput->set_speed(p->speed);
+	//	Protocol::Vec3* pos = info->mutable_pos(); // pos부분
+	//	pos->set_x(p->posX);
+	//	pos->set_y(p->posY);
+	//	pos->set_z(p->posZ);
+	//	
+	//	Protocol::PlayerMoveInput* playerMoveInput = info->mutable_input();
+	//	Protocol::Vec3* dir = playerMoveInput->mutable_dir();; // dir
+	//	dir->set_x(p->dirX);
+	//	dir->set_y(p->dirY);
+	//	dir->set_z(p->dirZ);
+	//	playerMoveInput->set_speed(p->speed);
 
-		/*std::cout
-			<< " | pos=(" 
-			<< p->posX << "," << p->posY << "," << p->posZ << ")"
-			<< " | dir=(" << p->dirX << "," << p->dirY << "," << p->dirZ << ")"
-			<< '\n';*/
-	}
+	//	/*std::cout
+	//		<< " | pos=(" 
+	//		<< p->posX << "," << p->posY << "," << p->posZ << ")"
+	//		<< " | dir=(" << p->dirX << "," << p->dirY << "," << p->dirZ << ")"
+	//		<< '\n';*/
+	//}
 
-	/* 모두 담았으면 브로드캐스트 */
-	auto buf = ClientPacketHandler::MakeSendBuffer(movePkt);
-	BroadCast(buf);
+	///* 모두 담았으면 브로드캐스트 */
+	//auto buf = ClientPacketHandler::MakeSendBuffer(movePkt);
+	//BroadCast(buf);
 
 #pragma endregion
 

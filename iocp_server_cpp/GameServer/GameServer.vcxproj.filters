@@ -107,6 +107,9 @@
     <ClInclude Include="StringConvert.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="ProtobufSizeUtil.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Common\Protobuf\bin\Protocol.proto">

@@ -9,7 +9,9 @@ public:
 	void StartTick(); // 최초 1번만 호출
 private:
 	void OnTick(); // 예약 Job이 실행하는 함수
-	void ReserveNextTick(); // 다음 Tick 예약
+	void ReserveNextTick();
+	void BroadCastMoveSnap(float dt); // BroadCast를 Snap하는 함수
+	// 다음 Tick 예약
 	void ProcessTick(float dt); // 기존 로직
 
 public:
