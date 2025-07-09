@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.27] - 2025-07-09
+
+### 🚜 Refactor
+
+- *(Move)* Room에 100명 이상 동시접속하게 되면, BroadCasting 할때의 총 패킷이 SendBufferChunkSize의 크기를 넘어버린다. 그래서 패킷을 초과할 여지가 있는 브로드 캐스팅의 경우, 길이를 미리 계산해서 분할송신한다.
+
 ## [0.0.26] - 2025-07-09
 
 ### 🐛 Bug Fixes
