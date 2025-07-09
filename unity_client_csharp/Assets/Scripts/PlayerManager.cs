@@ -20,6 +20,8 @@ public class PlayerManager : MonoBehaviour
     private Dictionary<ulong, Player> _players = new Dictionary<ulong, Player>();
 
     public static PlayerManager Instance { get; private set; }
+    
+    private uint _lastMoveSeq = 0;
 
     private void Awake()
     {
@@ -191,6 +193,14 @@ public class PlayerManager : MonoBehaviour
     }
     public void Move(S_BROADCAST_MOVE packet)
     {
+        if (packet.Seq <= _lastMoveSeq)
+        {
+            Debug.Log($"패킷 역전 발생! 현재 Pacekt : {packet.Seq}, 마지막에 받았던 패킷 : {_lastMoveSeq}");
+            return; // 옛 패킷 → 무시
+        }
+
+        _lastMoveSeq = packet.Seq;      // 최신 seq 갱신
+        
         foreach (var mv in packet.PlayerMoves)
         {
             /*-------- 내 플레이어(로컬입력) -----------------*/

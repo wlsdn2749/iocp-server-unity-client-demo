@@ -172,6 +172,7 @@ void Room::ProcessTick(float dt)
 #pragma region 이동 브로드 캐스팅
 	/*-----------Server-Side Player Move Broadcasting---------------------*/
 	Protocol::S_BROADCAST_MOVE movePkt;
+	movePkt.set_seq(++_moveSeq);
 
 	for (auto& kv : _players)
 	{

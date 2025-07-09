@@ -235,22 +235,6 @@ bool Handle_C_MOVE(PacketSessionRef& session, Protocol::C_MOVE& pkt)
 	GRoom->DoAsync(&Room::UpdateMoveInput,
 					gameSession->_currentPlayer->playerId,
 					inp);
-	//// Log
-	////cout << "Id: " << gameSession->_currentPlayer->playerId << " Moved" << endl;
-	//// 움직임을 갱신해주기
-	//gameSession->_currentPlayer->posX = pkt.posx(); 
-	//gameSession->_currentPlayer->posY = pkt.posy(); 
-	//gameSession->_currentPlayer->posZ = pkt.posz(); 
-
-	//// 이 움직임을 모든 클라이언트에게 쏘기
-	//Protocol::S_BROADCAST_MOVE movePkt;
-	//movePkt.set_playerid(gameSession->_currentPlayer->playerId);
-	//movePkt.set_posx(gameSession->_currentPlayer->posX);
-	//movePkt.set_posy(gameSession->_currentPlayer->posY);
-	//movePkt.set_posz(gameSession->_currentPlayer->posZ);
-
-	//auto sendBuffer = ClientPacketHandler::MakeSendBuffer(movePkt);
-	//GRoom->DoAsync(&Room::BroadCast, sendBuffer); // 룸 외부에서 처리할때는 반드시 DoAsync 사용
 
 	return true;
 }

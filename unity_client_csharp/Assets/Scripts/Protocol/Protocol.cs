@@ -38,12 +38,12 @@ namespace Protocol {
             "CgdwbGF5ZXJzGAIgAygLMhAuUHJvdG9jb2wuUGxheWVyIjoKFlNfQlJPQURD",
             "QVNUX0VOVEVSX0dBTUUSIAoGcGxheWVyGAEgASgLMhAuUHJvdG9jb2wuUGxh",
             "eWVyIjIKBkNfTU9WRRIoCgVpbnB1dBgBIAEoCzIZLlByb3RvY29sLlBsYXll",
-            "ck1vdmVJbnB1dCI9ChBTX0JST0FEQ0FTVF9NT1ZFEikKC3BsYXllck1vdmVz",
-            "GAEgAygLMhQuUHJvdG9jb2wuUGxheWVyTW92ZSIVCgZDX0NIQVQSCwoDbXNn",
-            "GAEgASgJIjEKEFNfQlJPQURDQVNUX0NIQVQSEAoIcGxheWVySWQYASABKAQS",
-            "CwoDbXNnGAIgASgJIhsKBUNfUlRUEhIKCmNsaWVudFRpbWUYASABKAQiLwoF",
-            "U19SVFQSEgoKY2xpZW50VGltZRgBIAEoBBISCgpzZXJ2ZXJUaW1lGAIgASgE",
-            "YgZwcm90bzM="));
+            "ck1vdmVJbnB1dCJKChBTX0JST0FEQ0FTVF9NT1ZFEgsKA3NlcRgBIAEoDRIp",
+            "CgtwbGF5ZXJNb3ZlcxgCIAMoCzIULlByb3RvY29sLlBsYXllck1vdmUiFQoG",
+            "Q19DSEFUEgsKA21zZxgBIAEoCSIxChBTX0JST0FEQ0FTVF9DSEFUEhAKCHBs",
+            "YXllcklkGAEgASgEEgsKA21zZxgCIAEoCSIbCgVDX1JUVBISCgpjbGllbnRU",
+            "aW1lGAEgASgEIi8KBVNfUlRUEhIKCmNsaWVudFRpbWUYASABKAQSEgoKc2Vy",
+            "dmVyVGltZRgCIAEoBGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Protocol.EnumReflection.Descriptor, global::Protocol.StructReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -58,7 +58,7 @@ namespace Protocol {
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_PLAYERLIST), global::Protocol.S_PLAYERLIST.Parser, new[]{ "MyPlayerId", "Players" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_BROADCAST_ENTER_GAME), global::Protocol.S_BROADCAST_ENTER_GAME.Parser, new[]{ "Player" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_MOVE), global::Protocol.C_MOVE.Parser, new[]{ "Input" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_BROADCAST_MOVE), global::Protocol.S_BROADCAST_MOVE.Parser, new[]{ "PlayerMoves" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_BROADCAST_MOVE), global::Protocol.S_BROADCAST_MOVE.Parser, new[]{ "Seq", "PlayerMoves" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_CHAT), global::Protocol.C_CHAT.Parser, new[]{ "Msg" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_BROADCAST_CHAT), global::Protocol.S_BROADCAST_CHAT.Parser, new[]{ "PlayerId", "Msg" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_RTT), global::Protocol.C_RTT.Parser, new[]{ "ClientTime" }, null, null, null, null),
@@ -2378,6 +2378,7 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public S_BROADCAST_MOVE(S_BROADCAST_MOVE other) : this() {
+      seq_ = other.seq_;
       playerMoves_ = other.playerMoves_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -2388,10 +2389,22 @@ namespace Protocol {
       return new S_BROADCAST_MOVE(this);
     }
 
+    /// <summary>Field number for the "seq" field.</summary>
+    public const int SeqFieldNumber = 1;
+    private uint seq_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint Seq {
+      get { return seq_; }
+      set {
+        seq_ = value;
+      }
+    }
+
     /// <summary>Field number for the "playerMoves" field.</summary>
-    public const int PlayerMovesFieldNumber = 1;
+    public const int PlayerMovesFieldNumber = 2;
     private static readonly pb::FieldCodec<global::Protocol.PlayerMove> _repeated_playerMoves_codec
-        = pb::FieldCodec.ForMessage(10, global::Protocol.PlayerMove.Parser);
+        = pb::FieldCodec.ForMessage(18, global::Protocol.PlayerMove.Parser);
     private readonly pbc::RepeatedField<global::Protocol.PlayerMove> playerMoves_ = new pbc::RepeatedField<global::Protocol.PlayerMove>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -2414,6 +2427,7 @@ namespace Protocol {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (Seq != other.Seq) return false;
       if(!playerMoves_.Equals(other.playerMoves_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -2422,6 +2436,7 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
+      if (Seq != 0) hash ^= Seq.GetHashCode();
       hash ^= playerMoves_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -2441,6 +2456,10 @@ namespace Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
+      if (Seq != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(Seq);
+      }
       playerMoves_.WriteTo(output, _repeated_playerMoves_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -2452,6 +2471,10 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Seq != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(Seq);
+      }
       playerMoves_.WriteTo(ref output, _repeated_playerMoves_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -2463,6 +2486,9 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
+      if (Seq != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Seq);
+      }
       size += playerMoves_.CalculateSize(_repeated_playerMoves_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2475,6 +2501,9 @@ namespace Protocol {
     public void MergeFrom(S_BROADCAST_MOVE other) {
       if (other == null) {
         return;
+      }
+      if (other.Seq != 0) {
+        Seq = other.Seq;
       }
       playerMoves_.Add(other.playerMoves_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -2492,7 +2521,11 @@ namespace Protocol {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
+          case 8: {
+            Seq = input.ReadUInt32();
+            break;
+          }
+          case 18: {
             playerMoves_.AddEntriesFrom(input, _repeated_playerMoves_codec);
             break;
           }
@@ -2511,7 +2544,11 @@ namespace Protocol {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
+          case 8: {
+            Seq = input.ReadUInt32();
+            break;
+          }
+          case 18: {
             playerMoves_.AddEntriesFrom(ref input, _repeated_playerMoves_codec);
             break;
           }

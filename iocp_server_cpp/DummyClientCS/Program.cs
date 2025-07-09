@@ -34,9 +34,9 @@ namespace DummyClientCS
             
             // 연결 관련 설정
             string connectionMode = "gradually"; // "direct" 또는 "gradually"
-            int totalConnections = 20;
+            int totalConnections = 150;
             int batchSize = 5;
-            int intervalMs = 50;
+            int intervalMs = 200;
 
             for (int i = 0; i < args.Length; i++)
             {
@@ -204,24 +204,24 @@ namespace DummyClientCS
             }, cancellationTokenSource.Token);
 
             // Chat 패킷을 주기적으로 보내는 Task
-            Task.Run(async () =>
-            {
-                while (!cancellationTokenSource.Token.IsCancellationRequested)
-                {
-                    try
-                    {
-                        SessionManager.Instance.SendForEachChat();
-                        prometheusExporter?.IncrementChatPackets();
-                        prometheusExporter?.IncrementPacketsSent();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"SendForEachChat Error: {e}");
-                    }
+            //Task.Run(async () =>
+            //{
+            //    while (!cancellationTokenSource.Token.IsCancellationRequested)
+            //    {
+            //        try
+            //        {
+            //            SessionManager.Instance.SendForEachChat();
+            //            prometheusExporter?.IncrementChatPackets();
+            //            prometheusExporter?.IncrementPacketsSent();
+            //        }
+            //        catch (Exception e)
+            //        {
+            //            Console.WriteLine($"SendForEachChat Error: {e}");
+            //        }
                     
-                    await Task.Delay(chatInterval, cancellationTokenSource.Token);
-                }
-            }, cancellationTokenSource.Token);
+            //        await Task.Delay(chatInterval, cancellationTokenSource.Token);
+            //    }
+            //}, cancellationTokenSource.Token);
 
             // RTT 패킷을 1초마다 보내는 Task
             Task.Run(async () =>
