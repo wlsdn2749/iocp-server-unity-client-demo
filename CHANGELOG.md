@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.28] - 2025-07-09
+
+### 🐛 Bug Fixes
+
+- *(Move)* 225명쯤 동시접속에서, 분할했음에도 불구하고 Move 패킷에서 Nullptr 오류가 났었음
+
 ## [0.0.27] - 2025-07-09
 
 ### 🚜 Refactor
