@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.26] - 2025-07-09
+
+### 🐛 Bug Fixes
+
+- *(Move)* 100명 가까이 이동하면, 모든 더미클라이언트가 뒤로 밀리는 현상이 발생했음. 보험으로 TCP 패킷 순서를 체크해서, 지연으로 인해 나중에 도착하는 패킷이 있다면? (TCP인데 그럴 수가 있나..?) 아무튼 그러면 드랍하도록 변경합.
+
 ## [0.0.25] - 2025-07-09
 
 ### 🚜 Refactor
