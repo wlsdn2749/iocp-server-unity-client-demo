@@ -6,8 +6,8 @@ public class Player : MonoBehaviour
 {
     // 설정 값
     [Header("Interpolation")]
-    [Tooltip("서버 좌표와 2m 이상 차이나면 즉시 스냅")]
-    [SerializeField] private float snapDist = 2f;
+    [Tooltip("서버 좌표와 10m 이상 차이나면 즉시 스냅")]
+    [SerializeField] private float snapDist = 10f;
 
     [Tooltip("보간 가중치 (값이 클 수록 빠르게 수렴")]
     [SerializeField] private float lerpFactor = 10f;
@@ -56,8 +56,8 @@ public class Player : MonoBehaviour
         // 서버 기준인 좌표, 방향, 속도 저장
         _serverPos = new Vector3(mv.Pos.X, mv.Pos.Y, mv.Pos.Z);
         
-        if(mv.PlayerId == 2)
-            Debug.Log($"Id: {mv.PlayerId} : {_serverPos}");
+        // if(mv.PlayerId == 2)
+        //     Debug.Log($"Id: {mv.PlayerId} : {_serverPos}");
         
         var dir = mv.Input.Dir;
         _dir = new Vector3(dir.X, dir.Y, dir.Z).normalized;
@@ -67,7 +67,10 @@ public class Player : MonoBehaviour
         
         // 즉시 스냅 (과도한 오차 보정)
         if (Vector3.Distance(transform.position, _serverPos) > snapDist)
+        {
             _rigid.position = _serverPos;
+            Debug.Log($"Snap: {Vector3.Distance(transform.position, _serverPos)}");
+        }
 
     }
 

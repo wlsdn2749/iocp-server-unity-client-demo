@@ -28,12 +28,12 @@ void Room::Enter(PlayerRef enteringPlayer)
         info->set_posy      (p->posY);
         info->set_posz      (p->posZ);
 
-	    std::cout << "[" << "PLAYERLIST" << "] id=" << p->playerId
+	   /* std::cout << "[" << "PLAYERLIST" << "] id=" << p->playerId
 	              << " | name=\"" << p->name << "\""
 	              << " | type="   << static_cast<int>(p->type)
 	              << " | pos=("   << p->posX << ", "
 	                              << p->posY << ", "
-	                              << p->posZ << ")\n";
+	                              << p->posZ << ")\n";*/
 	}
 	pkt.set_myplayerid(enteringPlayer->playerId);
 	SendBufferRef playerListBuffer = ClientPacketHandler::MakeSendBuffer(pkt);

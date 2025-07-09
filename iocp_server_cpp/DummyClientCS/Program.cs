@@ -1,12 +1,13 @@
-﻿using System;
+﻿using ServerCore;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using ServerCore;
 
 
 namespace DummyClientCS
@@ -32,8 +33,8 @@ namespace DummyClientCS
             bool isGTestMode = false;
             
             // 연결 관련 설정
-            string connectionMode = "direct"; // "direct" 또는 "gradually"
-            int totalConnections = 10;
+            string connectionMode = "gradually"; // "direct" 또는 "gradually"
+            int totalConnections = 20;
             int batchSize = 5;
             int intervalMs = 50;
 
@@ -174,22 +175,31 @@ namespace DummyClientCS
             }
 
             // Move 패킷을 주기적으로 보내는 Task
+            
             Task.Run(async () =>
             {
+                long nextTick = Environment.TickCount64;      // 밀리초 시계 기준
+
                 while (!cancellationTokenSource.Token.IsCancellationRequested)
                 {
+                    /* ① 할 일 --------------------------------------------------- */
+                    SessionManager.Instance.SendForEachMove();
+                    prometheusExporter?.IncrementMovePackets();
+                    prometheusExporter?.IncrementPacketsSent();
+
+                    /* ② 다음 Tick 시각 결정 -------------------------------------- */
+                    nextTick += moveInterval;                        // 항상 +50 ms
+
+                    /* ③ 남은 시간이 0 이하면 -> 이미 늦었으니 즉시 continue ----- */
+                    long wait = nextTick - Environment.TickCount64;
+                    if (wait <= 0)
+                        continue;
+
                     try
                     {
-                        SessionManager.Instance.SendForEachMove();
-                        prometheusExporter?.IncrementMovePackets();
-                        prometheusExporter?.IncrementPacketsSent();
+                        await Task.Delay((int)wait, cancellationTokenSource.Token);
                     }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"SendForEachMove Error: {e}");
-                    }
-                    
-                    await Task.Delay(moveInterval, cancellationTokenSource.Token);
+                    catch (TaskCanceledException) { break; }
                 }
             }, cancellationTokenSource.Token);
 

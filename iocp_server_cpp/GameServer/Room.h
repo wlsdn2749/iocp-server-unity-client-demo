@@ -27,7 +27,7 @@ public:
 private:
 	map<uint64, PlayerRef> _players; // playerId -> player Object
 	uint64 _lastTickMs = 0;
-	const float kWorldLimit = 80.f; // 벽은 80으로 고정
+	const float kWorldLimit = 90.f; // 벽은 90으로 고정
 	const float kFixedDt = 0.05f; // 클라와 같은 Tick
 	const uint64 kFixedMs = 50;
 

@@ -233,7 +233,7 @@ namespace ServerCore
             if(args.BytesTransferred > 0 && args.SocketError == SocketError.Success)
             {
                 //TODO
-                Debug.Log("Recv something");
+                // Debug.Log("Recv something");
                 try
                 {
                     // Write 커서 이동

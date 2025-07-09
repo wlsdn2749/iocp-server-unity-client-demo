@@ -55,7 +55,7 @@ void JobQueue::Execute()
 
 		const int32 jobCount = static_cast<int32>(jobs.size());
 
-		cout << "JobCount는? " << jobCount << endl;
+		//cout << "JobCount는? " << jobCount << endl;
 
 		for (int32 i = 0; i < jobCount; i++)
 		{

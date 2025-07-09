@@ -19,6 +19,7 @@ namespace DummyClientCS
         Random _rand = new Random();
         const float TickSec = 0.05f; // 20 Hz
         const float Speed = 15.0f;  // 15m/s
+        const float Step = Speed * TickSec;     // 0.75 m
 
         /* ─── 상태 테이블 ────────────────────────────────────────── */
         List<ServerSession> _sessions = new List<ServerSession>();
@@ -32,79 +33,69 @@ namespace DummyClientCS
         /* ─── 유틸 ────────────────────────────────────────── */
         Vector3 RandomPos() => new Vector3(_rand.Next(-80, 80), 10, _rand.Next(-80, 80));
 
+
         public void SendForEachMove()
         {
-            if (!_canSendPackets) return; // ENTER_GAME 완료 전에는 패킷 송신 금지
+            if (!_canSendPackets) return;
 
             lock (_lock)
             {
-               
-                foreach (var session in _sessions) 
+                foreach (ServerSession session in _sessions)
                 {
-                    /* ① 세션별 현재 좌표 꺼내기 (없으면 랜덤 초기화) */
-                    // DummyClient는 Session으로 관리하지 Player가 없으므로, 위치만 대신 관리
+                    /* ① 현재 위치 확보 (없으면 초기화) ---------------------------- */
                     if (!_posTable.TryGetValue(session, out Vector3 pos))
+                        _posTable[session] = pos = new Vector3(0, 10, 0);
+
+                    /* ② 목적지 확보 (없으면 초기화) ------------------------------ */
+                    if (!_destTable.TryGetValue(session, out Vector3 dest))
                     {
-                        pos = RandomPos();            // (-100,100) 범위
-                        _posTable[session] = pos;
+                        _destTable[session] = dest = RandomPos();
                     }
 
-
-                    /* ② 목적지 없거나 도착했으면 새 방향 설정 */
-                    // _destTable에 저장해 둔 목적지가 없거나,
-                    // 현 위치(pos)에서 0.75m(step)보다 살짝 큰 0.8m(임계치) 이내로 다가가면
-                    // “도착”으로 판정하고 새 목적지를 랜덤으로 잡습니다.
-                    if (!_destTable.TryGetValue(session, out Vector3 dest) ||
-                        Vector3.Distance(pos, dest) < 0.8f)
-                    {
-                        dest = RandomPos();
-                        _destTable[session] = dest;
-                    }
-
-                    /* ─────────── ③ 방향 계산 & 1스텝 이동 ─────────── */
-                    // 방향 벡터(dir)는 (dest - pos)의 정규화.
-                    // step = 15 m/s × 0.05 s = 0.75 m.
-                    // 남은 거리가 step보다 작으면 “이번 틱에 목표지점까지 붙어서”
-                    // 좌표를 딱 dest로 맞추고, 다음 틱부터 새 목적지를 향해 이동합니다.
+                    /* ③ 방향·거리 계산 ------------------------------------------ */
                     Vector3 diff = dest - pos;
                     float dist = diff.Length();
-                    Vector3 dir = (dist > 1e-6f) ? diff / dist : Vector3.UnitZ; // 방향을 구하는데, 못구하면 안전하게 Z로
-                    float step = Speed * TickSec;
+                    Vector3 moveDir = (dist > 1e-6f) ? diff / dist : Vector3.UnitZ;
 
-                    // Console.WriteLine("dest: "+ dest, "pos" + pos + "dist: " + dist + " " + "step: " + step);
-                    if (dist <= step)              // 도착·오버슈트 처리
+                    /* ④ 한 스텝 이동 ------------------------------------------- */
+                    bool arrived = dist <= Step;          // 이번 Tick 에 붙는가?
+
+                    if (arrived)
                     {
-                        pos = dest;
-                        dest = RandomPos();
-                        _destTable[session] = dest;
+                        pos = dest;                       // 목적지 스냅
+                        //Console.WriteLine($"dist: {dist}, step: {Step}, arrived:{arrived}");
                     }
                     else
+                        pos += moveDir * Step;            // 정상 이동
+
+                    /* ⑤ 도착했다면 새 목적지 설정 ------------------------------- */
+                    if (arrived)
                     {
-                        pos += dir * step;
+                        dest = RandomPos();
+                        //Console.WriteLine($"Target pos: {dest}");
+                        _destTable[session] = dest;
                     }
-                    _posTable[session] = pos;
+                    _posTable[session] = pos;             // 위치 갱신
+                    
 
+                    /* ⑥ 패킷용 dir·speed 계산 ---------------------------------- */
+                    Vector3 nextDiff = dest - pos;        // (새) 목적지 기준
+                    float nextDist = nextDiff.Length();
+                    Vector3 dirSend = (nextDist > 1e-6f) ? nextDiff / nextDist : Vector3.Zero;
 
-                    /* 4. dir + speed 패킷 전송 */
+                    float speedSend = (dirSend == Vector3.Zero) ? 0f : Speed;
+
+                    /* ⑦ 입력 패킷 전송 ----------------------------------------- */
                     var input = new PlayerMoveInput
                     {
-                        Dir = new Vec3
-                        {
-                            X = dir.X,
-                            Y = dir.Y,
-                            Z = dir.Z
-                        },
-                        Speed = Speed
+                        Dir = new Vec3 { X = dirSend.X, Y = 0, Z = dirSend.Z },
+                        Speed = speedSend
                     };
+                    //Console.WriteLine($"Current pos: {pos}, Current Dir = {dirSend}" );
+                    var pkt = new C_MOVE { Input = input };
 
-                    C_MOVE pkt = new C_MOVE
-                    {                      
-                        Input = input,
-                    };
-                    ArraySegment<byte> segment = ServerPacketManager.MakeSendBuffer(pkt);
-
-                    session.Send(segment);
-                    ClientPerformanceStats.Instance.OnPacketSent();
+                    session.Send(ServerPacketManager.MakeSendBuffer(pkt));
+                    ClientPerformanceStats.Instance?.OnPacketSent();
                 }
             }
         }

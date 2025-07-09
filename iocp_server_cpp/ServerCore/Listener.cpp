@@ -43,6 +43,9 @@ bool Listener::StartAccept(ServerServiceRef service)
 	if (SocketUtils::Listen(_socket) == false)
 		return false;
 
+	//if (SocketUtils::SetTcpNoDelay(_socket, true) == false) // Nagle 끄기
+	//	return false;
+
 	const int32 acceptCount = service->GetMaxSessionCount();
 	for (int32 i = 0; i < acceptCount; i++)
 	{
