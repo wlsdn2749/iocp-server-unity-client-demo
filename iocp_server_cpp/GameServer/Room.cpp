@@ -18,7 +18,7 @@ void Room::Enter(PlayerRef enteringPlayer)
 	const int   batch = ProtobufSizeUtil::MaxPlayersPerPlayerListPacket(_moveSeq + 1); // 자동 batch
 	auto        it = _players.begin();
 
-	cout << "엔터 진입" << endl;
+	//cout << "엔터 진입" << endl;
 	// 1. 방 멤버로 등록
 	_players[enteringPlayer->playerId] = enteringPlayer;
 
@@ -46,7 +46,7 @@ void Room::Enter(PlayerRef enteringPlayer)
 			++pushed;
 		}
 
-		cout << pushed << "만큼 플레이어 목록 전송 " << endl;
+		//cout << pushed << "만큼 플레이어 목록 전송 " << endl;
 		auto playerListBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
 		enteringPlayer->ownerSession->Send(playerListBuffer);
 	}
@@ -246,7 +246,7 @@ void Room::BroadCastMoveSnap(float dt)
 			++pushed;
 		}
 
-		cout << pushed << "만큼 보냄 " << endl;
+		//cout << pushed << "만큼 보냄 " << endl;
 		auto buf = ClientPacketHandler::MakeSendBuffer(movePkt);
 		BroadCast(buf);
 	}

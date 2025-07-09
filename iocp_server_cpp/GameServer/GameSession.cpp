@@ -11,6 +11,7 @@ extern PrometheusMetrics* GPrometheusMetrics;
 void GameSession::OnConnected()
 {
 	GSessionManager.Add(static_pointer_cast<GameSession>(shared_from_this()));
+	SetState(State::Connected);
 	STATS_CLIENT_CONNECTED();
 }
 
@@ -25,6 +26,7 @@ void GameSession::OnDisconnected()
 			room->DoAsync(&Room::Leave, _currentPlayer);
 	}
 
+	SetState(State::Disconnected);
 	_currentPlayer = nullptr;
 	_players.clear();
 }

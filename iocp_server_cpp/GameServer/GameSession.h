@@ -6,6 +6,22 @@
 class GameSession : public PacketSession
 {
 public:
+	enum class State : uint8
+	{
+		None, // TCP 연결 전 (가능한가?)...
+		Connected, // TCP 연결 된 직후 -> OnConnected() 
+		InGame, // 로그인 완료 -> ClientPacketHandler::C_Login() 에서 처리
+		InRoom, // 룸에 접속함 -> ClientPacketHandler::C_ENTER_GAME() 에서 처리
+		Disconnected // Room::OnDisConnected
+	};
+
+	State GetState() const { return _state.load(std::memory_order_acquire); }
+	void  SetState(State s) { _state.store(s, std::memory_order_release); }
+
+private:
+	std::atomic<State> _state{ State::None };
+
+public:
 	~GameSession()
 	{
 		cout << "~GameSession" << endl;

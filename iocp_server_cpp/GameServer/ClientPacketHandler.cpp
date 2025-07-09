@@ -95,6 +95,8 @@ bool Handle_C_LOGIN(PacketSessionRef& session, Protocol::C_LOGIN& pkt)
 	case Protocol::LoginResult::LOGIN_SUCCESS:
 	default:
 	{
+		gameSession->SetState(GameSession::State::InGame);
+
 		Protocol::S_LOGIN loginPkt;
 		loginPkt.set_result(loginResult);
 		static Atomic<uint64> idGenerator = 1;
@@ -143,8 +145,7 @@ bool Handle_C_ENTER_GAME(PacketSessionRef& session, Protocol::C_ENTER_GAME& pkt)
 	gameSession->_currentPlayer = gameSession->_players[index]; // READ_ONLY??
 	gameSession->_room = GRoom;
 
-	//GRoom.Enter(player);
-	//JobRef enterJob = MakeShared<EnterJob>(GRoom, player);
+	gameSession->SetState(GameSession::State::InRoom);
 	GRoom->DoAsync(&Room::Enter, gameSession->_currentPlayer);
 
 	Protocol::S_ENTER_GAME enterGamePkt;
@@ -216,6 +217,9 @@ bool Handle_C_MOVE(PacketSessionRef& session, Protocol::C_MOVE& pkt)
 {
 	
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	if(gameSession->GetState() != GameSession::State::InRoom)
+		return false; // Room에 들어오지 않았는데, C_Move를 핸들링하면, gameSession에 없는데 동작하므로 에러.
 
 
 	Protocol::PlayerMoveInput inp = pkt.input();
