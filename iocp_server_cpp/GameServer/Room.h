@@ -1,6 +1,7 @@
 #pragma once
 #include "Job.h"
 #include "JobQueue.h"
+#include "Protocol.pb.h"
 
 class Room : public JobQueue
 {
@@ -11,12 +12,18 @@ private:
 	void OnTick(); // 예약 Job이 실행하는 함수
 	void ReserveNextTick();
 	void BroadCastMoveSnap(float dt); // BroadCast를 Snap하는 함수
+	void BroadCastChatSnap(float dt); // Chat을 Snap하는 함수
 	// 다음 Tick 예약
 	void ProcessTick(float dt); // 기존 로직
 
 public:
 	// 게임 데이터 로직 처리
 	void UpdateMoveInput(uint64 pid, Protocol::PlayerMoveInput inp);
+	void AddChat(GameSessionRef session, Protocol::C_CHAT pkt);
+
+private:
+	using chatPair = pair<GameSessionRef, Protocol::C_CHAT>;
+	Vector<chatPair> _pendingChats;
 	
 public:
 	// 싱글 스레드 환경인 마냥 처리
@@ -30,6 +37,7 @@ private:
 	map<uint64, PlayerRef> _players; // playerId -> player Object
 	uint64 _lastTickMs = 0;
 	uint32 _moveSeq = 0;
+	uint32 _chatSeq = 0;
 	const float kWorldLimit = 90.f; // 벽은 90으로 고정
 	const float kFixedDt = 0.05f; // 클라와 같은 Tick
 	const uint64 kFixedMs = 50;

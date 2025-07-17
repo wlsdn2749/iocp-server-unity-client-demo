@@ -171,18 +171,17 @@ bool Handle_C_CHAT(PacketSessionRef& session, Protocol::C_CHAT& pkt)
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
 	//std::cout << pkt.msg() << endl;
 
+	if (gameSession->GetState() != GameSession::State::InRoom)
+		return false; // Room에 들어오지 않았는데, C_Move를 핸들링하면, gameSession에 없는데 동작하므로 에러.
+
 	// Prometheus 메트릭 업데이트
 	if (GPrometheusMetrics) {
 		GPrometheusMetrics->IncrementPacketsReceived();
 		GPrometheusMetrics->IncrementChatPackets();
 	}
 
-	Protocol::S_BROADCAST_CHAT chatPkt;
-	chatPkt.set_playerid(gameSession->_currentPlayer->playerId);
-	chatPkt.set_msg(pkt.msg());
-	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(chatPkt);
 
-	GRoom->DoAsync(&Room::BroadCast, sendBuffer); // 룸 외부에서 처리할때는 반드시 DoAsync 사용
+	GRoom->DoAsync(&Room::AddChat, gameSession, pkt); // 룸 외부에서 처리할때는 반드시 DoAsync 사용
 
 	return true;
 }

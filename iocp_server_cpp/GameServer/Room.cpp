@@ -127,6 +127,11 @@ void Room::UpdateMoveInput(uint64 pid, Protocol::PlayerMoveInput inp)
 	p->speed = inp.speed();
 }
 
+void Room::AddChat(GameSessionRef session, Protocol::C_CHAT pkt)
+{
+	_pendingChats.emplace_back(session, pkt);
+}
+
 void Room::StartTick()
 {
 	_lastTickMs = ::GetTickCount64();
@@ -251,57 +256,57 @@ void Room::BroadCastMoveSnap(float dt)
 		BroadCast(buf);
 	}
 }
+void Room::BroadCastChatSnap(float dt)
+{
+	if (_pendingChats.empty()) return;
+	auto kMaxPayloadSize = ProtobufSizeUtil::kChunkLimit;
+	auto it = _pendingChats.begin();
+
+	const int seq = ++_chatSeq;
+
+	while (it != _pendingChats.end())
+	{
+		size_t payloadSize = 0;
+		Protocol::S_BROADCAST_CHAT broadcastPkt;
+		broadcastPkt.set_seq(seq);
+
+		while (it != _pendingChats.end())
+		{
+			/* 1) 용량 계산을 먼저 */
+			const auto& [sess, cchat] = *it;
+
+			Protocol::ChatMsg tmp;
+			tmp.set_playerid(sess->_currentPlayer->playerId);
+			tmp.set_msg(cchat.msg());
+
+			const size_t msgSize = tmp.ByteSizeLong() + 1; // tag
+			
+			// 용량 초과시 전송
+			if (payloadSize + msgSize > kMaxPayloadSize) {
+				break;
+			}
+
+			auto chat = broadcastPkt.add_chats();
+			chat->Swap(&tmp);
+
+			payloadSize += msgSize;
+			++it;
+		}
+
+		auto buf = ClientPacketHandler::MakeSendBuffer(broadcastPkt);
+		BroadCast(buf);
+	}
+	
+	// 모두 보냈으면 클리어. 
+	_pendingChats.clear();
+}
 void Room::ProcessTick(float dt)
 {
-
-#pragma region 이동 브로드 캐스팅
 	/*-----------Server-Side Player Move Broadcasting---------------------*/
 	BroadCastMoveSnap(dt);
-	//Protocol::S_BROADCAST_MOVE movePkt;
-	//movePkt.set_seq(++_moveSeq);
 
-	//for (auto& kv : _players)
-	//{
-	//	PlayerRef p = kv.second;
-
-	//	/* 위치 적분 */
-	//	p->posX += p->dirX * p->speed * dt;
-	//	p->posY += p->dirY * p->speed * dt;
-	//	p->posZ += p->dirZ * p->speed * dt;
-	//	/* 2) **경계 클램프**  ------------------------------*/
-	//	p->posX = std::clamp(p->posX, -kWorldLimit, kWorldLimit);
-	//	p->posZ = std::clamp(p->posZ, -kWorldLimit, kWorldLimit);
-
-
-	//	/* 패킷 하나에 여러 플레이어를 담는다면 add_players() 식으로 */
-	//	Protocol::PlayerMove* info = movePkt.add_playermoves();   // or 새로 만드는 방식
-	//	info->set_playerid(p->playerId);
-
-	//	Protocol::Vec3* pos = info->mutable_pos(); // pos부분
-	//	pos->set_x(p->posX);
-	//	pos->set_y(p->posY);
-	//	pos->set_z(p->posZ);
-	//	
-	//	Protocol::PlayerMoveInput* playerMoveInput = info->mutable_input();
-	//	Protocol::Vec3* dir = playerMoveInput->mutable_dir();; // dir
-	//	dir->set_x(p->dirX);
-	//	dir->set_y(p->dirY);
-	//	dir->set_z(p->dirZ);
-	//	playerMoveInput->set_speed(p->speed);
-
-	//	/*std::cout
-	//		<< " | pos=(" 
-	//		<< p->posX << "," << p->posY << "," << p->posZ << ")"
-	//		<< " | dir=(" << p->dirX << "," << p->dirY << "," << p->dirZ << ")"
-	//		<< '\n';*/
-	//}
-
-	///* 모두 담았으면 브로드캐스트 */
-	//auto buf = ClientPacketHandler::MakeSendBuffer(movePkt);
-	//BroadCast(buf);
-
-#pragma endregion
-
+	/*-----------Server-Side Player Chat Broadcasting---------------------*/
+	BroadCastChatSnap(dt);
 }
 
 

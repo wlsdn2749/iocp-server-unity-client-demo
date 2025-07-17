@@ -63,18 +63,23 @@ namespace UI
         }
 
         /// <summary>
-        /// 서버 브로드캐스트 메시지를 UI에 추가한다.
+        /// 서버 브로드캐스트 메시지를 UI에 한 번에 추가한다.
         /// </summary>
-        public void AddMessage(string sender, string message)
+        public void AddMessages(Protocol.S_BROADCAST_CHAT packet)
         {
-            string time = DateTime.Now.ToString("HH:mm");
-            if (_sb.Length > 0) _sb.Append('\n'); // 줄바꿈
-            _sb.Append($"[{time}] {sender} : {message}");
+            foreach (Protocol.ChatMsg chatMsg in packet.Chats)
+            {
+                UInt64 sender = chatMsg.PlayerId;
+                string msg = chatMsg.Msg;
+                
+                string time = DateTime.Now.ToString("HH:mm");
+                if (_sb.Length > 0) _sb.Append('\n'); // 줄바꿈
+                _sb.Append($"[{time}] {sender} : {msg}");
 
-            // 1) 글자 수가 한계치 넘으면 앞부분 삭제
-            if (_sb.Length > _maxChars)
-                _sb.Remove(0, _sb.Length - _trimTarget);
-            
+                // 1) 글자 수가 한계치 넘으면 앞부분 삭제
+                if (_sb.Length > _maxChars)
+                    _sb.Remove(0, _sb.Length - _trimTarget);
+            }
             _dirty = true; // LateUpdate에서 한 번에 처리
         }
     }

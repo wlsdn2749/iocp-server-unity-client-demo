@@ -4,6 +4,9 @@
 
 namespace ProtobufSizeUtil
 {
+	inline constexpr auto MaxSendBufferSize = []() constexpr -> size_t {
+		return SendBufferChunk::SEND_BUFFER_CHUNK_SIZE;
+	};
 	// TODO 이걸 자동화를 하든? 아니면 템플릿을 만들든..
 	
     // PlayerMove의 직렬화 길이를 미리 잰 뒤 상수처럼 재사용

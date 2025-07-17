@@ -40,3 +40,10 @@ message PlayerMove
 	Vec3 pos = 2;
 	PlayerMoveInput input = 3; 
 }
+
+// 서버 전송시 사용
+message ChatMsg
+{
+	uint64 playerId = 1;   // 발신자
+	string msg      = 2;   // 내용
+}

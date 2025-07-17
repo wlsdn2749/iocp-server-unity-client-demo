@@ -40,10 +40,10 @@ namespace Protocol {
             "eWVyIjIKBkNfTU9WRRIoCgVpbnB1dBgBIAEoCzIZLlByb3RvY29sLlBsYXll",
             "ck1vdmVJbnB1dCJKChBTX0JST0FEQ0FTVF9NT1ZFEgsKA3NlcRgBIAEoDRIp",
             "CgtwbGF5ZXJNb3ZlcxgCIAMoCzIULlByb3RvY29sLlBsYXllck1vdmUiFQoG",
-            "Q19DSEFUEgsKA21zZxgBIAEoCSIxChBTX0JST0FEQ0FTVF9DSEFUEhAKCHBs",
-            "YXllcklkGAEgASgEEgsKA21zZxgCIAEoCSIbCgVDX1JUVBISCgpjbGllbnRU",
-            "aW1lGAEgASgEIi8KBVNfUlRUEhIKCmNsaWVudFRpbWUYASABKAQSEgoKc2Vy",
-            "dmVyVGltZRgCIAEoBGIGcHJvdG8z"));
+            "Q19DSEFUEgsKA21zZxgBIAEoCSJBChBTX0JST0FEQ0FTVF9DSEFUEgsKA3Nl",
+            "cRgBIAEoDRIgCgVjaGF0cxgCIAMoCzIRLlByb3RvY29sLkNoYXRNc2ciGwoF",
+            "Q19SVFQSEgoKY2xpZW50VGltZRgBIAEoBCIvCgVTX1JUVBISCgpjbGllbnRU",
+            "aW1lGAEgASgEEhIKCnNlcnZlclRpbWUYAiABKARiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Protocol.EnumReflection.Descriptor, global::Protocol.StructReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -60,7 +60,7 @@ namespace Protocol {
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_MOVE), global::Protocol.C_MOVE.Parser, new[]{ "Input" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_BROADCAST_MOVE), global::Protocol.S_BROADCAST_MOVE.Parser, new[]{ "Seq", "PlayerMoves" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_CHAT), global::Protocol.C_CHAT.Parser, new[]{ "Msg" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_BROADCAST_CHAT), global::Protocol.S_BROADCAST_CHAT.Parser, new[]{ "PlayerId", "Msg" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_BROADCAST_CHAT), global::Protocol.S_BROADCAST_CHAT.Parser, new[]{ "Seq", "Chats" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.C_RTT), global::Protocol.C_RTT.Parser, new[]{ "ClientTime" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.S_RTT), global::Protocol.S_RTT.Parser, new[]{ "ClientTime", "ServerTime" }, null, null, null, null)
           }));
@@ -2782,8 +2782,8 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public S_BROADCAST_CHAT(S_BROADCAST_CHAT other) : this() {
-      playerId_ = other.playerId_;
-      msg_ = other.msg_;
+      seq_ = other.seq_;
+      chats_ = other.chats_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2793,28 +2793,27 @@ namespace Protocol {
       return new S_BROADCAST_CHAT(this);
     }
 
-    /// <summary>Field number for the "playerId" field.</summary>
-    public const int PlayerIdFieldNumber = 1;
-    private ulong playerId_;
+    /// <summary>Field number for the "seq" field.</summary>
+    public const int SeqFieldNumber = 1;
+    private uint seq_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ulong PlayerId {
-      get { return playerId_; }
+    public uint Seq {
+      get { return seq_; }
       set {
-        playerId_ = value;
+        seq_ = value;
       }
     }
 
-    /// <summary>Field number for the "msg" field.</summary>
-    public const int MsgFieldNumber = 2;
-    private string msg_ = "";
+    /// <summary>Field number for the "chats" field.</summary>
+    public const int ChatsFieldNumber = 2;
+    private static readonly pb::FieldCodec<global::Protocol.ChatMsg> _repeated_chats_codec
+        = pb::FieldCodec.ForMessage(18, global::Protocol.ChatMsg.Parser);
+    private readonly pbc::RepeatedField<global::Protocol.ChatMsg> chats_ = new pbc::RepeatedField<global::Protocol.ChatMsg>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string Msg {
-      get { return msg_; }
-      set {
-        msg_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
+    public pbc::RepeatedField<global::Protocol.ChatMsg> Chats {
+      get { return chats_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2832,8 +2831,8 @@ namespace Protocol {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (PlayerId != other.PlayerId) return false;
-      if (Msg != other.Msg) return false;
+      if (Seq != other.Seq) return false;
+      if(!chats_.Equals(other.chats_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2841,8 +2840,8 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (PlayerId != 0UL) hash ^= PlayerId.GetHashCode();
-      if (Msg.Length != 0) hash ^= Msg.GetHashCode();
+      if (Seq != 0) hash ^= Seq.GetHashCode();
+      hash ^= chats_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2861,14 +2860,11 @@ namespace Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (PlayerId != 0UL) {
+      if (Seq != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt64(PlayerId);
+        output.WriteUInt32(Seq);
       }
-      if (Msg.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(Msg);
-      }
+      chats_.WriteTo(output, _repeated_chats_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2879,14 +2875,11 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (PlayerId != 0UL) {
+      if (Seq != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt64(PlayerId);
+        output.WriteUInt32(Seq);
       }
-      if (Msg.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(Msg);
-      }
+      chats_.WriteTo(ref output, _repeated_chats_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -2897,12 +2890,10 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (PlayerId != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(PlayerId);
+      if (Seq != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Seq);
       }
-      if (Msg.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Msg);
-      }
+      size += chats_.CalculateSize(_repeated_chats_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -2915,12 +2906,10 @@ namespace Protocol {
       if (other == null) {
         return;
       }
-      if (other.PlayerId != 0UL) {
-        PlayerId = other.PlayerId;
+      if (other.Seq != 0) {
+        Seq = other.Seq;
       }
-      if (other.Msg.Length != 0) {
-        Msg = other.Msg;
-      }
+      chats_.Add(other.chats_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -2937,11 +2926,11 @@ namespace Protocol {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            PlayerId = input.ReadUInt64();
+            Seq = input.ReadUInt32();
             break;
           }
           case 18: {
-            Msg = input.ReadString();
+            chats_.AddEntriesFrom(input, _repeated_chats_codec);
             break;
           }
         }
@@ -2960,11 +2949,11 @@ namespace Protocol {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            PlayerId = input.ReadUInt64();
+            Seq = input.ReadUInt32();
             break;
           }
           case 18: {
-            Msg = input.ReadString();
+            chats_.AddEntriesFrom(ref input, _repeated_chats_codec);
             break;
           }
         }

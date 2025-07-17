@@ -44,7 +44,7 @@ namespace Packet
             ServerSession serverSession = session as ServerSession;
             
             // UnityEngine.Debug.Log($"[Server's Broadcast] {pkt.PlayerId}: {pkt.Msg}");
-            UI.ChatUIManager.Instance?.AddMessage(pkt.PlayerId.ToString(), pkt.Msg);
+            UI.ChatUIManager.Instance.AddMessages(pkt);
         }
         public static void HANDLE_S_PLAYERLIST(PacketSession session, S_PLAYERLIST packet)
         {

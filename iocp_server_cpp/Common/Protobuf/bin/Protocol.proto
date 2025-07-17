@@ -78,8 +78,8 @@ message C_CHAT
 
 message S_BROADCAST_CHAT
 {
-	uint64 playerId = 1;
-	string msg = 2;
+	uint32 seq = 1;
+	repeated ChatMsg chats = 2;
 }
 
 message C_RTT
