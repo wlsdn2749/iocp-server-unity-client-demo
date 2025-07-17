@@ -17,7 +17,7 @@ public class MyPlayer : Player
     protected override void Awake()
     {
         base.Awake();
-        StartCoroutine(nameof(CoSendChatPacket));
+        // StartCoroutine(nameof(CoSendChatPacket));
         StartCoroutine(nameof(CoSendMovePacket));
     }
     
