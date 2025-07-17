@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.29] - 2025-07-17
+
+### ⚙️ Miscellaneous Tasks
+
+- *(Test1)* For Test, deactivate Chat broadcast, after few days, logic will be changed
+
 ## [0.0.28] - 2025-07-09
 
 ### 🐛 Bug Fixes
