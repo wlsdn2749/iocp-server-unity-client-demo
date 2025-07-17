@@ -1,0 +1,42 @@
+syntax = "proto3";
+package Protocol;
+
+import "Enum.proto";
+
+message Player
+{
+	uint64 id = 1;
+	string name = 2;
+	PlayerType playerType = 3;
+
+	// 스텟 정보
+
+	// 위치 정보
+	float posX = 4;
+	float posY = 5;
+	float posZ = 6;
+}
+
+message Vec3
+{
+	float x = 1;
+	float y = 2;
+	float z = 3;
+}
+
+
+// 입력
+message PlayerMoveInput 
+{
+	Vec3 dir = 1;
+	float speed = 2;
+}
+
+
+// 스냅샷
+message PlayerMove
+{
+	uint64 playerId = 1;
+	Vec3 pos = 2;
+	PlayerMoveInput input = 3; 
+}

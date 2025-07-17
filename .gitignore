@@ -460,3 +460,5 @@ Struct.cs
 GenProc.exe
 GenProcedures.h
 
+# Except Protocol file
+!iocp_server_cpp/Common/Protobuf/bin/

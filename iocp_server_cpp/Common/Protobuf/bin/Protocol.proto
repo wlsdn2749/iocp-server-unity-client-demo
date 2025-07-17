@@ -1,0 +1,94 @@
+syntax = "proto3";
+package Protocol;
+
+import "Enum.proto";
+import "Struct.proto";
+
+message C_REGISTER
+{
+	string email = 1;
+	string pw = 2;
+}
+
+message S_REGISTER
+{
+	int32 accountId = 1;
+	RegisterResult result = 2;
+}
+
+message C_LOGIN
+{
+	string email = 1;
+	string pw = 2;
+	PlayerType type = 3; // Dummy인지 아닌지 판별하기 위한
+}
+
+message S_LOGIN
+{
+	LoginResult result = 1; // 성공 여부
+	repeated Player players = 2; // 아이디 발급 전
+}
+
+message C_ENTER_GAME
+{
+	uint64 playerIndex = 1;
+}
+
+message S_ENTER_GAME
+{
+	bool success = 1;
+}
+
+message C_LEAVE_GAME
+{
+
+}
+
+message S_BROADCAST_LEAVE_GAME
+{
+	uint64 playerId = 1; // 떠난 플레이어
+}
+message S_PLAYERLIST
+{
+	uint64 myPlayerId = 1;
+	repeated Player players = 2;
+}
+
+message S_BROADCAST_ENTER_GAME
+{
+	Player player = 1;
+}
+
+message C_MOVE
+{
+	PlayerMoveInput input = 1;
+}
+
+// 서버 -> 모든 클라이언트
+message S_BROADCAST_MOVE
+{
+	uint32 seq = 1;
+	repeated PlayerMove playerMoves = 2;
+}
+
+message C_CHAT
+{
+	string msg = 1;
+}
+
+message S_BROADCAST_CHAT
+{
+	uint64 playerId = 1;
+	string msg = 2;
+}
+
+message C_RTT
+{
+	uint64 clientTime = 1; // 클라이언트가 보낸 timestamp
+}
+
+message S_RTT
+{
+	uint64 clientTime = 1; // 클라이언트가 보낸 timestamp 그대로,
+	uint64 serverTime = 2; // 서버에서 보내는 timestamp
+}
