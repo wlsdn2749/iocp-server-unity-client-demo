@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.31] - 2025-07-17
+
+### 🚀 Features
+
+- *(Chat)* Receive-Broadcast Style to Tick Broadcast Style updated it makes good efficiency and takes low TPS so server has more availability
+
 ## [0.0.29] - 2025-07-17
 
 ### ⚙️ Miscellaneous Tasks
