@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "GameSessionManager.h"
-#include <random>
-
-#include "../GameServer/ClientPacketHandler.h"
-#include "../GameServer/GameSession.h"
-#include "../GameServer/Protocol.pb.h"
+#include "GameSession.h"
 
 GameSessionManager GSessionManager;
 

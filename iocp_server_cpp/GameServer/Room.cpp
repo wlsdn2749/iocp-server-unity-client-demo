@@ -5,186 +5,35 @@
 #include "Player.h"
 #include "GameSession.h"
 #include "Protocol.pb.h"
-
 #include "SendBuffer.h"
-
 #include "ProtobufSizeUtil.h"
 
 shared_ptr<Room> GRoom = make_shared<Room>();
-
-void Room::Enter(PlayerRef enteringPlayer)
-{
-	const int   totalPlayers = static_cast<int>(_players.size());
-	const int   batch = ProtobufSizeUtil::MaxPlayersPerPlayerListPacket(_moveSeq + 1); // 자동 batch
-	auto        it = _players.begin();
-
-	//cout << "엔터 진입" << endl;
-	// 1. 방 멤버로 등록
-	_players[enteringPlayer->playerId] = enteringPlayer;
-
-	//// 2. (입장한 플레이어에게) 현재 방 플레이어 전체 리스트 송신.
-
-	while (it != _players.end())
-	{
-		Protocol::S_PLAYERLIST pkt;
-		pkt.set_myplayerid(enteringPlayer->playerId);
-
-		int pushed = 0;
-		while (pushed < batch && it != _players.end())
-		{
-			PlayerRef p = (it++)->second;
-
-			Protocol::Player* info = pkt.add_players();
-
-			info->set_id(p->playerId);
-			info->set_name(p->name);
-			info->set_playertype(p->type);
-			info->set_posx(p->posX);
-			info->set_posy(p->posY);
-			info->set_posz(p->posZ);
-
-			++pushed;
-		}
-
-		//cout << pushed << "만큼 플레이어 목록 전송 " << endl;
-		auto playerListBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
-		enteringPlayer->ownerSession->Send(playerListBuffer);
-	}
-	/* 기존 코드
-	//Protocol::S_PLAYERLIST pkt;
-	//for (const auto& kv : _players)
-	//{
-	//	const PlayerRef& p = kv.second;          // 가독성을 위해 별칭
-	//	Protocol::Player* info = pkt.add_players();
-
- //       info->set_id        (p->playerId);
- //       info->set_name      (p->name);
- //       info->set_playertype(p->type);
- //       info->set_posx      (p->posX);
- //       info->set_posy      (p->posY);
- //       info->set_posz      (p->posZ);
-
-	//   std::cout << "[" << "PLAYERLIST" << "] id=" << p->playerId
-	//              << " | name=\"" << p->name << "\""
-	//              << " | type="   << static_cast<int>(p->type)
-	//              << " | pos=("   << p->posX << ", "
-	//                              << p->posY << ", "
-	//                              << p->posZ << ")\n";
-	//}
-	//pkt.set_myplayerid(enteringPlayer->playerId);
-	//SendBufferRef playerListBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
-	//enteringPlayer->ownerSession->Send(playerListBuffer);
-	*/
-
-	////// 3. (전체 멤버에게) 입장 브로드캐스트
-	Protocol::S_BROADCAST_ENTER_GAME enterPkt;
-	auto* myInfo = enterPkt.mutable_player();
-	myInfo->set_id(enteringPlayer->playerId);
-	myInfo->set_name(enteringPlayer->name);
-	myInfo->set_playertype(enteringPlayer->type);
-	myInfo->set_posx(enteringPlayer->posX);
-	myInfo->set_posy(enteringPlayer->posY);
-	myInfo->set_posz(enteringPlayer->posZ);
-
-	SendBufferRef enterBuffer = ClientPacketHandler::MakeSendBuffer(enterPkt);
-	BroadCast(enterBuffer);
-	
-}
-
-void Room::Leave(PlayerRef player)
-{
-	// TODO Broadcasting?
-
-	auto leavePlayerId = player->playerId;
-	// 현재 룸에서 해당 플레이어 제거
-	_players.erase(leavePlayerId);
-
-	// 남은 모든 세션에 S_BROADCAST_LEAVE_GAME 전송
-	Protocol::S_BROADCAST_LEAVE_GAME pkt;
-	pkt.set_playerid(leavePlayerId);
-	SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
-	BroadCast(sendBuffer);
-}
-
-
-void Room::BroadCast(SendBufferRef sendBuffer)
-{
-	for (auto& s: _players)
-	{
-		s.second->ownerSession->Send(sendBuffer);
-	}
-}
-
-void Room::UpdateMoveInput(uint64 pid, Protocol::PlayerMoveInput inp)
-{
-	auto it = _players.find(pid);
-	if (it == _players.end()) return;
-
-	PlayerRef p = it->second;
-	p->dirX = inp.dir().x();
-	p->dirY = inp.dir().y();
-	p->dirZ = inp.dir().z();
-	p->speed = inp.speed();
-}
-
-void Room::AddChat(GameSessionRef session, Protocol::C_CHAT pkt)
-{
-	_pendingChats.emplace_back(session, pkt);
-}
 
 void Room::StartTick()
 {
 	_lastTickMs = ::GetTickCount64();
 	ReserveNextTick(); // 첫 예약
 }
-
 void Room::OnTick()
 {
-
 	// 50ms 고정이 아니라 왜 실제 시간을 재서 쓰는가?
 	// OS 스케쥴러에 의해 실제 50ms가 아니라, 42, 61, 58 이런식으로 변동이됨.
 	// 그럴때, 서버가 50ms로 고정하게 되면, 서버에서 덜 이동하거나 더 이동하거나가 됨
-	//
 	uint64 now = ::GetTickCount64();
 	float realDt = (now - _lastTickMs) * 0.001f;
-
-	// Option 1. 단순 클램핑 -> 한 프레임에 최대 0.05초만 이동 나머지는 버림.
-	//float dt = std::min<float>(realDt, kFixedDt); 
-	//_lastTickMs = now;
-	//ProcessTick(dt);
-	//ReserveNextTick();
 
 	// Option 2. Catch-up Loop
 	while (realDt >= kFixedDt)
 	{
 		ProcessTick(kFixedDt); // dt는 항상 0.05
 		_lastTickMs += kFixedMs; // 타임라인 50ms 앞으로
-		realDt		-= kFixedDt; // 남은 시간 차감
+		realDt -= kFixedDt; // 남은 시간 차감
 	}
 	ReserveNextTick();
-
-
 }
-
 void Room::ReserveNextTick()
-{	
-
-	// Option 1: 고정시간으로 50ms 매핑
-	//std::weak_ptr<Room> weakSelf =
-	//	std::static_pointer_cast<Room>(shared_from_this());
-
-	//JobRef tickJob = MakeShared<Job>(
-	//	[weakSelf]()
-	//	{
-	//		if(auto self = weakSelf.lock())
-	//			self->OnTick();
-	//	}
-	//);
-
-	//// JobTimer에 예약
-	//GJobTimer->Reserve(kFixedMs, shared_from_this(), tickJob);
-
-
+{
 	// Option 2: Catch-Up Loop
 	uint64 nextDueMs = _lastTickMs + kFixedMs;
 	uint64 now = ::GetTickCount64();
@@ -205,6 +54,12 @@ void Room::ReserveNextTick()
 
 	GJobTimer->Reserve(delayMs, shared_from_this(), tickJob);
 }
+void Room::ProcessTick(float dt)
+{
+	BroadCastMoveSnap(dt);
+	BroadCastChatSnap(dt);
+}
+
 
 void Room::BroadCastMoveSnap(float dt)
 {
@@ -259,14 +114,13 @@ void Room::BroadCastMoveSnap(float dt)
 void Room::BroadCastChatSnap(float dt)
 {
 	if (_pendingChats.empty()) return;
-	auto kMaxPayloadSize = ProtobufSizeUtil::kChunkLimit;
+	auto kMaxPayloadSize = ProtobufSizeUtil::kChunkLimit - sizeof(PacketHeader);
 	auto it = _pendingChats.begin();
 
 	const int seq = ++_chatSeq;
 
 	while (it != _pendingChats.end())
 	{
-		size_t payloadSize = 0;
 		Protocol::S_BROADCAST_CHAT broadcastPkt;
 		broadcastPkt.set_seq(seq);
 
@@ -275,39 +129,124 @@ void Room::BroadCastChatSnap(float dt)
 			/* 1) 용량 계산을 먼저 */
 			const auto& [sess, cchat] = *it;
 
-			Protocol::ChatMsg tmp;
-			tmp.set_playerid(sess->_currentPlayer->playerId);
-			tmp.set_msg(cchat.msg());
+			Protocol::ChatMsg* chat = broadcastPkt.add_chats();
+			chat->set_playerid(sess->_currentPlayer->playerId);
+			chat->set_msg(cchat.msg());
 
-			const size_t msgSize = tmp.ByteSizeLong() + 1; // tag
-			
-			// 용량 초과시 전송
-			if (payloadSize + msgSize > kMaxPayloadSize) {
+			// 초과 체크
+			size_t curSize = broadcastPkt.ByteSizeLong();
+			if (curSize > kMaxPayloadSize)
+			{
+				// 방금 추가한 거 되돌리기
+				broadcastPkt.mutable_chats()->RemoveLast();
 				break;
 			}
 
-			auto chat = broadcastPkt.add_chats();
-			chat->Swap(&tmp);
-
-			payloadSize += msgSize;
 			++it;
 		}
 
 		auto buf = ClientPacketHandler::MakeSendBuffer(broadcastPkt);
 		BroadCast(buf);
 	}
-	
+
 	// 모두 보냈으면 클리어. 
 	_pendingChats.clear();
 }
-void Room::ProcessTick(float dt)
-{
-	/*-----------Server-Side Player Move Broadcasting---------------------*/
-	BroadCastMoveSnap(dt);
 
-	/*-----------Server-Side Player Chat Broadcasting---------------------*/
-	BroadCastChatSnap(dt);
+void Room::UpdateMoveInput(uint64 pid, Protocol::PlayerMoveInput inp)
+{
+	auto it = _players.find(pid);
+	if (it == _players.end()) return;
+
+	PlayerRef p = it->second;
+	p->dirX = inp.dir().x();
+	p->dirY = inp.dir().y();
+	p->dirZ = inp.dir().z();
+	p->speed = inp.speed();
 }
+void Room::AddChat(GameSessionRef session, Protocol::C_CHAT pkt)
+{
+	_pendingChats.emplace_back(session, pkt);
+}
+
+void Room::Enter(PlayerRef enteringPlayer)
+{
+	const int   totalPlayers = static_cast<int>(_players.size());
+	const int   batch = ProtobufSizeUtil::MaxPlayersPerPlayerListPacket(_moveSeq + 1); // 자동 batch
+	auto        it = _players.begin();
+
+	// 1. 방 멤버로 등록
+	_players[enteringPlayer->playerId] = enteringPlayer;
+
+	// 2. (입장한 플레이어에게) 현재 방 플레이어 전체 리스트 송신.
+
+	while (it != _players.end())
+	{
+		Protocol::S_PLAYERLIST pkt;
+		pkt.set_myplayerid(enteringPlayer->playerId);
+
+		int pushed = 0;
+		while (pushed < batch && it != _players.end())
+		{
+			PlayerRef p = (it++)->second;
+
+			Protocol::Player* info = pkt.add_players();
+
+			info->set_id(p->playerId);
+			info->set_name(p->name);
+			info->set_playertype(p->type);
+			info->set_posx(p->posX);
+			info->set_posy(p->posY);
+			info->set_posz(p->posZ);
+
+			++pushed;
+		}
+
+		//cout << pushed << "만큼 플레이어 목록 전송 " << endl;
+		auto playerListBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+		enteringPlayer->ownerSession->Send(playerListBuffer);
+	}
+
+
+	////// 3. (전체 멤버에게) 입장 브로드캐스트
+	Protocol::S_BROADCAST_ENTER_GAME enterPkt;
+	auto* myInfo = enterPkt.mutable_player();
+	myInfo->set_id(enteringPlayer->playerId);
+	myInfo->set_name(enteringPlayer->name);
+	myInfo->set_playertype(enteringPlayer->type);
+	myInfo->set_posx(enteringPlayer->posX);
+	myInfo->set_posy(enteringPlayer->posY);
+	myInfo->set_posz(enteringPlayer->posZ);
+
+	SendBufferRef enterBuffer = ClientPacketHandler::MakeSendBuffer(enterPkt);
+	BroadCast(enterBuffer);
+	
+}
+void Room::Leave(PlayerRef player)
+{
+	// TODO Broadcasting?
+
+	auto leavePlayerId = player->playerId;
+	// 현재 룸에서 해당 플레이어 제거
+	_players.erase(leavePlayerId);
+
+	// 남은 모든 세션에 S_BROADCAST_LEAVE_GAME 전송
+	Protocol::S_BROADCAST_LEAVE_GAME pkt;
+	pkt.set_playerid(leavePlayerId);
+	SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
+	BroadCast(sendBuffer);
+}
+void Room::BroadCast(SendBufferRef sendBuffer)
+{
+	for (auto& s: _players)
+	{
+		s.second->ownerSession->Send(sendBuffer);
+	}
+}
+
+
+
+
 
 
 

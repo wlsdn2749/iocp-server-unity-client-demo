@@ -44,12 +44,10 @@ Bytes16 RegisterService::MakeSalt() const
 Bytes64 RegisterService::CalcPwHash(wstring_view pw, const Bytes16& salt) const
 {
     /* 1) pw ‖ salt 를 한 버퍼에 붙이기 */
-    std::vector<uint8_t> input;
-    input.reserve(pw.size() + salt.size());
-    input.insert(input.end(),
-        reinterpret_cast<const uint8_t*>(pw.data()),
-        reinterpret_cast<const uint8_t*>(pw.data()) + pw.size());
-    input.insert(input.end(), salt.begin(), salt.end());
+    Vector<BYTE> input(pw.size() + salt.size()); 
+    auto dst = input.data();
+    memcpy(dst, pw.data(), pw.size()); // pw 복사
+    memcpy(dst + pw.size(), salt.data(), salt.size()); // salt 복사
 
     /* 2) 해시 계산 */
 	Bytes64 out{};

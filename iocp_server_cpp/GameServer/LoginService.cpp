@@ -26,7 +26,7 @@ void LoginService::DoDbWork(SessionRef session, wstring email, wstring_view pw, 
 		getAccountHashSalt.ColumnOut_PwSalt(OUT salt);
 
 		getAccountHashSalt.Execute();
-		if (getAccountHashSalt.Fetch()) // Fetch가 성공한 경우 = 데이터가 있는 경우
+		if (getAccountHashSalt.Fetch())
 		{
 			// 여기서 비교
 			if (Validate(pw, salt, hash))
@@ -53,13 +53,10 @@ void LoginService::DoDbWork(SessionRef session, wstring email, wstring_view pw, 
 
 bool LoginService::Validate(wstring_view pw, const Bytes16& dbSalt, const Bytes64& dbHash)
 {
-	// pw ‖ salt 를 한 버퍼에 붙이기 
-	std::vector<uint8_t> input;
-	input.reserve(pw.size() + dbSalt.size());
-	input.insert(input.end(),
-		reinterpret_cast<const uint8_t*>(pw.data()),
-		reinterpret_cast<const uint8_t*>(pw.data()) + pw.size());
-	input.insert(input.end(), dbSalt.begin(), dbSalt.end());
+	Vector<BYTE> input(pw.size() + dbSalt.size());
+	auto dst = input.data();
+	memcpy(dst, pw.data(), pw.size()); // pw 복사
+	memcpy(dst + pw.size(), dbSalt.data(), dbSalt.size()); // salt 복사
 
 	Bytes64 out{};
 	size_t  outLen = out.size();                  // =64

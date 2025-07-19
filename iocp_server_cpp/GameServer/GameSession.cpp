@@ -65,6 +65,4 @@ void GameSession::OnRecvPacket(BYTE* buffer, int32 len)
 void GameSession::OnSend(int32 len)
 {
 	STATS_PACKET_SENT();
-	// Echo
-	// cout << "OnSend Len = " << len << endl;
 }	

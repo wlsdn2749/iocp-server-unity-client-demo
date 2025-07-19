@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "ClientPacketHandler.h"
-
 #include "GameSession.h"
 #include "LoginService.h"
 #include "Player.h"
@@ -11,22 +10,14 @@
 // Prometheus 메트릭 (외부 선언)
 extern PrometheusMetrics* GPrometheusMetrics;
 
-// Random Code
-#include <random>
-static std::random_device rd;
-static std::mt19937 gen(rd());
-std::uniform_real_distribution<float> dis(-50.0f, 50.0f); // ~50,50
-
-
+// PacketId를 통해 매핑되는 Wrappers
 PacketHandlerFunc GPacketHandler[UINT16_MAX];
 
 // 직접 컨텐츠 작업자가 만들어야함
-
 bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
 	PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
-
-	// TODO : log
+	cout << "INVALID PACKET ID" << endl;
 	return true;
 }
 
@@ -214,21 +205,16 @@ bool Handle_C_RTT(PacketSessionRef& session, Protocol::C_RTT& pkt)
 
 bool Handle_C_MOVE(PacketSessionRef& session, Protocol::C_MOVE& pkt)
 {
-	
 	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
 
 	if(gameSession->GetState() != GameSession::State::InRoom)
-		return false; // Room에 들어오지 않았는데, C_Move를 핸들링하면, gameSession에 없는데 동작하므로 에러.
-
+		return false; 
 
 	Protocol::PlayerMoveInput inp = pkt.input();
-
 	Protocol::Vec3 dir = inp.dir();
 	float speed = inp.speed();
 
 	// TODO 검증
-
-
 	// Prometheus 메트릭 업데이트
 	if (GPrometheusMetrics) {
 		GPrometheusMetrics->IncrementPacketsReceived();
@@ -238,6 +224,5 @@ bool Handle_C_MOVE(PacketSessionRef& session, Protocol::C_MOVE& pkt)
 	GRoom->DoAsync(&Room::UpdateMoveInput,
 					gameSession->_currentPlayer->playerId,
 					inp);
-
 	return true;
 }

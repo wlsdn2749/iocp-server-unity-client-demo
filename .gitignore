@@ -442,7 +442,8 @@ crashlytics-build.properties
 Assets/results
 
 .vscode
-server_stats.json
+server_stats*.json
+client_stats*.json
 
 # Protobuf Automated
 Protocol.pb.cc

@@ -66,7 +66,6 @@ namespace DummyClientCS
         {
             ServerPacketManager.Instance.OnRecvPacket(this, buffer);
             ClientPerformanceStats.Instance.OnPacketReceived();
-            // PacketManager.Instance.OnRecvPacket(this, buffer, (s, p) => PacketQueue.Instance.Push(p) );
         }
 
         public override void OnSend(int numOfBytes)

@@ -87,49 +87,18 @@ void DoWorkerJob(ServerServiceRef& service)
 
 int main()
 {
-	ASSERT_CRASH(GDBConnectionPool->Connect(10, L"Driver={ODBC Driver 17 for SQL Server};Server=(localdb)\\MSSQLLocalDB;Database=ServerDb;Trusted_Connection=Yes;"));
+	const String dbLocalPath = L"Driver={ODBC Driver 17 for SQL Server};Server=(localdb)\\MSSQLLocalDB;Database=ServerDb;Trusted_Connection=Yes;";
+	const String dbXmlPath = L"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/GameServer/GameDB.xml"; // abs path
+	ASSERT_CRASH(GDBConnectionPool->Connect(10, dbLocalPath.data()));
 
 	DBConnection* dbConn = GDBConnectionPool->Pop();
 	DBSynchronizer dbSync(*dbConn);
-	dbSync.Synchronize(L"C:/Users/wlsdn/workspace/iocp-server-unity-client-demo/iocp_server_cpp/GameServer/GameDB.xml");
-
+	dbSync.Synchronize(dbXmlPath.data());
 
 	// GRoom이 전역적으로 존재하므로 한번 만 여기서 실행
 	GRoom->StartTick();
-	{
-		WCHAR name[] = L"홍길동";
-		SP::InsertGold insertGold(*dbConn);
-		insertGold.ParamIn_Gold(100);
-		insertGold.ParamIn_Name(name);
-		insertGold.ParamIn_CreateDate(TIMESTAMP_STRUCT{2020, 10, 19});
-		insertGold.Execute();
-	}
 
-	{
-		SP::GetGold getGold(*dbConn);
-		getGold.ParamIn_Gold(100);
-
-		int32 id = 0;
-		int32 gold = 0;
-		WCHAR name[100];
-		TIMESTAMP_STRUCT date;
-
-		getGold.ColumnOut_Id(OUT id);
-		getGold.ColumnOut_Gold(OUT gold);
-		getGold.ColumnOut_Name(OUT name);
-		getGold.ColumnOut_CreateDate(OUT date);
-
-		getGold.Execute();
-
-		while (getGold.Fetch())
-		{
-			GConsoleLogger->WriteStdOut(Color::BLUE,
-				L"ID[%d] Gold[%d] Name[%ls]\n", id, gold, name);
-		}
-
-	}
-
-	ClientPacketHandler::init();
+	ClientPacketHandler::init(); // 핸들러와 Wrapper 매핑
 
 	// Ctrl+C 핸들러 등록 (성능 통계 저장을 위해)
 	if (!SetConsoleCtrlHandler(ConsoleHandler, TRUE)) {
@@ -161,8 +130,6 @@ int main()
 		{
 			while (true)
 			{
-				// Worker Thread가 Queue에서 Event를 꺼냄
-				//service->GetIocpCore()->Dispatch();
 				DoWorkerJob(service);
 
 			}

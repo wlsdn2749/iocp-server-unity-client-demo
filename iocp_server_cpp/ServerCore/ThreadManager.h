@@ -6,8 +6,6 @@
 /*------------------
 	ThreadManager
 -------------------*/
-
-
 class ThreadManager
 {
 

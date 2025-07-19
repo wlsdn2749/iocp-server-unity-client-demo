@@ -2,15 +2,10 @@
 #include <string>
 #include <stdexcept>
 
-using String = std::basic_string<
-    wchar_t,
-    std::char_traits<wchar_t>,
-    StlAllocator<wchar_t>>;   // 당신이 정의한 커스텀 wstring
-
 /*───────────────────────────────────────────────
  * 1) UTF-8(std::string) → UTF-16(String)
  *──────────────────────────────────────────────*/
-inline String StrToWstr(const std::string& src)      // UTF-8 ➜ String
+inline String StrToWstr(const std::string& src)      // string ➜ String
 {
     if (src.empty())
         return {};
@@ -38,7 +33,7 @@ inline String StrToWstr(const std::string& src)      // UTF-8 ➜ String
 /*───────────────────────────────────────────────
  * 2) UTF-16(String) → UTF-8(std::string)
  *──────────────────────────────────────────────*/
-inline std::string WstrToStr(const String& src)      // String ➜ UTF-8
+inline std::string WstrToStr(const String& src)      // String ➜ string
 {
     if (src.empty())
         return {};

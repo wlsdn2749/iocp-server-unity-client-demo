@@ -182,7 +182,6 @@ CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\ServerCore\GameSessionManager.cpp" />
     <ClCompile Include="Enum.pb.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -191,6 +190,7 @@ CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
     </ClCompile>
     <ClCompile Include="GameServer.cpp" />
     <ClCompile Include="GameSession.cpp" />
+    <ClCompile Include="GameSessionManager.cpp" />
     <ClCompile Include="LoginService.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -216,9 +216,9 @@ CALL $(SolutionDIr)Common\Procedures\GenProcs.bat</Command>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\ServerCore\GameSessionManager.h" />
     <ClInclude Include="Enum.pb.h" />
     <ClInclude Include="GameSession.h" />
+    <ClInclude Include="GameSessionManager.h" />
     <ClInclude Include="Genprocedures.h" />
     <ClInclude Include="LoginService.h" />
     <ClInclude Include="pch.h" />
