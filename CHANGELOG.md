@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.32] - 2025-07-19
+
+### 🚜 Refactor
+
+- *(Codes)* Remove Reduntant codes and refactor some codes
+
 ## [0.0.31] - 2025-07-17
 
 ### 🚀 Features
