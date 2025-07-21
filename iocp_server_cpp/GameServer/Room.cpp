@@ -7,7 +7,9 @@
 #include "Protocol.pb.h"
 #include "SendBuffer.h"
 #include "ProtobufSizeUtil.h"
+#include "PrometheusMetrics.h"
 
+extern PrometheusMetrics* GPrometheusMetrics;
 shared_ptr<Room> GRoom = make_shared<Room>();
 
 void Room::StartTick()
@@ -22,6 +24,11 @@ void Room::OnTick()
 	// 그럴때, 서버가 50ms로 고정하게 되면, 서버에서 덜 이동하거나 더 이동하거나가 됨
 	uint64 now = ::GetTickCount64();
 	float realDt = (now - _lastTickMs) * 0.001f;
+
+	if (GPrometheusMetrics)
+	{
+		GPrometheusMetrics->SetRoomTickInterval(realDt * 1000.f);
+	}
 
 	// Option 2. Catch-up Loop
 	while (realDt >= kFixedDt)
@@ -56,8 +63,22 @@ void Room::ReserveNextTick()
 }
 void Room::ProcessTick(float dt)
 {
-	BroadCastMoveSnap(dt);
-	BroadCastChatSnap(dt);
+	auto start = std::chrono::high_resolution_clock::now();
+
+	{
+		BroadCastMoveSnap(dt);
+		BroadCastChatSnap(dt);
+	}
+
+	auto end = std::chrono::high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+	double processingTimeMs = duration.count() / 1000.0;
+
+	if (GPrometheusMetrics) 
+	{
+		GPrometheusMetrics->UpdateRoomTickTime(processingTimeMs); // ProcessTick이 얼마나 걸렸는가?
+	}
+		
 }
 
 
@@ -108,7 +129,7 @@ void Room::BroadCastMoveSnap(float dt)
 
 		//cout << pushed << "만큼 보냄 " << endl;
 		auto buf = ClientPacketHandler::MakeSendBuffer(movePkt);
-		BroadCast(buf);
+		BroadCast(buf, "move");
 	}
 }
 void Room::BroadCastChatSnap(float dt)
@@ -146,11 +167,12 @@ void Room::BroadCastChatSnap(float dt)
 		}
 
 		auto buf = ClientPacketHandler::MakeSendBuffer(broadcastPkt);
-		BroadCast(buf);
+		BroadCast(buf, "chat");
 	}
 
 	// 모두 보냈으면 클리어. 
 	_pendingChats.clear();
+	_pendingMoves.shrink_to_fit();
 }
 
 void Room::UpdateMoveInput(uint64 pid, Protocol::PlayerMoveInput inp)
@@ -219,7 +241,7 @@ void Room::Enter(PlayerRef enteringPlayer)
 	myInfo->set_posz(enteringPlayer->posZ);
 
 	SendBufferRef enterBuffer = ClientPacketHandler::MakeSendBuffer(enterPkt);
-	BroadCast(enterBuffer);
+	BroadCast(enterBuffer, "enter");
 	
 }
 void Room::Leave(PlayerRef player)
@@ -234,13 +256,16 @@ void Room::Leave(PlayerRef player)
 	Protocol::S_BROADCAST_LEAVE_GAME pkt;
 	pkt.set_playerid(leavePlayerId);
 	SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(pkt);
-	BroadCast(sendBuffer);
+	BroadCast(sendBuffer, "leave");
 }
-void Room::BroadCast(SendBufferRef sendBuffer)
+void Room::BroadCast(SendBufferRef sendBuffer, const char* pktType)
 {
 	for (auto& s: _players)
 	{
 		s.second->ownerSession->Send(sendBuffer);
+
+		if (GPrometheusMetrics)   // ① 송신 카운터 ++
+			GPrometheusMetrics->IncrementPacketsSent(pktType);
 	}
 }
 

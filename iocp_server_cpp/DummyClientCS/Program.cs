@@ -34,7 +34,7 @@ namespace DummyClientCS
             
             // 연결 관련 설정
             string connectionMode = "gradually"; // "direct" 또는 "gradually"
-            int totalConnections = 100;
+            int totalConnections = 300;
             int batchSize = 5;
             int intervalMs = 200;
 
@@ -174,8 +174,8 @@ namespace DummyClientCS
                     intervalMs: intervalMs);
             }
 
-            // Move 패킷을 주기적으로 보내는 Task
-            
+            //Move 패킷을 주기적으로 보내는 Task
+
             Task.Run(async () =>
             {
                 long nextTick = Environment.TickCount64;      // 밀리초 시계 기준
@@ -203,45 +203,45 @@ namespace DummyClientCS
                 }
             }, cancellationTokenSource.Token);
 
-            // Chat 패킷을 주기적으로 보내는 Task
-            Task.Run(async () =>
-            {
-                while (!cancellationTokenSource.Token.IsCancellationRequested)
-                {
-                    try
-                    {
-                        SessionManager.Instance.SendForEachChat();
-                        prometheusExporter?.IncrementChatPackets();
-                        prometheusExporter?.IncrementPacketsSent();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"SendForEachChat Error: {e}");
-                    }
+            //// Chat 패킷을 주기적으로 보내는 Task
+            //Task.Run(async () =>
+            //{
+            //    while (!cancellationTokenSource.Token.IsCancellationRequested)
+            //    {
+            //        try
+            //        {
+            //            SessionManager.Instance.SendForEachChat();
+            //            prometheusExporter?.IncrementChatPackets();
+            //            prometheusExporter?.IncrementPacketsSent();
+            //        }
+            //        catch (Exception e)
+            //        {
+            //            Console.WriteLine($"SendForEachChat Error: {e}");
+            //        }
 
-                    await Task.Delay(chatInterval, cancellationTokenSource.Token);
-                }
-            }, cancellationTokenSource.Token);
+            //        await Task.Delay(chatInterval, cancellationTokenSource.Token);
+            //    }
+            //}, cancellationTokenSource.Token);
 
-            // RTT 패킷을 1초마다 보내는 Task
-            Task.Run(async () =>
-            {
-                while (!cancellationTokenSource.Token.IsCancellationRequested)
-                {
-                    try
-                    {
-                        SessionManager.Instance.SendForEachRtt();
-                        prometheusExporter?.IncrementRttPackets();
-                        prometheusExporter?.IncrementPacketsSent();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"SendForEachRtt Error: {e}");
-                    }
-                    
-                    await Task.Delay(1000, cancellationTokenSource.Token); // 1초마다
-                }
-            }, cancellationTokenSource.Token);
+            //// RTT 패킷을 1초마다 보내는 Task
+            //Task.Run(async () =>
+            //{
+            //    while (!cancellationTokenSource.Token.IsCancellationRequested)
+            //    {
+            //        try
+            //        {
+            //            SessionManager.Instance.SendForEachRtt();
+            //            prometheusExporter?.IncrementRttPackets();
+            //            prometheusExporter?.IncrementPacketsSent();
+            //        }
+            //        catch (Exception e)
+            //        {
+            //            Console.WriteLine($"SendForEachRtt Error: {e}");
+            //        }
+
+            //        await Task.Delay(1000, cancellationTokenSource.Token); // 1초마다
+            //    }
+            //}, cancellationTokenSource.Token);
 
             // 메인 스레드는 대기 상태로 유지
             try

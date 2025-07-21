@@ -47,7 +47,7 @@ private:
 public:
 	void Enter(PlayerRef player);
 	void Leave(PlayerRef player);
-	void BroadCast(SendBufferRef sendBuffer);
+	void BroadCast(SendBufferRef sendBuffer, const char* pktType);
 
 private:
 	map<uint64, PlayerRef> _players; // playerId -> player Object

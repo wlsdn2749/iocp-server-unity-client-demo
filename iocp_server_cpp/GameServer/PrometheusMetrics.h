@@ -23,10 +23,14 @@ private:
     // 기본 메트릭들
     std::atomic<int32> _connectedClients{0};
     std::atomic<int64> _totalPacketsReceived{0};
-    std::atomic<int64> _totalPacketsSent{0};
     std::atomic<int64> _movePacketsReceived{0};
     std::atomic<int64> _chatPacketsReceived{0};
     std::atomic<int64> _rttPacketsReceived{0};
+
+    std::atomic<int64> _txTotal{0};
+    std::atomic<int64> _txMove{0};
+    std::atomic<int64> _txChat{0};
+    std::atomic<int64> _txRtt{0};
     
     // JobQueue 메트릭들
     std::atomic<int64> _jobQueuePushedTotal{0};
@@ -41,6 +45,15 @@ private:
     std::atomic<int64> _processingTimeCount{0};
     std::atomic<double> _totalProcessingTime{0.0};
     
+
+    /*----- Room-Tick 전용 메트릭 -----*/
+    std::atomic<double> _roomTickAvgMs{ 0.0 };
+    std::atomic<double> _roomTickMaxMs{ 0.0 };
+    std::atomic<int64>  _roomTickCount{ 0 };
+    std::atomic<double> _roomTickTotalMs{ 0.0 };
+    std::atomic<int64>  _roomTickBuckets[10]{};   // 1 ms, 2 ms, 5 ms, 10 ms, 20 ms, 50 ms, 100 ms, 200 ms, 500 ms, +Inf
+
+    std::atomic<double> _roomTickIntervalMs{ 0.0 };  // Tick 호출 간 간격
 
     
     // 히스토그램 버킷들 (패킷 처리 시간)
@@ -65,16 +78,29 @@ public:
     void IncrementConnectedClients() { _connectedClients++; }
     void DecrementConnectedClients() { _connectedClients--; }
     void IncrementPacketsReceived() { _totalPacketsReceived++; _recentPacketsReceived++; }
-    void IncrementPacketsSent() { _totalPacketsSent++; _recentPacketsSent++; }
     void IncrementMovePackets() { _movePacketsReceived++; }
     void IncrementChatPackets() { _chatPacketsReceived++; }
     void IncrementRttPackets() { _rttPacketsReceived++; }
+
+    inline void IncrementPacketsSent(const char* type)
+    {
+        _txTotal++;
+        _recentPacketsSent++;
+        if (strcmp(type, "move") == 0) _txMove++;
+        else if (strcmp(type, "chat") == 0) _txChat++;
+        else if (strcmp(type, "rtt") == 0) _txRtt++;
+    }
     
     // JobQueue 메트릭 업데이트 함수들
     void IncrementJobQueuePushed() { _jobQueuePushedTotal++; }
     void IncrementJobQueueExecuted() { _jobQueueExecutedTotal++; }
     void UpdateJobQueuePending(int64 pendingCount) { _jobQueuePendingCount = pendingCount; }
     
+
+    // Room
+    inline void SetRoomTickInterval(double ms) { _roomTickIntervalMs = ms; }
+
+
     void UpdateProcessingTime(double timeMs) {
         // 최대값 업데이트
         double currentMax = _maxProcessingTime.load();
@@ -106,6 +132,38 @@ public:
         }
     }
     
+    /*----------------------
+        Room - Tick 계측 업데이트
+    ---------------------- - */
+    void UpdateRoomTickTime(double timeMs)
+    {
+        /* 최대값 */
+        double curMax = _roomTickMaxMs.load();
+        while (timeMs > curMax &&
+            !_roomTickMaxMs.compare_exchange_weak(curMax, timeMs)) {
+        }
+
+        /* 평균 계산용 누적 */
+        _roomTickCount++;
+        double curTotal = _roomTickTotalMs.load();
+        while (!_roomTickTotalMs.compare_exchange_weak(curTotal, curTotal + timeMs)) {}
+
+        int64 cnt = _roomTickCount.load();
+        if (cnt > 0)
+            _roomTickAvgMs = _roomTickTotalMs.load() / cnt;
+
+        /* 히스토그램 버킷 (ms 단위) */
+        const double bucketsMs[] = { 1, 2, 5, 10, 20, 50, 100, 200, 500, INFINITY };
+        for (int i = 0; i < 10; ++i)
+        {
+            if (timeMs <= bucketsMs[i])
+            {
+                _roomTickBuckets[i]++;
+                break;
+            }
+        }
+    }
+
     void UpdateMemoryUsage(int64 heapBytes, int64 poolBytes) {
         _memoryUsageBytes = heapBytes;
         _poolMemoryBytes = poolBytes;
@@ -147,9 +205,10 @@ public:
         
         oss << "# HELP server_packets_sent_total Total packets sent\n";
         oss << "# TYPE server_packets_sent_total counter\n";
-        oss << "server_packets_sent_total " << _totalPacketsSent.load() << "\n\n";
-        
-
+        oss << "server_packets_sent_total{type=\"move\"} " << _txMove.load() << '\n';
+        oss << "server_packets_sent_total{type=\"chat\"} " << _txChat.load() << '\n';
+        oss << "server_packets_sent_total{type=\"rtt\"} " << _txRtt.load() << '\n';
+        oss << "server_packets_sent_total{type=\"total\"} " << _txTotal.load() << "\n\n";
         
         // TPS 메트릭
         oss << "# HELP server_tps_current Current transactions per second\n";
@@ -194,7 +253,35 @@ public:
         oss << "# TYPE server_memory_usage_bytes gauge\n";
         oss << "server_memory_usage_bytes{type=\"heap\"} " << _memoryUsageBytes.load() << "\n";
         oss << "server_memory_usage_bytes{type=\"pool\"} " << _poolMemoryBytes.load() << "\n\n";
-        
+
+
+        /* Room - Tick Gauge */
+        oss << "# HELP room_tick_duration_avg_ms Room tick average duration (ms)\n"
+            << "# TYPE room_tick_duration_avg_ms gauge\n"
+            << "room_tick_duration_avg_ms " << _roomTickAvgMs.load() << "\n\n";
+
+        oss << "# HELP room_tick_duration_max_ms Room tick max duration (ms)\n"
+            << "# TYPE room_tick_duration_max_ms gauge\n"
+            << "room_tick_duration_max_ms " << _roomTickMaxMs.load() << "\n\n";
+
+        /* Room-Tick Histogram ― seconds 단위로 변환 */
+        const double bucketMs[] = { 1, 2, 5, 10, 20, 50, 100, 200, 500 };
+        oss << "# HELP room_tick_duration_seconds Room tick duration histogram\n"
+            << "# TYPE room_tick_duration_seconds histogram\n";
+        for (int i = 0; i < 9; ++i)
+        {
+            oss << "room_tick_duration_seconds_bucket{le=\""
+                << bucketMs[i] / 1000.0 << "\"} "
+                << _roomTickBuckets[i].load() << "\n";
+        }
+        oss << "room_tick_duration_seconds_bucket{le=\"+Inf\"} "
+            << _roomTickBuckets[9].load() << "\n\n";
+
+        /* --- 현재 Tick 간격 --- */
+        oss << "# HELP room_tick_interval_ms Current interval between Tick calls in ms\n"
+            << "# TYPE room_tick_interval_ms gauge\n"
+            << "room_tick_interval_ms " << _roomTickIntervalMs.load() << "\n\n";
+       
         return oss.str();
     }
 

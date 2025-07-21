@@ -198,6 +198,8 @@ bool Handle_C_RTT(PacketSessionRef& session, Protocol::C_RTT& pkt)
 	if (GPrometheusMetrics) {
 		GPrometheusMetrics->IncrementPacketsReceived();
 		GPrometheusMetrics->IncrementRttPackets();
+
+		GPrometheusMetrics->IncrementPacketsSent("rtt");
 	}
 	
 	return true;
@@ -223,6 +225,6 @@ bool Handle_C_MOVE(PacketSessionRef& session, Protocol::C_MOVE& pkt)
 	
 	GRoom->DoAsync(&Room::UpdateMoveInput,
 					gameSession->_currentPlayer->playerId,
-					inp);
+					std::move(inp));
 	return true;
 }

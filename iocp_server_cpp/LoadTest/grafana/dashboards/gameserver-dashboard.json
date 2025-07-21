@@ -719,6 +719,90 @@
       ],
       "title": "메모리 사용량",
       "type": "timeseries"
+    },
+    
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 40 },
+      "id": 20,
+      "options": {
+        "color": { "mode": "palette-classic" },
+        "heatmap": { "colorScale": "sqrt" },
+        "legend": { "showLegend": false },
+        "tooltip": { "mode": "single" }
+      },
+      "pluginVersion": "7.5.0",
+      "targets": [
+        {
+          "expr": "room_tick_duration_seconds_bucket",
+          "legendFormat": "{{le}} s",
+          "refId": "A"
+        }
+      ],
+      "title": "🕒 Room Tick 지연 분포 (Histogram)",
+      "type": "heatmap"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 50 },
+              { "color": "red", "value": 55 }
+            ]
+          }
+        }
+      },
+      "gridPos": { "h": 8, "w": 6, "x": 0, "y": 49 },
+      "id": 30,
+      "options": {
+        "colorMode": "value",
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "textMode": "value"
+      },
+      "targets": [
+        { "expr": "room_tick_interval_ms", "refId": "A", "legendFormat": "" }
+      ],
+      "title": "⏱️ 현재 Tick 간격",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 45 },
+              { "color": "red", "value": 50 }
+            ]
+          }
+        }
+      },
+      "gridPos": { "h": 8, "w": 6, "x": 6, "y": 49 },
+      "id": 31,
+      "options": {
+        "colorMode": "value",
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "textMode": "value"
+      },
+      "targets": [
+        { "expr": "room_tick_exec_ms", "refId": "A", "legendFormat": "" }
+      ],
+      "title": "⚡ 현재 Tick 실행 시간",
+      "type": "stat"
     }
   ],
   "refresh": "1s",
