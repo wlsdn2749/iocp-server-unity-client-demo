@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.33] - 2025-07-21
+
+### 💼 Other
+
+- *(monitor)* Prometheus + Grafana 지표 추가 및 Client 측 지표 추가
+
 ## [0.0.32] - 2025-07-19
 
 ### 🚜 Refactor
