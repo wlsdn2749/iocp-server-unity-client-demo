@@ -172,7 +172,7 @@ void Room::BroadCastChatSnap(float dt)
 
 	// 모두 보냈으면 클리어. 
 	_pendingChats.clear();
-	_pendingMoves.shrink_to_fit();
+
 }
 
 void Room::UpdateMoveInput(uint64 pid, Protocol::PlayerMoveInput inp)
