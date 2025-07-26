@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.35] - 2025-07-26
+
+### 💼 Other
+
+- 누락된 빌드 Protobuf 파일 추가
+
 ## [0.0.33] - 2025-07-21
 
 ### 💼 Other
