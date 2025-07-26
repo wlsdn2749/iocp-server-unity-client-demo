@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.36] - 2025-07-26
+
+### 💼 Other
+
+- DummyClient Project 삭제 (Unused)
+
 ## [0.0.35] - 2025-07-26
 
 ### 💼 Other
