@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.38] - 2025-07-26
+
+### 💼 Other
+
+- DummyClientCS 누락된 파일 추가
+
 ## [0.0.37] - 2025-07-26
 
 ### 💼 Other
